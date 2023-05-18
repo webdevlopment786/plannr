@@ -84,15 +84,12 @@ class LoginControllers extends BaseControllers
     public function login(Request $request)
     {   
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-            $authUser = Auth::user(); 
-            dd($authUser);
-            $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken; 
-            $success['name'] =  $authUser->name;
-   
-            return $this->sendResponse($success, 'User signed in');
+            $user = Auth::user(); 
+            $success['token'] =  $user->createToken('MyApp')->accessToken; 
+            return $this->sendResponse($success, 'User login successfully.');
         } 
         else{ 
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
-        } 
+        }
     }
 }
