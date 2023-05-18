@@ -39,8 +39,9 @@ class LoginControllers extends Controller
 
     public function getUser(Request $request)
     {
+        dd('dssfdsf');
         $userGet = User::get();
-        return $userGet;
+        return view('pages.tables.data-table', compact('userGet'));
     }
 
 }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\LoginControllers as APILoginControllers;
-use App\Http\Controllers\Dashboard\LoginControllers;
 use Illuminate\Http\Request;
 
 /*
@@ -19,9 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('getUser',[LoginControllers::class,'getUser']);
+
 Route::post('login',[APILoginControllers::class,'login']);
 Route::post('register',[APILoginControllers::class,'register']);
+Route::post('otp-verification',[APILoginControllers::class,'otpVerification']);
 
 
 

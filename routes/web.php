@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\Dashboard\LoginControllers;
 /*
 |--------------------------------------------------------------------------
@@ -118,3 +119,7 @@ Route::get('/clear-cache', function() {
 Route::any('/{page?}',function(){
     return View::make('pages.error.404');
 })->where('page','.*');
+
+
+
+Route::get('getUser',[LoginControllers::class,'getUser'])->name('user.list');
