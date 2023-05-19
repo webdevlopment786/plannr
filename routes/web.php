@@ -13,13 +13,16 @@ use App\Http\Controllers\Dashboard\LoginControllers;
 |
 */
 
+
+Route::get('get-user',[LoginControllers::class,'getUser'])->name('user.list');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
         return view('dashboard');
 }); 
     Route::group(['prefix' => 'tables'], function(){
         Route::get('basic-tables', function () { return view('pages.tables.basic-tables'); });
-        Route::get('data-table', function () { return view('pages.tables.data-table'); });
+        // Route::get('data-table', function () { return view('pages.tables.data-table'); });
     });
 });
 
@@ -122,4 +125,3 @@ Route::any('/{page?}',function(){
 
 
 
-Route::get('getUser',[LoginControllers::class,'getUser'])->name('user.list');

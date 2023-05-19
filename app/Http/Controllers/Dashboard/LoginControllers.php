@@ -21,14 +21,13 @@ class LoginControllers extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-   
+        
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->intended('/')
                         ->withSuccess('Signed in');
         }
-  
-        return redirect("auth/login")->withErrors('Login details are not valid');
+        return redirect("auth/login")->with('error','Login details are not valid');
     }
 
     public function logOut() {
@@ -39,9 +38,8 @@ class LoginControllers extends Controller
 
     public function getUser(Request $request)
     {
-        dd('dssfdsf');
-        $userGet = User::get();
-        return view('pages.tables.data-table', compact('userGet'));
+        $usergets = User::get();
+        return view('pages.tables.data-table', compact('usergets'));
     }
 
 }

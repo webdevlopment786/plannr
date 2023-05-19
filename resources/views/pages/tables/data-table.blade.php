@@ -7,8 +7,8 @@
 @section('content')
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Tables</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data Table</li>
+    <li class="breadcrumb-item"><a href="#">User List</a></li>
+    <li class="breadcrumb-item active" aria-current="page">User List</li>
   </ol>
 </nav>
 
@@ -16,8 +16,7 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Data Table</h6>
-        <p class="text-muted mb-3">Read the <a href="https://datatables.net/" target="_blank"></p>
+        <h6 class="card-title">User List</h6>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
             <thead>
@@ -30,15 +29,15 @@
               </tr>
             </thead>
             <tbody>
-           
-              <tr>
-                <td>First Name</td>
-                <td>Last Name</td>
-                <td>Phone</td>
-                <td>Email</td>
-                <td>Active</td>
-              </tr>
-           
+              @foreach($usergets as $userget)
+                <tr>
+                  <td>{{$userget->first_name}}</td>
+                  <td>{{$userget->last_name}}</td>
+                  <td>{{$userget->phone_number}}</td>
+                  <td>{{$userget->email}}</td>
+                  <td>Active</td>
+                </tr>
+              @endforeach
             </tbody>
           </table>
         </div>

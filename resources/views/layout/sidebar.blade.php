@@ -20,7 +20,7 @@
       </li>
 
       <li class="nav-item {{ active_class(['tables/*']) }}">
-        <a href="{{ url('/tables/data-table') }}" class="nav-link">
+        <a href="{{ route('user.list') }}" class="nav-link">
           <i class="link-icon" data-feather="layout"></i>
           <span class="link-title">User List</span>
         </a>
@@ -328,7 +328,7 @@
     </ul>
   </div>
 </nav>
-<nav class="settings-sidebar">
+<!-- <nav class="settings-sidebar">
   <div class="sidebar-body">
     <a href="#" class="settings-sidebar-toggler">
       <i data-feather="settings"></i>
@@ -344,4 +344,4 @@
       </a>
     </div>
   </div>
-</nav>
+</nav> -->

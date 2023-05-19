@@ -22,6 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login',[APILoginControllers::class,'login']);
 Route::post('register',[APILoginControllers::class,'register']);
 Route::post('otp-verification',[APILoginControllers::class,'otpVerification']);
+Route::post('forget-password',[APILoginControllers::class,'forgetPassword']);
+Route::post('reset-password',[APILoginControllers::class,'resetPassword']);
 
 
 

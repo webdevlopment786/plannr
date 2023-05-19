@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 use Mail;
 
@@ -30,6 +31,7 @@ class LoginControllers extends BaseControllers
         $otp = rand(1000,9999);
         $input['password'] = bcrypt($input['password']);
         $input['otp'] = $otp;
+
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyApp')->accessToken;
         $success['first_name'] =  $user->first_name;
@@ -51,34 +53,18 @@ class LoginControllers extends BaseControllers
 
     public function otpVerification(Request $request){
 
-        $validator = Validator::make($request->all(), [ 
-            'otp' => 'required', 
-        ]);
-        if ($validator->fails()) { 
-           return response()->json(['status'=>false,'message'=>$validator->errors()->first()]);             
-        }
-        $user  = User::where([['otp','=',$request->otp]])->first();
+        $user  = User::where([['email','=',$request->email],['otp','=',$request->otp]])->first();
+
         if($user){
-            User::where('email','=',$request->email)->update(['otp' => null,'is_email_verified'=>true]);
-            $user_data  = array('id'=>$user->id,'name'=>$user->name,'email'=>$user->email);
-            $success['status'] = true;             
-            $success['user'] =$user_data;
-            $success['message'] = "Your e-mail is verified. You can now login.";
-            $message = "Your e-mail is verified. You can now login.";
-                 try {
-                    $to_address=$user->email;
-                    $verification_data=array('email' =>$user->email,
-                                             'name' => $user->name);
-                    $varifyemail= \Mail::send('emails.registrationEmail', ['verification'=>$verification_data], function($message) use ($to_address) { $message->to($to_address)->subject('Congratulation, on verifying your account'); });
-                  
-                }
-                  catch(Exception $e) {
-               }
-            return response()->json($success, $this->successStatus);
+            auth()->login($user, true);
+            User::where('email','=',$request->email)->update(['otp' => null]);
+            $accessToken = auth()->user()->createToken('authToken')->accessToken;
+            return response(["status" => 200, "message" => "Success", 'user' => auth()->user(), 'access_token' => $accessToken]);
         }
         else{
-             return response()->json(["status" => false, 'message' => 'Invalid OTP']);
+            return response(["status" => 401, 'message' => 'Invalid']);
         }
+        
     }
 
     public function login(Request $request)
@@ -90,6 +76,48 @@ class LoginControllers extends BaseControllers
         } 
         else{ 
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+        }
+    }
+
+    public function forgetPassword(Request $request)
+    {
+        
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+        
+        $user = User::where('email','=',$request->email)->first(); 
+         
+        if($user){
+            $otp = rand(1000,9999);
+            $user = User::where('email','=',$request->email)->first();
+            $user->otp = $otp;
+            $user->update();
+            $success['otp'] =  $otp;
+            Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
+                $message->to($request->email);
+                $message->subject('OTP Received for account verification');
+          });
+        }else{
+            return $this->sendError('Check Mail id is invalid.');
+        }
+       
+        return $this->sendResponse($success, 'OTP Send Check Mail.');
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+                'email' => 'required|email',
+            'password' => 'required',
+            'c_password' => 'required|same:password',
+        ]);
+
+        $user = User::where('email', $request->email)->update(['password' => Hash::make($request->password)]);
+        if($user){
+            return $this->sendResponse($user, 'Password Change');
+        }else{
+            return $this->sendResponse($user, 'Password Not Change Please Password');
         }
     }
 }
