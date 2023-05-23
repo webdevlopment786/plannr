@@ -14,7 +14,6 @@
       <div class="card-body">
 
         <h6 class="card-title">Basic Form</h6>
-
         <form class="forms-sample">
           <div class="mb-3">
             <label for="exampleInputUsername1" class="form-label">Username</label>
@@ -93,7 +92,6 @@
       <div class="card-body">
         <h6 class="card-title">Inputs</h6>
         <form>
-
           <div class="mb-3">
             <label for="exampleInputText1" class="form-label">Text Input</label>
             <input type="text" class="form-control" id="exampleInputText1" value="Amiah Burton" placeholder="Enter Name">

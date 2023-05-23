@@ -36,10 +36,4 @@ class LoginControllers extends Controller
         return Redirect('auth/login');
     }
 
-    public function getUser(Request $request)
-    {
-        $usergets = User::get();
-        return view('pages.tables.data-table', compact('usergets'));
-    }
-
 }

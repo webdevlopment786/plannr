@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseControllers as BaseControllers;
 use App\Http\Controllers\Controller;
 use App\User;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,17 +35,12 @@ class LoginControllers extends BaseControllers
 
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyApp')->accessToken;
-        $success['first_name'] =  $user->first_name;
-        $success['last_name'] =  $user->last_name;
-        $success['phone_number'] =  $user->phone_number;
-        $success['email'] =  $user->email;
-        $success['otp'] =  $user->otp;
-        if($user){           
+        if($user){        
             Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
                 $message->to($request->email);
                 $message->subject('OTP Received for account verification');
           });
-         return $this->sendResponse($success, 'OTP Send Check Mail.');
+         return $this->sendResponse('Success', 'OTP Send Check Mail.');
         }
         else{
             return response()->json(["status" => false, 'message' => 'failed']);
@@ -58,8 +54,13 @@ class LoginControllers extends BaseControllers
         if($user){
             auth()->login($user, true);
             User::where('email','=',$request->email)->update(['otp' => null]);
-            $accessToken = auth()->user()->createToken('authToken')->accessToken;
-            return response(["status" => 200, "message" => "Success", 'user' => auth()->user(), 'access_token' => $accessToken]);
+            $success['token'] = auth()->user()->createToken('authToken')->accessToken;
+            $success['first_name'] = $user->first_name; 
+            $success['last_name'] = $user->last_name; 
+            $success['phone_number'] = $user->phone_number; 
+            $success['email'] = $user->email; 
+            $success['otp'] = $request->otp;
+            return response(['data' => $success, "message" => "Success"]);
         }
         else{
             return response(["status" => 401, 'message' => 'Invalid']);
@@ -72,7 +73,12 @@ class LoginControllers extends BaseControllers
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
-            return $this->sendResponse($success, 'User login successfully.');
+            $success['first_name'] = $user->first_name;
+            $success['last_name'] = $user->last_name;
+            $success['phone_number'] = $user->phone_number;
+            $success['email'] = $user->email;
+            $success['otp'] = $user->otp;
+            return response(['data' => $success, "message" => "Success",]);
         } 
         else{ 
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);

@@ -2,6 +2,9 @@
 
 
 use App\Http\Controllers\Dashboard\LoginControllers;
+use App\Http\Controllers\Dashboard\CategoryControllers;
+use App\Http\Controllers\Dashboard\UserControllers;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +17,23 @@ use App\Http\Controllers\Dashboard\LoginControllers;
 */
 
 
-Route::get('get-user',[LoginControllers::class,'getUser'])->name('user.list');
+Route::get('user',[UserControllers::class,'index'])->name('user'); 
+Route::get('user-create',[UserControllers::class,'create'])->name('user.create'); 
+
+// Category
+Route::get('category',[CategoryControllers::class,'index'])->name('category.index');
+Route::post('category-store',[CategoryControllers::class,'store'])->name('category.store');
+Route::post('category-update',[CategoryControllers::class,'update'])->name('category.update');
+Route::get('category-delete/{id}',[CategoryControllers::class,'delete'])->name('category.delete');
+
+// Category Listing
+Route::get('category-listing-index',[CategoryControllers::class,'listing'])->name('category.listing.index');
+Route::get('category-listing-create',[CategoryControllers::class,'listingCreate'])->name('category.listing.create');
+Route::post('category-listing-store',[CategoryControllers::class,'listingStore'])->name('category.listing.store');
+Route::get('category-listing-edit/{id}',[CategoryControllers::class,'listingEdit'])->name('category.listing.edit');
+Route::post('category-listing-update/{id}',[CategoryControllers::class,'listingUpdate'])->name('category.listing.update');
+Route::get('category-listing-delete/{id}',[CategoryControllers::class,'deleteCategoryListing'])->name('category.listing.delete');
+
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {

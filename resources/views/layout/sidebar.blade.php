@@ -20,9 +20,23 @@
       </li>
 
       <li class="nav-item {{ active_class(['tables/*']) }}">
-        <a href="{{ route('user.list') }}" class="nav-link">
+        <a href="{{ route('user') }}" class="nav-link">
           <i class="link-icon" data-feather="layout"></i>
           <span class="link-title">User List</span>
+        </a>
+      </li>
+
+      <li class="nav-item {{ active_class(['tables/*']) }}">
+        <a href="{{ route('category.index') }}" class="nav-link">
+          <i class="link-icon" data-feather="codepen"></i>
+          <span class="link-title">Category</span>
+        </a>
+      </li>
+
+      <li class="nav-item {{ active_class(['tables/*']) }}">
+        <a href="{{ route('category.listing.index') }}" class="nav-link">
+          <i class="link-icon" data-feather="list"></i>
+          <span class="link-title">Product</span>
         </a>
       </li>
 
