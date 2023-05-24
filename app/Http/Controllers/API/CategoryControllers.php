@@ -42,7 +42,7 @@ class CategoryControllers extends Controller
 
     public function color()
     {
-        $color = Color::get(['color_name','color_code',]);
+        $color = Color::get(['id','color_name','color_code',]);
         if($color){
             return response(["status" => true, 'data' => $color]);
         }else{

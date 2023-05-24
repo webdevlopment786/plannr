@@ -19,6 +19,9 @@
             <div class="mb-3">
                 <label for="exampleInputPlaceholder" class="form-label">Product Title</label>
                 <input type="text" class="form-control" name="product_title" id="exampleInputPlaceholder" placeholder="Enter Product Title">
+                @if ($errors->has('product_title'))
+                  <span class="text-danger">{{ $errors->first('product_title') }}</span>
+                @endif
             </div>
 
             <div class="mb-3">
