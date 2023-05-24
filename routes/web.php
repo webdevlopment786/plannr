@@ -16,9 +16,13 @@ use App\Http\Controllers\Dashboard\UserControllers;
 |
 */
 
-
+// User
 Route::get('user',[UserControllers::class,'index'])->name('user'); 
 Route::get('user-create',[UserControllers::class,'create'])->name('user.create'); 
+Route::post('user-store',[UserControllers::class,'store'])->name('user.store'); 
+Route::get('user-edit/{id}',[UserControllers::class,'edit'])->name('user.edit'); 
+Route::post('user-update/{id}',[UserControllers::class,'update'])->name('user.update'); 
+Route::get('user-delete/{id}',[UserControllers::class,'delete'])->name('user.delete'); 
 
 // Category
 Route::get('category',[CategoryControllers::class,'index'])->name('category.index');

@@ -51,8 +51,8 @@
                         @endif
                     </td>
                     <td>
-                      <a href="#" class="btn btn-sm btn-info">Edit</a>
-                      <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                      <a href="{{url('user-edit/'.$user->id)}}" class="btn btn-sm btn-info">Edit</a>
+                      <a href="{{url('user-delete/'.$user->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                   </tr>
                 @endforeach

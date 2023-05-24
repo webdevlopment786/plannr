@@ -23,21 +23,32 @@
                     @endforeach
                 </select>
             </div>
-
+            <div class="mb-3">
+                <label for="exampleInputPlaceholder" class="form-label">Product Title</label>
+                <input type="text" class="form-control" value="{{$categorysListing->product_title}}" name="product_title" id="exampleInputPlaceholder" placeholder="Enter Product Title">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlSelect1" class="form-label">Color</label>
+                <select class="form-select" name="color_id" id="exampleFormControlSelect1">
+                    <option selected disabled>Select Your Color</option>
+                    @foreach($colors as $color)
+                        <option value="{{$color->id}}" {{ $color->id == $categorysListing->color_id ? 'selected' : '' }}>{{ $color->color_name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="mb-3">
                 <label for="exampleInputPlaceholder" class="form-label">Free Or Premium</label>
-                <input type="text" class="form-control" value="{{$categorysListing->free_or_premium}}" name="free_or_premium" id="exampleInputPlaceholder" placeholder="Free Or Premium">
-            </div>
-
-            <div class="mb-3">
-                <label for="exampleInputPlaceholder" class="form-label">Third Field</label>
-                <input type="text" class="form-control" value="{{$categorysListing->third_field_text}}" name="third_field_text" id="exampleInputPlaceholder" placeholder="Third Field">
+                <select class="form-select" name="free_or_premium" id="exampleFormControlSelect1">
+                    <option selected disabled>Please Select</option>
+                    <option value="0" @if($categorysListing->free_or_premium == old('free_or_premium','0')) selected="selected" @endif> Free</option>
+                    <option value="1" @if($categorysListing->free_or_premium == old('free_or_premium','1')) selected="selected" @endif> Premium</option>
+                </select>
             </div>
             <div class="mb-3">
                 <div class="row">
                     <div class="col-md-10">
                         <label class="form-label" for="formFile">File upload</label>
-                        <input class="form-control" name="image" value="{{$categorysListing->image}}" type="file" id="formFile">
+                        <input class="form-control" name="image" value="{{$categorysListing->image}}" type="file">
                     </div>
                     <div class="col-md-2">
                     <img class="category-image" src="{{ asset('images/'.$categorysListing->image) }}" alt="tag" height="60px" width="60px">

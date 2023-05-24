@@ -12,6 +12,11 @@ class CategoryListing extends Model
     protected $table = 'category_listing';
 
     protected $fillable = [
-        'category_id', 'free_or_premium','third_field_text', 'image', 'status',
+        'category_id', 'free_or_premium','product_title', 'image', 'status',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
 }

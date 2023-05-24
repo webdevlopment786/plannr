@@ -7,6 +7,14 @@
     h6.add-category {
     text-align: right;
 }
+.table td img {
+        width: 100px !important;
+        height: 70px !important;
+        border-radius: 0 !important;
+   }
+   .category-image.show{
+    margin-top: 16px; 
+   }
 /* .hideform {
     display: none;
 }
@@ -44,12 +52,16 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Category Add</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form class="forms-sample" action="{{route('category.store')}}" method="post">
+              <form class="forms-sample" action="{{route('category.store')}}" method="post" enctype="multipart/form-data">
               @csrf
               <div class="modal-body">
                   <div class="mb-3">
                     <label for="exampleInputUsername1" class="form-label">Category Name</label>
                     <input type="text" class="form-control" name="name" id="category_name" autocomplete="off" placeholder="Category Name">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="formFile">File upload</label>
+                    <input class="form-control" name="image" type="file" id="formFile">
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Status</label>
@@ -68,16 +80,17 @@
           </div>
         </div>
 
+
          <!-- Edit Category Modal -->
          @foreach($categorys as $category)
          <div class="modal fade" id="exampleModaledit{{$category->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Category Add</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Category Update</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form class="forms-sample" action="{{route('category.update')}}" method="post">
+              <form class="forms-sample" action="{{route('category.update')}}" method="post" enctype="multipart/form-data">
               @csrf
               <div class="modal-body">
                   <div class="mb-3">
@@ -85,6 +98,17 @@
                     <input type="hidden" name="category_id" value="{{$category->id}}">
                     <input type="text" class="form-control" name="name" value="{{$category->name}}" id="category_name" autocomplete="off" placeholder="Category Name Edit">
                   </div>
+                  <div class="mb-3">
+                  <div class="row">
+                    <div class="col-md-10">
+                        <label class="form-label" for="formFile">File upload</label>
+                            <input class="form-control" name="image" value="{{$category->image}}" id="formFile" type="file">
+                        </div>
+                        <div class="col-md-2">
+                        <img class="category-image show" src="{{ asset('images/category/'.$category->image) }}" alt="tag" height="60px" width="60px">
+                        </div>
+                  </div>
+                </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Status</label>
                     <select class="form-select" value="{{$category->status}}" name="status" id="status">
@@ -94,7 +118,7 @@
                   </div>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Update</button>
               </div>
               </form>
             </div>
@@ -106,6 +130,7 @@
             <thead>
               <tr>
                 <th>Category Name</th>
+                <th>Image</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -114,6 +139,7 @@
                 @foreach($categorys as $category)
                   <tr>
                     <td>{{ $category->name }}</td>
+                    <td><img class="category-image" src="{{ asset('images/category/'.$category->image) }}" alt="tag" height="30px" width="30px"></td>
                     <td>
                         @if($category->status == 1)
                           Active
@@ -124,7 +150,14 @@
                     <td>
                     <!-- <button type="button" class="btn btn-primary" style="float: right; margin-bottom: 10px;">Add Category</button> -->
                       <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#exampleModaledit{{ $category->id }}">Edit</a>
-                      <a href="{{ url('category-delete',$category->id) }}" class="btn btn-sm btn-danger">Delete</a>
+                      <a href="{{url('category-delete/'.$category->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</a>
+                      <!-- <form method="POST" action="{{ url('category-delete', $category->id) }}" id="delete-form">
+                        @csrf
+                        @method('DELETE') -->
+
+                        <!-- Delete button -->
+                        <!-- <button class="btn btn-sm btn-danger" type="submit" onclick="return confirmDelete()">Delete</button>
+                    </form> -->
                     </td>
                   </tr>
                 @endforeach

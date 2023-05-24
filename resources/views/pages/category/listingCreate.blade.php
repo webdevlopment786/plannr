@@ -4,7 +4,7 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Category Listing Add</h6>
+        <h6 class="card-title">Product Add</h6>
         <form action="{{route('category.listing.store')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
@@ -16,17 +16,29 @@
                     @endforeach
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="exampleInputPlaceholder" class="form-label">Product Title</label>
+                <input type="text" class="form-control" name="product_title" id="exampleInputPlaceholder" placeholder="Enter Product Title">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlSelect1" class="form-label">Color</label>
+                <select class="form-select" name="color_id" id="exampleFormControlSelect1">
+                    <option selected disabled>Select Your Color</option>
+                    @foreach($color as $colors)
+                        <option value="{{$colors->id}}">{{$colors->color_name}}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="mb-3">
                 <label for="exampleInputPlaceholder" class="form-label">Free Or Premium</label>
-                <input type="text" class="form-control" name="free_or_premium" id="exampleInputPlaceholder" placeholder="Free Or Premium">
-            </div>
-
-            <div class="mb-3">
-                <label for="exampleInputPlaceholder" class="form-label">Third Field</label>
-                <input type="text" class="form-control" name="third_field_text" id="exampleInputPlaceholder" placeholder="Third Field">
-            </div>
-            
+                <select class="form-select" name="free_or_premium" id="exampleFormControlSelect1">
+                    <option selected disabled>Please Select</option>
+                    <option value="0">Free</option>
+                    <option value="1">Premium</option>
+                </select>
+            </div> 
             <div class="mb-3">
                 <label class="form-label" for="formFile">File upload</label>
                 <input class="form-control" name="image" type="file" id="formFile">

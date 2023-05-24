@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Validator;
 
 class UserControllers extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::get();
+        $users = User::orderBy('id', 'DESC')->get();
         return view('pages.user.index', compact('users'));
     }
 
@@ -18,4 +19,59 @@ class UserControllers extends Controller
     {
         return view('pages.user.create');
     }
+
+    public function store(Request $request)
+    {
+        
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'status' => 'required'
+        ]);
+
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+        return redirect("user")->with('success','User Add Successfully');
+
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $users = User::find($id);
+        return view('pages.user.edit',compact('users'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required',
+            'status' => 'required'
+        ]);
+
+        $user = User::find($id);
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->phone_number = $request->phone_number;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password); 
+        $user->status = $request->status;
+        $user->update();
+        return redirect("user")->with('success','User Update Successfully');
+    }
+
+    public function delete($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        return redirect("user")->with('success','User Delete Successfully');
+        
+    }
+
 }
