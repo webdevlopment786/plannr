@@ -34,3 +34,14 @@ Route::get('color',[CategoryControllers::class,'color']);
 Route::post('search-fitter',[CategoryControllers::class,'searchFitter']);
 
 
+//Google
+Route::get('/login/google', [APILoginControllers::class, 'redirectToGoogle'])->name('login.google');
+Route::get('/login/google/callback', [APILoginControllers::class, 'handleGoogleCallback']);
+
+Route::get('/redirect/{provider}', [APILoginControllers::class, 'redirectToProvider'])->where('provider', '[A-Za-z]+');
+Route::get('/{provider}/callback', [APILoginControllers::class, 'handleProviderCallback'])->where('provider', '[A-Za-z]+');
+//Facebook
+Route::get('/login/facebook', [APILoginControllers::class, 'redirectToFacebook'])->name('login.facebook');
+Route::get('/login/facebook/callback', [APILoginControllers::class, 'handleFacebookCallback']);
+
+

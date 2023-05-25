@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use Mail;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginControllers extends BaseControllers
 {
@@ -69,7 +70,19 @@ class LoginControllers extends BaseControllers
     }
 
     public function login(Request $request)
-    {   
+    {  
+        
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $user = User::where('email', '=', $email)->first();
+        if (!$user) {
+            return response()->json(['success'=>false, 'message' => 'Login Fail, please check email id'], 400);
+        }
+        if (!Hash::check($password, $user->password)) {
+            return response()->json(['success'=>false, 'message' => 'Login Fail, pls check password'], 201);
+        }
+        
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
@@ -114,7 +127,7 @@ class LoginControllers extends BaseControllers
     public function resetPassword(Request $request)
     {
         $request->validate([
-                'email' => 'required|email',
+            'email' => 'required|email',
             'password' => 'required',
             'c_password' => 'required|same:password',
         ]);
@@ -126,4 +139,117 @@ class LoginControllers extends BaseControllers
             return $this->sendResponse($user, 'Password Not Change Please Password');
         }
     }
+
+    
+    //Google Login
+    // public function redirectToGoogle()
+    // {
+    //     return Socialite::driver('google')->stateless()->redirect();
+    // }
+
+    public function redirectToProvider($provider)
+    {
+        // if(!in_array($provider, self::PROVIDERS)){
+        //     return $this->sendError(self::NOT_FOUND);       
+        // }
+
+        return Socialite::driver('google')->stateless()->redirect();
+   
+        // return $this->sendResponse($success, "Provider '".$provider."' redirect url.");
+    }
+
+    //Google callback  
+    // public function handleGoogleCallback(){
+
+    //     $user = Socialite::driver('google')->stateless()->user();
+    //     $this->_registerorLoginUser($user);
+    //     return 'login Done';
+    // }
+
+    public function handleProviderCallback($provider)
+    {
+        if(!in_array($provider, self::PROVIDERS)){
+            return $this->sendError(self::NOT_FOUND);       
+        }
+
+        try {
+            $providerUser = Socialite::driver($provider)->stateless()->user();
+            
+            if ($providerUser) {
+                $user = $this->findOrCreate($providerUser, $provider);
+
+                $token = $user->createToken(env('API_AUTH_TOKEN_PASSPORT_SOCIAL'))->accessToken; 
+       
+                return $this->respondWithToken($token);
+                //return redirect('https://my-frontend-domain.com/dashboard?access_token='.$token);
+            }
+
+        } catch (Exception $exception) {
+            return $this->sendError(self::UNAUTHORIZED, null, ['error'=>$e->getMessage()]);
+        }        
+    }
+
+    //Facebook Login
+    public function redirectToFacebook(){
+        return Socialite::driver('facebook')->stateless()->redirect();
+    }
+    
+    //facebook callback  
+    public function handleFacebookCallback(){
+    
+    $user = Socialite::driver('facebook')->stateless()->user();
+      $this->_registerorLoginUser($user);
+      return redirect()->route('home');
+    }
+
+    protected function _registerOrLoginUser($data){
+        $user = User::where('email',$data->email)->first();
+          if(!$user){
+             $user = new User();
+             $user->first_name = $data->name;
+             $user->last_name = $data->name;
+             $user->phone_number = $data->name;
+             $user->password = $data->name;
+             $user->email = $data->email;
+             $user->provider_id = $data->id;
+             $user->save();
+          }
+             Auth::login($user);
+        }
+
+
+        public function findOrCreate(ProviderUser $providerUser, string $provider): User
+        {
+            $linkedSocialAccount = SocialAccount::where('provider_name', $provider)
+                ->where('provider_id', $providerUser->getId())
+                ->first();
+    
+            if ($linkedSocialAccount) {
+                return $linkedSocialAccount->user;
+            } else {
+                $user = null;
+    
+                if ($email = $providerUser->getEmail()) {
+                    $user = User::where('email', $email)->first();
+                }
+    
+                if (! $user) {
+                    $user = User::create([
+                        'name' => $providerUser->getName(),
+                        'email' => $providerUser->getEmail(),
+                    ]);
+                }
+    
+                $user->linkedSocialAccounts()->create([
+                    'provider_id' => $providerUser->getId(),
+                    'provider_name' => $provider,
+                    'name' => $providerUser->getName(),
+                    'email' => $providerUser->getEmail(),
+                    'avatar' => $providerUser->getAvatar(),
+                    'user_id' => $user->id,
+                ]);
+    
+                return $user;
+            }
+        }
 }

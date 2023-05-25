@@ -53,7 +53,6 @@ class CategoryControllers extends Controller
 
     public function searchFitter(Request $request)
     {
-       
         if($request->free_or_premium != '' && !empty($request->color_id)){
                 $category =  CategoryListing::
                 Where( 'free_or_premium', '=', $request->free_or_premium)
