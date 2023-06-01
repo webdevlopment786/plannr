@@ -40,6 +40,20 @@
         </a>
       </li>
 
+      <li class="nav-item {{ active_class(['tables/*']) }}">
+        <a href="{{ route('banner.index') }}" class="nav-link">
+          <i class="link-icon" data-feather="command"></i>
+          <span class="link-title">Banner</span>
+        </a>
+      </li>
+
+      <li class="nav-item {{ active_class(['tables/*']) }}">
+        <a href="{{ route('logout') }}" class="nav-link">
+          <i class="link-icon" data-feather="log-out"></i>
+          <span class="link-title">Logout</span>
+        </a>
+      </li>
+
       <!-- <li class="nav-item nav-category">web apps</li>
       <li class="nav-item {{ active_class(['email/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">

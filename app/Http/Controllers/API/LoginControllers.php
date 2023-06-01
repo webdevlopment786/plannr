@@ -36,15 +36,24 @@ class LoginControllers extends BaseControllers
 
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyApp')->accessToken;
-        if($user){        
-            Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
-                $message->to($request->email);
-                $message->subject('OTP Received for account verification');
-          });
+        $success['first_name'] =  $user->first_name;
+        $success['last_name'] =  $user->last_name;
+        $success['phone_number'] =  $user->phone_number;
+        $success['email'] =  $user->email;
+        $success['otp'] =  $user->otp;
+        $headers = 'Your OTP';
+        $subject = 'Your OTP is :-'.$success['otp'];
+        $header = 'Verify This OTP';
+        if($user){   
+                mail($success['email'], $headers, $subject, $header);     
+        //     Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
+        //         $message->to($request->email);
+        //         $message->subject('OTP Received for account verification');
+        //   });
          return $this->sendResponse('Success', 'OTP Send Check Mail.');
         }
         else{
-            return response()->json(["status" => false, 'message' => 'failed']);
+            return response()->json(["status" => false, 'status' => 'failed']);
        }
     }
 
@@ -61,7 +70,7 @@ class LoginControllers extends BaseControllers
             $success['phone_number'] = $user->phone_number; 
             $success['email'] = $user->email; 
             $success['otp'] = $request->otp;
-            return response(['data' => $success, "message" => "Success"]);
+            return response(["status" => true, 'data' => $success]);
         }
         else{
             return response(["status" => 401, 'message' => 'Invalid']);
@@ -91,7 +100,7 @@ class LoginControllers extends BaseControllers
             $success['phone_number'] = $user->phone_number;
             $success['email'] = $user->email;
             $success['otp'] = $user->otp;
-            return response(['data' => $success, "message" => "Success",]);
+            return response(["status" => true, 'data' => $success]);
         } 
         else{ 
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
@@ -113,10 +122,16 @@ class LoginControllers extends BaseControllers
             $user->otp = $otp;
             $user->update();
             $success['otp'] =  $otp;
-            Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
-                $message->to($request->email);
-                $message->subject('OTP Received for account verification');
-          });
+            $headers = 'Your OTP';
+            $subject = 'Your OTP is :-'.$success['otp'];
+            $header = 'Verify This OTP';
+            mail($user->email, $headers, $subject, $header);
+
+        //     Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
+        //         $message->to($request->email);
+        //         $message->subject('OTP Received for account verification');
+        //   });
+        
         }else{
             return $this->sendError('Check Mail id is invalid.');
         }
@@ -142,51 +157,17 @@ class LoginControllers extends BaseControllers
 
     
     //Google Login
-    // public function redirectToGoogle()
-    // {
-    //     return Socialite::driver('google')->stateless()->redirect();
-    // }
-
-    public function redirectToProvider($provider)
+    public function redirectToGoogle()
     {
-        // if(!in_array($provider, self::PROVIDERS)){
-        //     return $this->sendError(self::NOT_FOUND);       
-        // }
-
         return Socialite::driver('google')->stateless()->redirect();
-   
-        // return $this->sendResponse($success, "Provider '".$provider."' redirect url.");
     }
 
     //Google callback  
-    // public function handleGoogleCallback(){
+    public function handleGoogleCallback(){
 
-    //     $user = Socialite::driver('google')->stateless()->user();
-    //     $this->_registerorLoginUser($user);
-    //     return 'login Done';
-    // }
-
-    public function handleProviderCallback($provider)
-    {
-        if(!in_array($provider, self::PROVIDERS)){
-            return $this->sendError(self::NOT_FOUND);       
-        }
-
-        try {
-            $providerUser = Socialite::driver($provider)->stateless()->user();
-            
-            if ($providerUser) {
-                $user = $this->findOrCreate($providerUser, $provider);
-
-                $token = $user->createToken(env('API_AUTH_TOKEN_PASSPORT_SOCIAL'))->accessToken; 
-       
-                return $this->respondWithToken($token);
-                //return redirect('https://my-frontend-domain.com/dashboard?access_token='.$token);
-            }
-
-        } catch (Exception $exception) {
-            return $this->sendError(self::UNAUTHORIZED, null, ['error'=>$e->getMessage()]);
-        }        
+        $user = Socialite::driver('google')->stateless()->user();
+        $this->_registerorLoginUser($user);
+        return response()->json($user);
     }
 
     //Facebook Login
@@ -196,10 +177,9 @@ class LoginControllers extends BaseControllers
     
     //facebook callback  
     public function handleFacebookCallback(){
-    
-    $user = Socialite::driver('facebook')->stateless()->user();
-      $this->_registerorLoginUser($user);
-      return redirect()->route('home');
+        $user = Socialite::driver('facebook')->stateless()->user();
+        $this->_registerorLoginUser($user);
+        return response()->json($user);
     }
 
     protected function _registerOrLoginUser($data){
@@ -215,41 +195,5 @@ class LoginControllers extends BaseControllers
              $user->save();
           }
              Auth::login($user);
-        }
-
-
-        public function findOrCreate(ProviderUser $providerUser, string $provider): User
-        {
-            $linkedSocialAccount = SocialAccount::where('provider_name', $provider)
-                ->where('provider_id', $providerUser->getId())
-                ->first();
-    
-            if ($linkedSocialAccount) {
-                return $linkedSocialAccount->user;
-            } else {
-                $user = null;
-    
-                if ($email = $providerUser->getEmail()) {
-                    $user = User::where('email', $email)->first();
-                }
-    
-                if (! $user) {
-                    $user = User::create([
-                        'name' => $providerUser->getName(),
-                        'email' => $providerUser->getEmail(),
-                    ]);
-                }
-    
-                $user->linkedSocialAccounts()->create([
-                    'provider_id' => $providerUser->getId(),
-                    'provider_name' => $provider,
-                    'name' => $providerUser->getName(),
-                    'email' => $providerUser->getEmail(),
-                    'avatar' => $providerUser->getAvatar(),
-                    'user_id' => $user->id,
-                ]);
-    
-                return $user;
-            }
         }
 }

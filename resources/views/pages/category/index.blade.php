@@ -125,6 +125,7 @@
           </div>
         </div>
         @endforeach
+
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
             <thead>
@@ -164,6 +165,7 @@
             </tbody>
           </table>
         </div>
+        
       </div>
     </div>
   </div>

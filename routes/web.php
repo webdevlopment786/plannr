@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Dashboard\BannerControllers;
 use App\Http\Controllers\Dashboard\LoginControllers;
 use App\Http\Controllers\Dashboard\CategoryControllers;
 use App\Http\Controllers\Dashboard\UserControllers;
@@ -37,6 +37,12 @@ Route::post('category-listing-store',[CategoryControllers::class,'listingStore']
 Route::get('category-listing-edit/{id}',[CategoryControllers::class,'listingEdit'])->name('category.listing.edit');
 Route::post('category-listing-update/{id}',[CategoryControllers::class,'listingUpdate'])->name('category.listing.update');
 Route::get('category-listing-delete/{id}',[CategoryControllers::class,'deleteCategoryListing'])->name('category.listing.delete');
+
+// Banner 
+Route::get('banner',[BannerControllers::class,'index'])->name('banner.index');
+Route::post('banner-store',[BannerControllers::class,'store'])->name('banner.store');
+Route::post('banner-update',[BannerControllers::class,'update'])->name('banner.update');
+Route::get('banner-delete/{id}',[BannerControllers::class,'delete'])->name('banner.delete');
 
 
 Route::group(['middleware' => 'auth'], function () {

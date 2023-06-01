@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\CategoryControllers;
 use App\Http\Controllers\API\LoginControllers as APILoginControllers;
+use App\Http\Controllers\API\HomePageControllers;
 use Illuminate\Http\Request;
 
 /*
@@ -33,15 +34,18 @@ Route::get('product',[CategoryControllers::class,'product']);
 Route::get('color',[CategoryControllers::class,'color']);
 Route::post('search-fitter',[CategoryControllers::class,'searchFitter']);
 
+// home Sccreen 
+Route::get('banner',[HomePageControllers::class,'banner']);
 
 //Google
 Route::get('/login/google', [APILoginControllers::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/login/google/callback', [APILoginControllers::class, 'handleGoogleCallback']);
 
-Route::get('/redirect/{provider}', [APILoginControllers::class, 'redirectToProvider'])->where('provider', '[A-Za-z]+');
-Route::get('/{provider}/callback', [APILoginControllers::class, 'handleProviderCallback'])->where('provider', '[A-Za-z]+');
+
 //Facebook
 Route::get('/login/facebook', [APILoginControllers::class, 'redirectToFacebook'])->name('login.facebook');
 Route::get('/login/facebook/callback', [APILoginControllers::class, 'handleFacebookCallback']);
 
 
+// Route::get('redirect/{provider}', [APILoginControllers::class, 'redirect']);
+// Route::get('login/{provider}', [APILoginControllers::class, 'callback']);
