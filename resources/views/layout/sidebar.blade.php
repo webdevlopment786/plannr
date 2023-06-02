@@ -54,7 +54,7 @@
         </a>
       </li>
 
-      <!-- <li class="nav-item nav-category">web apps</li>
+      <li class="nav-item nav-category">web apps</li>
       <li class="nav-item {{ active_class(['email/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
           <i class="link-icon" data-feather="mail"></i>
@@ -74,7 +74,7 @@
             </li>
           </ul>
         </div>
-      </li> -->
+      </li>
 
       <!-- <li class="nav-item {{ active_class(['apps/chat']) }}">
         <a href="{{ url('/apps/chat') }}" class="nav-link">
@@ -88,6 +88,7 @@
           <span class="link-title">Calendar</span>
         </a>
       </li> -->
+
       <!-- <li class="nav-item nav-category">Components</li> -->
       <!-- <li class="nav-item {{ active_class(['ui-components/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#uiComponents" role="button" aria-expanded="{{ is_active_route(['ui-components/*']) }}" aria-controls="uiComponents">
@@ -170,7 +171,7 @@
         </div>
       </li> -->
 
-      <!-- <li class="nav-item {{ active_class(['advanced-ui/*']) }}">
+      <li class="nav-item {{ active_class(['advanced-ui/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#advanced-ui" role="button" aria-expanded="{{ is_active_route(['advanced-ui/*']) }}" aria-controls="advanced-ui">
           <i class="link-icon" data-feather="anchor"></i>
           <span class="link-title">Advanced UI</span>
@@ -192,7 +193,7 @@
             </li>
           </ul>
         </div>
-      </li> -->
+      </li>
 
       <!-- <li class="nav-item {{ active_class(['forms/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#forms" role="button" aria-expanded="{{ is_active_route(['forms/*']) }}" aria-controls="forms">

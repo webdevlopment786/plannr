@@ -20,10 +20,16 @@ class LoginControllers extends BaseControllers
             'first_name' => 'required',
             'last_name' => 'required',
             'phone_number' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required',
             'password' => 'required',
             'c_password' => 'required|same:password',
         ]);
+
+        $email = $request->input('email');
+        $user = User::where('email', '=', $email)->first();
+        if ($user) {
+            return response()->json(['status'=>false, 'message' => 'The email has already been taken'], 400);
+        }
 
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
@@ -45,12 +51,12 @@ class LoginControllers extends BaseControllers
         $subject = 'Your OTP is :-'.$success['otp'];
         $header = 'Verify This OTP';
         if($user){   
-                mail($success['email'], $headers, $subject, $header);     
-        //     Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
-        //         $message->to($request->email);
-        //         $message->subject('OTP Received for account verification');
-        //   });
-         return $this->sendResponse('Success', 'OTP Send Check Mail.');
+                // mail($success['email'], $headers, $subject, $header);     
+            Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
+                $message->to($request->email);
+                $message->subject('OTP Received for account verification');
+          });
+         return $this->sendResponse('message', 'OTP Send Check Mail.');
         }
         else{
             return response()->json(["status" => false, 'status' => 'failed']);
@@ -73,7 +79,7 @@ class LoginControllers extends BaseControllers
             return response(["status" => true, 'data' => $success]);
         }
         else{
-            return response(["status" => 401, 'message' => 'Invalid']);
+            return response(["status" => false, 'message' => 'Invalid OTP']);
         }
         
     }
@@ -86,10 +92,10 @@ class LoginControllers extends BaseControllers
 
         $user = User::where('email', '=', $email)->first();
         if (!$user) {
-            return response()->json(['success'=>false, 'message' => 'Login Fail, please check email id'], 400);
+            return response()->json(['status'=>false, 'message' => 'Login Fail, please check email id'], 400);
         }
         if (!Hash::check($password, $user->password)) {
-            return response()->json(['success'=>false, 'message' => 'Login Fail, pls check password'], 201);
+            return response()->json(['status'=>false, 'message' => 'Login Fail, pls check password'], 201);
         }
         
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
@@ -137,6 +143,27 @@ class LoginControllers extends BaseControllers
         }
        
         return $this->sendResponse($success, 'OTP Send Check Mail.');
+    }
+
+    public function resendOTP(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+        ]);
+
+        $user = User::where('email','=',$request->email)->first();
+        $otp = rand(1000,9999);
+        $user->otp = $otp;
+        $user->save();
+        $to = $user->email;
+        $subject = 'OTP Resent';
+        $message = 'Your OTP is: ' . $otp;
+        mail($to, $subject, $message);
+        //     Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
+        //         $message->to($request->email);
+        //         $message->subject('OTP Received for account verification');
+        //   });
+        return response()->json(["status" => true, 'message' => 'Resend OTP Send Successfully']);
     }
 
     public function resetPassword(Request $request)
