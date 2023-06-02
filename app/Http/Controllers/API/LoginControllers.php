@@ -51,11 +51,11 @@ class LoginControllers extends BaseControllers
         $subject = 'Your OTP is :-'.$success['otp'];
         $header = 'Verify This OTP';
         if($user){   
-                // mail($success['email'], $headers, $subject, $header);     
-            Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
-                $message->to($request->email);
-                $message->subject('OTP Received for account verification');
-          });
+                mail($success['email'], $headers, $subject, $header);     
+        //     Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
+        //         $message->to($request->email);
+        //         $message->subject('OTP Received for account verification');
+        //   });
          return $this->sendResponse('message', 'OTP Send Check Mail.');
         }
         else{
