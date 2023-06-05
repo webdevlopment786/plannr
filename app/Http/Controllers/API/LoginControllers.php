@@ -140,7 +140,7 @@ class LoginControllers extends BaseControllers
         //   });
         
         }else{
-            return $this->sendError('Check Mail id is invalid.');
+            return response()->json(['status'=>false, 'message' => 'Check Mail id is invalid.'], 201);
         }
        
         return $this->sendResponse($success, 'OTP Send Check Mail.');
