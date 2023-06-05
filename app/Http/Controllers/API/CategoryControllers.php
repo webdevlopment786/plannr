@@ -167,7 +167,23 @@ class CategoryControllers extends Controller
         if($createinvitation){
             return response(["status" => true, 'data' => $createinvitation], 200);
         }else{
-            return response(["status" => false, 'data' => 'Not found'], 404);
+            return response(["status" => false, 'data' => 'Not found'], 201);
         }
+    }
+
+    public function createInvitationID(Request $request)
+    {
+        $product_id = $request->product_id;
+        $product = CategoryListing::where('id',$product_id)->first();
+        $imagePath = asset('images/'.$product->image);
+        $data['id'] = $product->id;
+        $data['image'] =  $imagePath;
+
+        if($data){
+            return response(["status" => true, 'data' => $data], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+
     }
 }
