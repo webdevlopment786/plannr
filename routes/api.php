@@ -34,9 +34,12 @@ Route::get('category',[CategoryControllers::class,'index']);
 Route::get('product',[CategoryControllers::class,'product']);
 Route::get('color',[CategoryControllers::class,'color']);
 Route::post('search-fitter',[CategoryControllers::class,'searchFitter']);
+Route::post('create-invitation',[CategoryControllers::class,'createInvitation']);
 
 // home Sccreen 
 Route::get('banner',[HomePageControllers::class,'banner']);
+Route::get('birtday-banner',[HomePageControllers::class,'birtdayBanner']);
+Route::get('bridal-banner',[HomePageControllers::class,'bridalBanner']);
 
 //Google
 Route::get('/login/google', [APILoginControllers::class, 'redirectToGoogle'])->name('login.google');

@@ -5,9 +5,12 @@ namespace App\Http\Controllers\API;
 use App\Category;
 use App\CategoryListing;
 use App\Color;
+use App\CreateInvitation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class CategoryControllers extends Controller
 {
@@ -116,5 +119,55 @@ class CategoryControllers extends Controller
             return response(["status" => false, 'data' => 'Not found']);
         }
        
+    }
+
+    public function createInvitation(Request $request)
+    {   
+         
+        // $lastedit = Carbon::createFromFormat('m/d/Y', $request->date);
+        // return $lastedit;
+        // return $request->all();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'date' => 'required',
+            'time' => 'required',
+            'zone' => 'required',
+            'location' => 'required',
+            'phone' => 'required',
+            'message' => 'required',
+            'type_events' => 'required',
+            'dress_code' => 'required',
+            'food' => 'required',
+            'add_info' => 'required',
+            'add_admin' => 'required',
+            'add_chat_room' => 'required',
+            'invite_more' => 'required',
+            'hosted_by' => 'required',
+        ]);
+
+        $createinvitation = New CreateInvitation();
+        $createinvitation->name = $request->name;
+        $createinvitation->date = $request->date;
+        $createinvitation->zone = $request->time_zone;
+        $createinvitation->time = $request->time;
+        $createinvitation->location = $request->location;
+        $createinvitation->phone = $request->phone;
+        $createinvitation->type_events = $request->type_events;
+        $createinvitation->dress_code = $request->dress_code;
+        $createinvitation->food = $request->food;
+        $createinvitation->add_info = $request->add_info;
+        $createinvitation->add_admin = $request->add_admin;
+        $createinvitation->add_chat_room = $request->add_chat_room;
+        $createinvitation->invite_more = $request->invite_more;
+        $createinvitation->hosted_by = $request->hosted_by;
+        $createinvitation->product_id = $request->product_id;
+        $createinvitation->message = $request->message;
+        $createinvitation->save();
+
+        if($createinvitation){
+            return response(["status" => true, 'data' => $createinvitation], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 404);
+        }
     }
 }

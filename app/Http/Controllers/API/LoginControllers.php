@@ -63,7 +63,8 @@ class LoginControllers extends BaseControllers
        }
     }
 
-    public function otpVerification(Request $request){
+    public function otpVerification(Request $request)
+    {
 
         $user  = User::where([['email','=',$request->email],['otp','=',$request->otp]])->first();
 
@@ -92,7 +93,7 @@ class LoginControllers extends BaseControllers
 
         $user = User::where('email', '=', $email)->first();
         if (!$user) {
-            return response()->json(['status'=>false, 'message' => 'Login Fail, please check email id'], 400);
+            return response()->json(['status'=>false, 'message' => 'Login Fail, please check email id'], 201);
         }
         if (!Hash::check($password, $user->password)) {
             return response()->json(['status'=>false, 'message' => 'Login Fail, pls check password'], 201);
