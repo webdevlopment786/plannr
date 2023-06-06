@@ -55,7 +55,7 @@
                             @endforeach
                         </td>
                         <td>{{$categoryListing->product_title}}</td>
-                        <td><img class="category-image" src="{{ asset('images/'.$categoryListing->image) }}" alt="tag" height="30px" width="30px"></td>
+                        <td><img class="category-image" src="{{ asset('images/product/'.$categoryListing->image) }}" alt="tag" height="30px" width="30px"></td>
                         <td>
                             @foreach($colors as $color)
                                 @if($color->id == $categoryListing->color_id)

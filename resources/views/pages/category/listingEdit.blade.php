@@ -51,7 +51,7 @@
                         <input class="form-control" name="image" value="{{$categorysListing->image}}" type="file">
                     </div>
                     <div class="col-md-2">
-                    <img class="category-image" src="{{ asset('images/'.$categorysListing->image) }}" alt="tag" height="60px" width="60px">
+                    <img class="category-image" src="{{ asset('images/product/'.$categorysListing->image) }}" alt="tag" height="60px" width="60px">
                     </div>
                 </div>
             </div>

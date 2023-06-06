@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Banner;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use App\Banner;
 
 class BannerControllers extends Controller
 {
@@ -49,6 +50,10 @@ class BannerControllers extends Controller
     public function delete($id)
     {
         $banner = Banner::find($id);
+        $image_path = public_path('images/banner/'.$banner->banner);
+        if(File::exists($image_path)) {
+          File::delete($image_path);
+        }
         $banner->delete();
         return redirect("banner")->with('success','Banner Delete Successfully');
     }

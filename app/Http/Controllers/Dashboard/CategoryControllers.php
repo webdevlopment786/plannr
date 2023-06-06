@@ -7,7 +7,7 @@ use App\CategoryListing;
 use App\Color;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Symfony\Component\CssSelector\Node\FunctionNode;
+use Illuminate\Support\Facades\File;
 
 class CategoryControllers extends Controller
 {
@@ -56,8 +56,11 @@ class CategoryControllers extends Controller
 
     public function delete($id)
     {
-        // dd('sadsadsad');
         $category = Category::find($id);
+        $image_path = public_path('images/category/'.$category->image);
+        if(File::exists($image_path)) {
+          File::delete($image_path);
+        }
         $category->delete();
         return redirect("category")->with('success','Category Delete Successfully');
     }
@@ -89,7 +92,7 @@ class CategoryControllers extends Controller
         ]);
         $imageName = time() . '.' . $request->image->extension();
         // $request->image->move(public_path('images'), $imageName);
-        $request->image->move(public_path('images'), $imageName);
+        $request->image->move(public_path('images/product'), $imageName);
 
         $categorys = New CategoryListing();
         $categorys->category_id = $request->category_id;
@@ -126,9 +129,17 @@ class CategoryControllers extends Controller
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
             // $request->image->move(public_path('images'), $imageName);
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->move(public_path('images/product'), $imageName);
+            
+            $image_path = public_path('images/product/'.$categorys->image);
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+            }
+
             $categorys->image = $imageName;
         }
+
+       
        
         $categorys->category_id = $request->category_id;
         $categorys->color_id = $request->color_id;
@@ -142,6 +153,10 @@ class CategoryControllers extends Controller
     public function deleteCategoryListing($id)
     {   
         $CategoryListing = CategoryListing::find($id);
+        $image_path = public_path('images/product'.$CategoryListing->image);
+        if(File::exists($image_path)) {
+          File::delete($image_path);
+        }
         $CategoryListing->delete();
         return redirect("category-listing-index")->with('success','Delete Category Listing Successfully');
     }

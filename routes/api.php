@@ -36,6 +36,7 @@ Route::get('color',[CategoryControllers::class,'color']);
 Route::post('search-fitter',[CategoryControllers::class,'searchFitter']);
 Route::post('create-invitation',[CategoryControllers::class,'createInvitation']);
 Route::post('create-invitation-product',[CategoryControllers::class,'createInvitationID']);
+Route::post('category-wise-product',[CategoryControllers::class,'categoryWiseProduct']);
 
 // home Sccreen 
 Route::get('banner',[HomePageControllers::class,'banner']);

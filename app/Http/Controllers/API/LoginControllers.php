@@ -28,7 +28,7 @@ class LoginControllers extends BaseControllers
         $email = $request->input('email');
         $user = User::where('email', '=', $email)->first();
         if ($user) {
-            return response()->json(['status'=>false, 'message' => 'The email has already been taken'], 400);
+            return response()->json(['status'=>false, 'message' => 'The email has already been taken'], 201);
         }
 
         if($validator->fails()){
@@ -96,7 +96,7 @@ class LoginControllers extends BaseControllers
             return response()->json(['status'=>false, 'message' => 'Login Fail, please check email id'], 201);
         }
         if (!Hash::check($password, $user->password)) {
-            return response()->json(['status'=>false, 'message' => 'Login Fail, pls check password'], 201);
+            return response()->json(['status'=>false, 'message' => 'Login Fail, please check password'], 201);
         }
         
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 

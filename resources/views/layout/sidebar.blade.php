@@ -40,7 +40,14 @@
         </a>
       </li>
 
-      <li class="nav-item {{ active_class(['banner/*']) }}">
+      <li class="nav-item {{ active_class(['tables/*']) }}">
+          <a href="{{ route('banner.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="command"></i>
+            <span class="link-title">Banner</span>
+          </a>
+      </li>
+
+      <!-- <li class="nav-item {{ active_class(['banner/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
           <i class="link-icon" data-feather="home"></i>
           <span class="link-title">Home Screen</span>
@@ -54,7 +61,7 @@
             </a>
           </ul>
         </div>
-      </li>
+      </li> -->
 
       <li class="nav-item {{ active_class(['tables/*']) }}">
         <a href="{{ route('logout') }}" class="nav-link">

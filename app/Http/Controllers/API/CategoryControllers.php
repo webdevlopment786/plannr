@@ -53,7 +53,7 @@ class CategoryControllers extends Controller
         foreach($categoryProduct as $categoryProducts){
 
             if($categoryProducts->status == 1){
-                $imagePath = asset('images/'.$categoryProducts->image);
+                $imagePath = asset('images/product/'.$categoryProducts->image);
                 $data = array();
                 $data['id'] =  $categoryProducts->id;      
                 $data['product_title'] =  $categoryProducts->product_title;      
@@ -100,7 +100,7 @@ class CategoryControllers extends Controller
         }
 
         foreach($category as $categorys){
-            $imagePath = asset('images/'.$categorys->image);
+            $imagePath = asset('images/product/'.$categorys->image);
             $data = array();
             $data['id'] = $categorys->id;
             $data['category_id'] = $categorys->category_id;
@@ -123,10 +123,6 @@ class CategoryControllers extends Controller
 
     public function createInvitation(Request $request)
     {   
-         
-        // $lastedit = Carbon::createFromFormat('m/d/Y', $request->date);
-        // return $lastedit;
-        // return $request->all();
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'required',
@@ -181,6 +177,33 @@ class CategoryControllers extends Controller
 
         if($data){
             return response(["status" => true, 'data' => $data], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+
+    }
+
+    public function categoryWiseProduct(Request $request)
+    {
+        $productData = array();
+
+        $categoryListings = CategoryListing::where('category_id',$request->catgeory_id)->get();
+        foreach($categoryListings as $categoryListing){
+            $imagePath = asset('images/product/'.$categoryListing->image);
+            $data = array();
+            $data['id'] = $categoryListing->id;
+            $data['category_id'] = $categoryListing->category_id;
+            $data['color_id'] = $categoryListing->color_id;
+            $data['free_or_premium'] = $categoryListing->free_or_premium;
+            $data['product_title'] = $categoryListing->product_title;
+            $data['image'] = $categoryListing->image;
+            $data['image_path'] = $imagePath;
+            array_push($productData, $data);
+        }
+        $item = $categoryListings->count();
+        
+        if($productData){
+            return response(["status" => true,'item' => $item , 'data' => $productData], 200);
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         }
