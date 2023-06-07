@@ -64,6 +64,14 @@
                     <input class="form-control" name="image" type="file" id="formFile">
                   </div>
                   <div class="mb-3">
+                    <label for="exampleFormControlSelect1" class="form-label">Show Home Screen</label>
+                    <select class="form-select" name="home_screen" id="exampleFormControlSelect1">
+                        <option selected disabled>Please Select</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Status</label>
                     <select class="form-select" name="status" id="status">
                     <option selected disabled>Status</option>
@@ -99,22 +107,30 @@
                     <input type="text" class="form-control" name="name" value="{{$category->name}}" id="category_name" autocomplete="off" placeholder="Category Name Edit">
                   </div>
                   <div class="mb-3">
-                  <div class="row">
-                    <div class="col-md-10">
-                        <label class="form-label" for="formFile">File upload</label>
-                            <input class="form-control" name="image" value="{{$category->image}}" id="formFile" type="file">
-                        </div>
-                        <div class="col-md-2">
-                        <img class="category-image show" src="{{ asset('images/category/'.$category->image) }}" alt="tag" height="60px" width="60px">
-                        </div>
+                    <div class="row">
+                      <div class="col-md-10">
+                          <label class="form-label" for="formFile">File upload</label>
+                              <input class="form-control" name="image" value="{{$category->image}}" id="formFile" type="file">
+                          </div>
+                          <div class="col-md-2">
+                          <img class="category-image show" src="{{ asset('images/category/'.$category->image) }}" alt="tag" height="60px" width="60px">
+                          </div>
+                    </div>
                   </div>
-                </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlSelect1" class="form-label">Show Home Screen</label>
+                    <select class="form-select" name="home_screen" id="exampleFormControlSelect1">
+                        <option selected disabled>Please Select</option>
+                        <option value="1" @if($category->home_screen == old('home_screen','1')) selected="selected" @endif>Yes</option>
+                        <option value="0" @if($category->home_screen == old('home_screen','0')) selected="selected" @endif>No</option>
+                    </select>
+                  </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Status</label>
                     <select class="form-select" value="{{$category->status}}" name="status" id="status">
-                    <option value="1" @if($category->status == old('status','1')) selected="selected" @endif>Active</option>
-                    <option value="0" @if($category->status == old('status','0')) selected="selected" @endif>Inactive</option>
-                  </select>
+                      <option value="1" @if($category->status == old('status','1')) selected="selected" @endif>Active</option>
+                      <option value="0" @if($category->status == old('status','0')) selected="selected" @endif>Inactive</option>
+                    </select>
                   </div>
               </div>
               <div class="modal-footer">
@@ -132,6 +148,7 @@
               <tr>
                 <th>Category Name</th>
                 <th>Image</th>
+                <th>Show Home Screen</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -142,6 +159,13 @@
                     <td>{{ $category->name }}</td>
                     <td><img class="category-image" src="{{ asset('images/category/'.$category->image) }}" alt="tag" height="30px" width="30px"></td>
                     <td>
+                        @if($category->home_screen == 1)
+                          Yes
+                        @else
+                          No
+                        @endif
+                    </td>
+                    <td>
                         @if($category->status == 1)
                           Active
                         @else
@@ -149,16 +173,8 @@
                         @endif
                     </td>
                     <td>
-                    <!-- <button type="button" class="btn btn-primary" style="float: right; margin-bottom: 10px;">Add Category</button> -->
                       <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#exampleModaledit{{ $category->id }}">Edit</a>
                       <a href="{{url('category-delete/'.$category->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</a>
-                      <!-- <form method="POST" action="{{ url('category-delete', $category->id) }}" id="delete-form">
-                        @csrf
-                        @method('DELETE') -->
-
-                        <!-- Delete button -->
-                        <!-- <button class="btn btn-sm btn-danger" type="submit" onclick="return confirmDelete()">Delete</button>
-                    </form> -->
                     </td>
                   </tr>
                 @endforeach

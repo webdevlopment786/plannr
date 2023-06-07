@@ -40,6 +40,7 @@
                 <th>Image</th>
                 <th>Color</th>
                 <th>Free Or Premium</th>
+                <th>Show Home Screen</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -71,10 +72,17 @@
                             @endif
                         </td>
                         <td>
+                            @if($categoryListing->home_screen == 1)
+                                Yes
+                            @else
+                                No
+                            @endif
+                        </td>
+                        <td>
                             @if($categoryListing->status == 1)
                                 Active
                             @else
-                                Inactive
+                                Block
                             @endif
                         </td>
                         <td>

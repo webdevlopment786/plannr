@@ -19,11 +19,11 @@ class CategoryControllers extends Controller
 
     public function store(Request $request)
     {
-        // return $request->all();
         $request->validate([
             'name' => 'required',
             'image' => 'required',
             'status' => 'required',
+            'home_screen' => 'required',
         ]);
         
         $imageName = time() . '.' . $request->image->extension();
@@ -32,6 +32,7 @@ class CategoryControllers extends Controller
 
         $category = New Category();
         $category->name = $request->name;
+        $category->home_screen = $request->home_screen;
         $category->status = $request->status;
         $category->image = $imageName;
         $category->save();
@@ -48,6 +49,7 @@ class CategoryControllers extends Controller
             $category->image = $imageName;
         }
         $category->name = $request->name;
+        $category->home_screen = $request->home_screen;
         $category->status = $request->status;
         $category->update();
 
@@ -72,12 +74,22 @@ class CategoryControllers extends Controller
         $colors = Color::get();
         return view('pages.category.listing', compact('categoryListings', 'categorys', 'colors'));
     }
-
+    
     public Function listingCreate(Request $request)
     {   
+        
+        $value =  $request->all(['value']);
+        $valueone = json_encode($value, true);
         $categorys = Category::where('status','1')->get();
+        $categoryProduct = Category::where('id',$valueone)->first();
         $color = Color::get();
-        return view('pages.category.listingCreate',compact('categorys','color'));
+        return view('pages.category.listingCreate',compact('categorys','color','categoryProduct','valueone'));
+    }
+
+    public function ajaxData(Request $request)
+    {
+        $categorys =  $request->all(['value']);
+        return $categorys;
     }
 
     public function listingStore(Request $request)
@@ -89,6 +101,7 @@ class CategoryControllers extends Controller
             'product_title' => 'required',
             'image' => 'required',
             'status' => 'required',
+            'home_screen' => 'required',
         ]);
         $imageName = time() . '.' . $request->image->extension();
         // $request->image->move(public_path('images'), $imageName);
@@ -100,6 +113,7 @@ class CategoryControllers extends Controller
         $categorys->free_or_premium = $request->free_or_premium;
         $categorys->product_title = $request->product_title;
         $categorys->image = $imageName;
+        $categorys->home_screen = $request->home_screen;
         $categorys->status = $request->status;
         $categorys->save();
         return redirect("category-listing-index")->with('success','Add Category Listing Successfully');
@@ -139,12 +153,11 @@ class CategoryControllers extends Controller
             $categorys->image = $imageName;
         }
 
-       
-       
         $categorys->category_id = $request->category_id;
         $categorys->color_id = $request->color_id;
         $categorys->free_or_premium = $request->free_or_premium;
         $categorys->product_title = $request->product_title;
+        $categorys->home_screen = $request->home_screen;
         $categorys->status = $request->status;
         $categorys->update();
         return redirect("category-listing-index")->with('success','Update Category Listing Successfully');

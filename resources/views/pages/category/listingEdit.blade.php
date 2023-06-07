@@ -56,6 +56,14 @@
                 </div>
             </div>
             <div class="mb-3">
+                <label for="exampleFormControlSelect1" class="form-label">Show Home Screen</label>
+                <select class="form-select" name="home_screen" id="exampleFormControlSelect1">
+                    <option selected disabled>Please Select</option>
+                    <option value="1" @if($categorysListing->home_screen == old('home_screen','1')) selected="selected" @endif>Yes</option>
+                    <option value="0" @if($categorysListing->home_screen == old('home_screen','0')) selected="selected" @endif>No</option>
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="exampleFormControlSelect1" class="form-label">Status</label>
                 <select class="form-select" name="status" id="exampleFormControlSelect1">
                     <option selected disabled>Select your Status</option>

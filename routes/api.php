@@ -40,8 +40,7 @@ Route::post('category-wise-product',[CategoryControllers::class,'categoryWisePro
 
 // home Sccreen 
 Route::get('banner',[HomePageControllers::class,'banner']);
-Route::get('birtday-banner',[HomePageControllers::class,'birtdayBanner']);
-Route::get('bridal-banner',[HomePageControllers::class,'bridalBanner']);
+Route::get('category-wise-product-banner',[HomePageControllers::class,'categoryWiseProductBanner']);
 
 //Google
 Route::get('/login/google', [APILoginControllers::class, 'redirectToGoogle'])->name('login.google');

@@ -6,6 +6,7 @@ use App\Banner;
 use App\Category;
 use App\CategoryListing;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class HomePageControllers extends Controller
@@ -31,49 +32,34 @@ class HomePageControllers extends Controller
         }
     }
 
-    public function birtdayBanner()
+    public function categoryWiseProductBanner()
     {   
-        $bannnerData = array();
-        $category = Category::where('name','Birthday Party')->first();
-        $birtdays = CategoryListing::where('category_id',$category->id)->get();
 
-        foreach($birtdays as $birtday){
-            $imagePath = asset('images/'.$birtday->image);
-            $data = array();
-            $data['id'] = $birtday->id;
-            $data['image'] = $birtday->image;
-            $data['image_path'] =  $imagePath;
-            array_push($bannnerData, $data);
+        $categorys = Category::where('home_screen',1)->get();
+        $categoryProducts = array();
+        foreach($categorys as $category){
+            $birtdays['cat_name'] = $category->name;
+            //$birtdays['cat_product'] = CategoryListing::where('home_screen',1)->where('category_id',$adsghcas->id)->get();
+            $catProducts = CategoryListing::where('home_screen',1)->where('category_id',$category->id)->get();
+            $productCategory = array();
+            foreach($catProducts as $catProduct){
+                $imagePath = asset('images/'.$catProduct->image);
+                $data = array();
+                $data['id'] = $catProduct->id;
+                $data['product_title'] = $catProduct->product_title;
+                $data['image'] = $catProduct->image;
+                $data['image_path'] =  $imagePath;
+                array_push($productCategory, $data);
+            }
+            $birtdays['cat_product'] = $productCategory;
+            array_push($categoryProducts,$birtdays);
         }
-        
-        if($bannnerData){
-            return response(["status" => true, 'data' => $bannnerData],200);
+        if($categoryProducts){
+            return response(["status" => true, 'data' => $categoryProducts],200);
         }else{
             return response(["status" => false, 'data' => 'Not found'],404);
         }
-    }
-
-    public function bridalBanner()
-    {   
-        $bannnerData = array();
-        $category = Category::where('name','Bridal Shower')->first();
-        $bridals = CategoryListing::where('category_id',$category->id)->get();
-        foreach($bridals as $bridal){
-            $imagePath = asset('images/'.$bridal->image);
-            $data = array();
-            $data['id'] = $bridal->id;
-            $data['image'] = $bridal->image;
-            $data['image_path'] =  $imagePath;
-            array_push($bannnerData, $data);
-        }
         
-        if($bannnerData){
-            return response(["status" => true, 'data' => $bannnerData],200);
-        }else{
-            return response(["status" => false, 'data' => 'Not found'],404);
-        }
     }
-
-    
 }
     

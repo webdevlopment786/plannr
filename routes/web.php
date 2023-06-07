@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\BannerControllers;
 use App\Http\Controllers\Dashboard\LoginControllers;
 use App\Http\Controllers\Dashboard\CategoryControllers;
+use App\Http\Controllers\Dashboard\SubscriptionControllers;
 use App\Http\Controllers\Dashboard\UserControllers;
 
 /*
@@ -33,10 +34,16 @@ Route::get('category-delete/{id}',[CategoryControllers::class,'delete'])->name('
 // Category Listing
 Route::get('category-listing-index',[CategoryControllers::class,'listing'])->name('category.listing.index');
 Route::get('category-listing-create',[CategoryControllers::class,'listingCreate'])->name('category.listing.create');
+Route::post('category-listing-create',[CategoryControllers::class,'listingCreate'])->name('category.listing.create');
 Route::post('category-listing-store',[CategoryControllers::class,'listingStore'])->name('category.listing.store');
 Route::get('category-listing-edit/{id}',[CategoryControllers::class,'listingEdit'])->name('category.listing.edit');
 Route::post('category-listing-update/{id}',[CategoryControllers::class,'listingUpdate'])->name('category.listing.update');
 Route::get('category-listing-delete/{id}',[CategoryControllers::class,'deleteCategoryListing'])->name('category.listing.delete');
+
+// subscription 
+Route::get('subscription',[SubscriptionControllers::class,'index'])->name('subscription.index');
+
+
 
 // Banner 
 Route::get('banner',[BannerControllers::class,'index'])->name('banner.index');

@@ -33,17 +33,24 @@
         </a>
       </li>
 
-      <li class="nav-item {{ active_class(['tables/*']) }}">
+      <li class="nav-item {{ active_class(['category-listing-index/*']) }}">
         <a href="{{ route('category.listing.index') }}" class="nav-link">
           <i class="link-icon" data-feather="list"></i>
           <span class="link-title">Product</span>
         </a>
       </li>
 
-      <li class="nav-item {{ active_class(['tables/*']) }}">
+      <li class="nav-item {{ active_class(['banner']) }}">
           <a href="{{ route('banner.index') }}" class="nav-link">
             <i class="link-icon" data-feather="command"></i>
             <span class="link-title">Banner</span>
+          </a>
+      </li>
+
+      <li class="nav-item {{ active_class(['subscription']) }}">
+          <a href="{{ route('subscription.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="command"></i>
+            <span class="link-title">Subscription</span>
           </a>
       </li>
 
