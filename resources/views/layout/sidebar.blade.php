@@ -19,21 +19,21 @@
         </a>
       </li>
 
-      <li class="nav-item {{ active_class(['tables/*']) }}">
+      <li class="nav-item {{ active_class(['user']) }}">
         <a href="{{ route('user') }}" class="nav-link">
           <i class="link-icon" data-feather="layout"></i>
           <span class="link-title">User List</span>
         </a>
       </li>
 
-      <li class="nav-item {{ active_class(['tables/*']) }}">
+      <li class="nav-item {{ active_class(['category']) }}">
         <a href="{{ route('category.index') }}" class="nav-link">
           <i class="link-icon" data-feather="codepen"></i>
           <span class="link-title">Category</span>
         </a>
       </li>
 
-      <li class="nav-item {{ active_class(['category-listing-index/*']) }}">
+      <li class="nav-item {{ active_class(['category-listing-index']) }}">
         <a href="{{ route('category.listing.index') }}" class="nav-link">
           <i class="link-icon" data-feather="list"></i>
           <span class="link-title">Product</span>
@@ -49,7 +49,7 @@
 
       <li class="nav-item {{ active_class(['subscription']) }}">
           <a href="{{ route('subscription.index') }}" class="nav-link">
-            <i class="link-icon" data-feather="command"></i>
+            <i class="link-icon" data-feather="layers"></i>
             <span class="link-title">Subscription</span>
           </a>
       </li>
