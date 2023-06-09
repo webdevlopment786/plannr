@@ -186,7 +186,6 @@ class CategoryControllers extends Controller
     public function categoryWiseProduct(Request $request)
     {
         $productData = array();
-
         $categoryListings = CategoryListing::where('category_id',$request->catgeory_id)->get();
         foreach($categoryListings as $categoryListing){
             $imagePath = asset('images/product/'.$categoryListing->image);
@@ -201,11 +200,12 @@ class CategoryControllers extends Controller
             array_push($productData, $data);
         }
         $item = $categoryListings->count();
+        $productEmpty = array();
         
         if($productData){
             return response(["status" => true,'item' => $item , 'data' => $productData], 200);
         }else{
-            return response(["status" => false, 'data' => 'Not found'], 201);
+            return response(["status" => true, 'data' => $productEmpty], 200);
         }
 
     }

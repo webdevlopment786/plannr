@@ -39,11 +39,10 @@ class HomePageControllers extends Controller
         $categoryProducts = array();
         foreach($categorys as $category){
             $birtdays['cat_name'] = $category->name;
-            //$birtdays['cat_product'] = CategoryListing::where('home_screen',1)->where('category_id',$adsghcas->id)->get();
             $catProducts = CategoryListing::where('home_screen',1)->where('category_id',$category->id)->get();
             $productCategory = array();
             foreach($catProducts as $catProduct){
-                $imagePath = asset('images/'.$catProduct->image);
+                $imagePath = asset('images/product/'.$catProduct->image);
                 $data = array();
                 $data['id'] = $catProduct->id;
                 $data['product_title'] = $catProduct->product_title;
