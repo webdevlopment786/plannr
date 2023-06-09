@@ -171,7 +171,7 @@ class CategoryControllers extends Controller
     {
         $product_id = $request->product_id;
         $product = CategoryListing::where('id',$product_id)->first();
-        $imagePath = asset('images/'.$product->image);
+        $imagePath = asset('images/product/'.$product->image);
         $data['id'] = $product->id;
         $data['image'] =  $imagePath;
 
@@ -201,7 +201,7 @@ class CategoryControllers extends Controller
         }
         $item = $categoryListings->count();
         $productEmpty = array();
-        
+
         if($productData){
             return response(["status" => true,'item' => $item , 'data' => $productData], 200);
         }else{
