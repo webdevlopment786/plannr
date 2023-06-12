@@ -9,6 +9,7 @@ use App\CreateInvitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -98,7 +99,7 @@ class CategoryControllers extends Controller
         }else{
             $category = CategoryListing::get();
         }
-
+        $item = $category->count();
         foreach($category as $categorys){
             $imagePath = asset('images/product/'.$categorys->image);
             $data = array();
@@ -114,7 +115,7 @@ class CategoryControllers extends Controller
         }
 
         if($searchData){
-            return response(["status" => true, 'data' => $searchData]);
+            return response(["status" => true,  'item' => $item ,'data' => $searchData]);
         }else{
             return response(["status" => false, 'data' => 'Not found']);
         }
@@ -123,6 +124,7 @@ class CategoryControllers extends Controller
 
     public function createInvitation(Request $request)
     {   
+        // return $request->all();
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'required',
@@ -141,6 +143,10 @@ class CategoryControllers extends Controller
             'hosted_by' => 'required',
         ]);
 
+        $imageName = time() . '.' . $request->image->extension();
+        // $request->image->move(public_path('images'), $imageName);
+        $request->image->move(public_path('images/createinvitation'), $imageName);
+
         $createinvitation = New CreateInvitation();
         $createinvitation->name = $request->name;
         $createinvitation->date = $request->date;
@@ -158,7 +164,9 @@ class CategoryControllers extends Controller
         $createinvitation->hosted_by = $request->hosted_by;
         $createinvitation->product_id = $request->product_id;
         $createinvitation->message = $request->message;
-        $createinvitation->save();
+        $createinvitation->user_id = $request->user_id;
+        $createinvitation->custom_image =  $imageName;
+        $createinvitation->save();  
 
         if($createinvitation){
             return response(["status" => true, 'data' => $createinvitation], 200);
@@ -209,4 +217,91 @@ class CategoryControllers extends Controller
         }
 
     }
+
+    public function createInvitationWithImage(Request $request)
+    {   
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'date' => 'required',
+            'time' => 'required',
+            'zone' => 'required',
+            'location' => 'required',
+            'phone' => 'required',
+            'message' => 'required',
+            'type_events' => 'required',
+            'dress_code' => 'required',
+            'food' => 'required',
+            'add_info' => 'required',
+            'add_admin' => 'required',
+            'add_chat_room' => 'required',
+            'invite_more' => 'required',
+            'hosted_by' => 'required',
+        ]);
+        $imageName = time() . '.' . $request->image->extension();
+        // $request->image->move(public_path('images'), $imageName);
+        $request->image->move(public_path('images/createinvitation'), $imageName);
+
+        $createinvitation = New CreateInvitation();
+        $createinvitation->name = $request->name;
+        $createinvitation->date = $request->date;
+        $createinvitation->zone = $request->time_zone;
+        $createinvitation->time = $request->time;
+        $createinvitation->location = $request->location;
+        $createinvitation->phone = $request->phone;
+        $createinvitation->type_events = $request->type_events;
+        $createinvitation->dress_code = $request->dress_code;
+        $createinvitation->food = $request->food;
+        $createinvitation->add_info = $request->add_info;
+        $createinvitation->add_admin = $request->add_admin;
+        $createinvitation->add_chat_room = $request->add_chat_room;
+        $createinvitation->invite_more = $request->invite_more;
+        $createinvitation->hosted_by = $request->hosted_by;
+        $createinvitation->product_id = $request->product_id;
+        $createinvitation->message = $request->message;
+        $createinvitation->user_id = $request->user_id;
+        $createinvitation->custom_image = $imageName;
+        $createinvitation->save();
+
+        if($createinvitation){
+            return response(["status" => true, 'data' => $createinvitation], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+    }
+
+    public function createInvitationView(Request $request)
+    {
+
+        $CreateInvitationView = CreateInvitation::where('user_id',$request->user_id)->first();
+        $product = CategoryListing::where('id',$CreateInvitationView->product_id)->first();
+
+        if($product){
+            $imagePath = asset('images/product/'.$product->image);
+        }else{
+            $imagePath = asset('images/createinvitation/'.$CreateInvitationView->custom_image);
+        }
+
+        $data['image'] =  $imagePath;
+        $data['Event Title'] =  $CreateInvitationView->name;
+        $data['Start Date'] =  $CreateInvitationView->date;
+        $data['Event Time'] =  $CreateInvitationView->time;
+        $data['Time Zone'] =  $CreateInvitationView->zone;
+        $data['Hosted By'] =  $CreateInvitationView->hosted_by;
+        $data['Location'] =  $CreateInvitationView->location;
+        $data['message'] =  $CreateInvitationView->message;
+        $data['Type of Event'] =  $CreateInvitationView->type_events;
+        $data['Dress Code'] =  $CreateInvitationView->dress_code;
+        $data['Food / Beverages'] =  $CreateInvitationView->food;
+        $data['Additional Information'] =  $CreateInvitationView->add_info;
+        $data['Add Additional Admin / Event Organizer'] =  $CreateInvitationView->add_admin;
+        $data['Add Chat Room'] =  $CreateInvitationView->add_chat_room;
+        $data['Invite More Than 2 People'] =  $CreateInvitationView->invite_more;
+
+        if($data){
+            return response(["status" => true, 'data' => $data], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+    }
+
 }

@@ -16,10 +16,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::middleware('auth:api')->group( function () {
     
 });
+
 
 // Login and Register API
 Route::post('login',[APILoginControllers::class,'login']);
@@ -34,9 +38,13 @@ Route::get('category',[CategoryControllers::class,'index']);
 Route::get('product',[CategoryControllers::class,'product']);
 Route::get('color',[CategoryControllers::class,'color']);
 Route::post('search-fitter',[CategoryControllers::class,'searchFitter']);
+Route::post('category-wise-product',[CategoryControllers::class,'categoryWiseProduct']);
+
+// Create Invitation
 Route::post('create-invitation',[CategoryControllers::class,'createInvitation']);
 Route::post('create-invitation-product',[CategoryControllers::class,'createInvitationID']);
-Route::post('category-wise-product',[CategoryControllers::class,'categoryWiseProduct']);
+Route::post('create-invitation-with-image',[CategoryControllers::class,'createInvitationWithImage']);
+Route::post('create-invitation-view',[CategoryControllers::class,'createInvitationView']);
 
 // home Sccreen 
 Route::get('banner',[HomePageControllers::class,'banner']);

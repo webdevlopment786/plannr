@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\BannerControllers;
 use App\Http\Controllers\Dashboard\LoginControllers;
 use App\Http\Controllers\Dashboard\CategoryControllers;
+use App\Http\Controllers\Dashboard\CreateinvitationController;
 use App\Http\Controllers\Dashboard\SubscriptionControllers;
 use App\Http\Controllers\Dashboard\UserControllers;
 
@@ -42,8 +43,11 @@ Route::get('category-listing-delete/{id}',[CategoryControllers::class,'deleteCat
 
 // subscription 
 Route::get('subscription',[SubscriptionControllers::class,'index'])->name('subscription.index');
+Route::get('subscription-edit/{id}',[SubscriptionControllers::class,'edit'])->name('subscription.edit');
+Route::post('subscription-update/{id}',[SubscriptionControllers::class,'update'])->name('subscription.update');
 
-
+// createinvitation
+Route::get('create-invition',[CreateinvitationController::class,'index'])->name('create.invition.index');
 
 // Banner 
 Route::get('banner',[BannerControllers::class,'index'])->name('banner.index');

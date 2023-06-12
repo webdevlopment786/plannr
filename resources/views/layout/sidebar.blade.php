@@ -47,6 +47,13 @@
           </a>
       </li>
 
+      <li class="nav-item {{ active_class(['create-invition']) }}">
+          <a href="{{ route('create.invition.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="maximize"></i>
+            <span class="link-title">Create Invitation</span>
+          </a>
+      </li>
+
       <li class="nav-item {{ active_class(['subscription']) }}">
           <a href="{{ route('subscription.index') }}" class="nav-link">
             <i class="link-icon" data-feather="layers"></i>

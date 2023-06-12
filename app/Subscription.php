@@ -10,9 +10,6 @@ class Subscription extends Model
     use HasFactory;
     protected $table = 'subscription';
 
-    protected $fillable = [
-        'banner_image', 'status',
-    ];
 }
 
 
