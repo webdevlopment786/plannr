@@ -143,10 +143,12 @@ class CategoryControllers extends Controller
             'hosted_by' => 'required',
         ]);
 
-        $imageName = time() . '.' . $request->image->extension();
-        // $request->image->move(public_path('images'), $imageName);
-        $request->image->move(public_path('images/createinvitation'), $imageName);
-
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            // $request->image->move(public_path('images'), $imageName);
+             $request->image->move(public_path('images/createinvitation'), $imageName);
+        }
+        
         $createinvitation = New CreateInvitation();
         $createinvitation->name = $request->name;
         $createinvitation->date = $request->date;

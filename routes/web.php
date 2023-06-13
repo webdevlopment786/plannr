@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\LoginControllers;
 use App\Http\Controllers\Dashboard\CategoryControllers;
 use App\Http\Controllers\Dashboard\CreateinvitationController;
 use App\Http\Controllers\Dashboard\SubscriptionControllers;
+use App\Http\Controllers\Dashboard\TrendingControllers;
 use App\Http\Controllers\Dashboard\UserControllers;
 
 /*
@@ -54,6 +55,13 @@ Route::get('banner',[BannerControllers::class,'index'])->name('banner.index');
 Route::post('banner-store',[BannerControllers::class,'store'])->name('banner.store');
 Route::post('banner-update',[BannerControllers::class,'update'])->name('banner.update');
 Route::get('banner-delete/{id}',[BannerControllers::class,'delete'])->name('banner.delete');
+
+// Trending
+Route::get('trending',[TrendingControllers::class,'index'])->name('trending.index');
+Route::post('trending-store',[TrendingControllers::class,'store'])->name('trending.store');
+Route::post('trending-update',[TrendingControllers::class,'update'])->name('trending.update');
+Route::get('trending-delete/{id}',[TrendingControllers::class,'delete'])->name('trending.delete');
+
 
 
 Route::group(['middleware' => 'auth'], function () {

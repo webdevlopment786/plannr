@@ -11,7 +11,7 @@ class BannerControllers extends Controller
 {
     public function index()
     {
-        $banners = Banner::get();
+        $banners = Banner::where('which',0)->get();
         return view('pages.banner.index', compact('banners'));
     }
 
@@ -28,6 +28,7 @@ class BannerControllers extends Controller
         $banner = New Banner();
         $banner->banner = $imageName;
         $banner->status = $request->status;
+        $banner->which = 0;
         $banner->save();
         return redirect("banner")->with('success','Banner Add Successfully');
     }
@@ -43,6 +44,7 @@ class BannerControllers extends Controller
         }
        
         $banners->status = $request->status;
+        $banners->which = 0;
         $banners->update();
         return redirect("banner")->with('success','Banner Update Successfully');
     }

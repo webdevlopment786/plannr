@@ -14,7 +14,7 @@ class HomePageControllers extends Controller
     public function banner()
     {   
         $bannnerData = array();
-        $banners = Banner::where('status', 1)->get();
+        $banners = Banner::where('status', 1)->where('which',0)->get();
 
         foreach($banners as $banner){
             $imagePath = asset('images/banner/'.$banner->banner);
@@ -59,6 +59,28 @@ class HomePageControllers extends Controller
             return response(["status" => false, 'data' => 'Not found'],404);
         }
         
+    }
+
+    public function trendingBanner()
+    {
+        $trendingData = array();
+        $trendings = Banner::where('status', 1)->where('which',1)->get();
+
+        foreach($trendings as $trending){
+            $imagePath = asset('images/banner/'.$trending->banner);
+            $data = array();
+            $data['id'] = $trending->id;
+            $data['title'] = $trending->name;
+            $data['image'] = $trending->banner;
+            $data['image_path'] =  $imagePath;
+            array_push($trendingData, $data);
+        }
+        
+        if($trendingData){
+            return response(["status" => true, 'data' => $trendingData],200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'],201);
+        }
     }
 }
     

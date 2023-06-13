@@ -47,6 +47,13 @@
           </a>
       </li>
 
+      <li class="nav-item {{ active_class(['trending']) }}">
+          <a href="{{ route('trending.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="aperture"></i>
+            <span class="link-title">Trending Banner</span>
+          </a>
+      </li>
+
       <li class="nav-item {{ active_class(['create-invition']) }}">
           <a href="{{ route('create.invition.index') }}" class="nav-link">
             <i class="link-icon" data-feather="maximize"></i>

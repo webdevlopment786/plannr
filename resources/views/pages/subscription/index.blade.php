@@ -43,7 +43,7 @@
   
               </table>
               <div class="d-grid">
-                  <a class="btn btn-success mt-4" href="{{url('subscription-edit/'.$subscription->id)}}">Edit</a>
+                  <!-- <a class="btn btn-success mt-4" href="{{url('subscription-edit/'.$subscription->id)}}">Edit</a> -->
               </div>
               @endif
               @endforeach
@@ -83,7 +83,7 @@
                   </tr>
                 </table>
                 <div class="d-grid">
-                    <a class="btn btn-success mt-4" href="{{url('subscription-edit/'.$subscription->id)}}">Edit</a>                    
+                    <!-- <a class="btn btn-success mt-4" href="{{url('subscription-edit/'.$subscription->id)}}">Edit</a>                 -->
                 </div>
                 @endif
                 @endforeach
@@ -122,7 +122,7 @@
                   </tr>
                 </table>
                 <div class="d-grid">
-                    <a class="btn btn-success mt-4" href="{{url('subscription-edit/'.$subscription->id)}}">Edit</a>
+                    <!-- <a class="btn btn-success mt-4" href="{{url('subscription-edit/'.$subscription->id)}}">Edit</a> -->
                 </div>
                 @endif
                 @endforeach

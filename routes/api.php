@@ -49,6 +49,7 @@ Route::post('create-invitation-view',[CategoryControllers::class,'createInvitati
 // home Sccreen 
 Route::get('banner',[HomePageControllers::class,'banner']);
 Route::get('category-wise-product-banner',[HomePageControllers::class,'categoryWiseProductBanner']);
+Route::get('trending-banner',[HomePageControllers::class,'trendingBanner']);
 
 //Google
 Route::get('/login/google', [APILoginControllers::class, 'redirectToGoogle'])->name('login.google');

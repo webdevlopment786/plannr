@@ -1,16 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\API;
-use App\Http\Controllers\API\BaseControllers as BaseControllers;
-use App\Http\Controllers\Controller;
-use App\User;
-use GrahamCampbell\ResultType\Success;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\BaseControllers;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Validator;
-use Mail;
-use Laravel\Socialite\Facades\Socialite;
+use App\User;
 
 class LoginControllers extends BaseControllers
 {
@@ -74,6 +71,7 @@ class LoginControllers extends BaseControllers
             $success['token'] = auth()->user()->createToken('authToken')->accessToken;
             $success['first_name'] = $user->first_name; 
             $success['last_name'] = $user->last_name; 
+            $success['user_id'] = $user->id; 
             $success['phone_number'] = $user->phone_number; 
             $success['email'] = $user->email; 
             $success['otp'] = $request->otp;
@@ -103,6 +101,7 @@ class LoginControllers extends BaseControllers
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
             $success['first_name'] = $user->first_name;
+            $success['user_id'] = $user->id;
             $success['last_name'] = $user->last_name;
             $success['phone_number'] = $user->phone_number;
             $success['email'] = $user->email;
@@ -183,7 +182,6 @@ class LoginControllers extends BaseControllers
         }
     }
 
-    
     //Google Login
     public function redirectToGoogle()
     {
@@ -191,7 +189,8 @@ class LoginControllers extends BaseControllers
     }
 
     //Google callback  
-    public function handleGoogleCallback(){
+    public function handleGoogleCallback()
+    {
 
         $user = Socialite::driver('google')->stateless()->user();
         $this->_registerorLoginUser($user);
@@ -199,18 +198,21 @@ class LoginControllers extends BaseControllers
     }
 
     //Facebook Login
-    public function redirectToFacebook(){
+    public function redirectToFacebook()
+    {
         return Socialite::driver('facebook')->stateless()->redirect();
     }
     
     //facebook callback  
-    public function handleFacebookCallback(){
+    public function handleFacebookCallback()
+    {
         $user = Socialite::driver('facebook')->stateless()->user();
         $this->_registerorLoginUser($user);
         return response()->json($user);
     }
 
-    protected function _registerOrLoginUser($data){
+    protected function _registerOrLoginUser($data)
+    {
         $user = User::where('email',$data->email)->first();
           if(!$user){
              $user = new User();
@@ -223,5 +225,5 @@ class LoginControllers extends BaseControllers
              $user->save();
           }
              Auth::login($user);
-        }
+    }
 }
