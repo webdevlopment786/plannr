@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 
 class CategoryControllers extends Controller
@@ -100,6 +101,7 @@ class CategoryControllers extends Controller
             $category = CategoryListing::get();
         }
         $item = $category->count();
+
         foreach($category as $categorys){
             $imagePath = asset('images/product/'.$categorys->image);
             $data = array();
@@ -147,6 +149,8 @@ class CategoryControllers extends Controller
             $imageName = time() . '.' . $request->image->extension();
             // $request->image->move(public_path('images'), $imageName);
              $request->image->move(public_path('images/createinvitation'), $imageName);
+        }else{
+            $imageName = '';
         }
         
         $createinvitation = New CreateInvitation();
@@ -304,6 +308,74 @@ class CategoryControllers extends Controller
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         }
+    }
+
+    public function upComingEvent(Request $request)
+    {   
+            $searchData = array();
+            
+            $events = CreateInvitation::where('user_id',$request->user_id)->get();
+
+            foreach($events as $event){
+                $products = CategoryListing::where('id',$event->product_id)->get();
+                foreach($products as $product){
+                    $data = array();
+                    $imagePath = asset('images/product/'.$product->image);
+                    
+                    $date = Carbon::parse($event->date)->format('Y-m-d') >= Carbon::today()->format('Y-m-d');
+                
+                    if($date)
+                    {
+                        $data['id'] = $event->id;
+                        $data['Name'] = $event->name;
+                        $data['Phone'] = $event->phone;
+                        $data['Date'] = $event->date;
+                        $data['Time'] = $event->time;
+                        $data['Hosted_By'] = $event->hosted_by;
+                        $data['Image'] = $imagePath;
+                        array_push($searchData, $data);
+                    }
+                }
+            }
+
+            if($searchData){
+                return response(["status" => true, 'data' => $searchData], 200);
+            }else{
+                return response(["status" => false, 'data' => 'Not found'], 201);
+            }
+    }
+
+    public function pastEvent(Request $request)
+    {   
+            $searchData = array();
+            $events = CreateInvitation::where('user_id',$request->user_id)->get();    
+            foreach($events as $event){
+                $products = CategoryListing::where('id',$event->product_id)->get();
+                foreach($products as $product){
+                    $data = array();
+
+                    $imagePath = asset('images/product/'.$product->image);
+                    $date = Carbon::parse($event->date)->format('Y-m-d') <= Carbon::today()->format('Y-m-d');
+                     
+                    if($date)
+                    {
+                        $data['id'] = $event->id;
+                        $data['Name'] = $event->name;
+                        $data['Phone'] = $event->phone;
+                        $data['Date'] = $event->date;
+                        $data['Time'] = $event->time;
+                        $data['Hosted_By'] = $event->hosted_by;
+                        $data['Image'] = $imagePath;
+                        array_push($searchData, $data);
+                    }
+                }
+            }
+
+            if($searchData){
+                return response(["status" => true, 'data' => $searchData], 200);
+            }else{
+                return response(["status" => false, 'data' => 'Not found'], 201);
+            }
     }
 
 }
