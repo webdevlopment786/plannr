@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\CategoryControllers;
 use App\Http\Controllers\API\ContactControllers;
+use App\Http\Controllers\API\EventControllers;
 use App\Http\Controllers\API\LoginControllers as APILoginControllers;
 use App\Http\Controllers\API\HomePageControllers;
 use Illuminate\Http\Request;
@@ -46,8 +47,13 @@ Route::post('create-invitation',[CategoryControllers::class,'createInvitation'])
 Route::post('create-invitation-product',[CategoryControllers::class,'createInvitationID']);
 Route::post('create-invitation-with-image',[CategoryControllers::class,'createInvitationWithImage']);
 Route::post('create-invitation-view',[CategoryControllers::class,'createInvitationView']);
-Route::post('event-upcoming',[CategoryControllers::class,'upComingEvent']);
-Route::post('event-past',[CategoryControllers::class,'pastEvent']);
+
+// Event
+Route::post('event-upcoming',[EventControllers::class,'upComingEvent']);
+Route::post('event-past',[EventControllers::class,'pastEvent']);
+Route::post('event-overview',[EventControllers::class,'eventOverView']);
+Route::post('edit-invitation',[EventControllers::class,'editInvitation']);
+Route::post('view-invitation',[EventControllers::class,'viewInvitation']);
 
 // Contacts
 Route::post('create-contact-list',[ContactControllers::class,'createContactList']);

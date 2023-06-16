@@ -13,6 +13,6 @@ class CreateInvitation extends Model
     protected $fillable = [
         'name','date','time','zone','location','phone','message',
         'type_events','dress_code','food','add_info','add_admin',
-        'add_chat_room','invite_more','hosted_by'
+        'add_chat_room','invite_more','hosted_by','user_id',
     ];
 }
