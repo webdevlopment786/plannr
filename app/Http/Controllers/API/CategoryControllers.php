@@ -152,6 +152,11 @@ class CategoryControllers extends Controller
         }else{
             $imageName = '';
         }
+        if($request->draft){
+            $drafts = $request->draft;
+        }else{
+            $drafts = '';
+        }
         
         $createinvitation = New CreateInvitation();
         $createinvitation->name = $request->name;
@@ -172,6 +177,7 @@ class CategoryControllers extends Controller
         $createinvitation->message = $request->message;
         $createinvitation->user_id = $request->user_id;
         $createinvitation->custom_image =  $imageName;
+        $createinvitation->draft =  $drafts;
         $createinvitation->save();  
 
         if($createinvitation){
