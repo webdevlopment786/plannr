@@ -143,6 +143,7 @@ class CategoryControllers extends Controller
             'add_chat_room' => 'required',
             'invite_more' => 'required',
             'hosted_by' => 'required',
+            'user_id' => 'required',
         ]);
 
         if ($request->hasFile('image')) {
