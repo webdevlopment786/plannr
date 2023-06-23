@@ -55,7 +55,7 @@
                   </label>
                 </div>
                 <div>
-                  <a href="{{url('api/login/google')}}" class="btn btn-primary me-2 mb-2 mb-md-0">Google</a>
+                  <!-- <a href="{{url('api/login/google')}}" class="btn btn-primary me-2 mb-2 mb-md-0">Google</a> -->
                   <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">Login</button>
                 </div>
               </form>

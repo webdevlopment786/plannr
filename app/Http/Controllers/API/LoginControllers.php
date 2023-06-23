@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Validator;
 use App\User;
+use Illuminate\Support\Facades\Mail;
 
 class LoginControllers extends BaseControllers
 {
@@ -67,7 +68,7 @@ class LoginControllers extends BaseControllers
 
         if($user){
             auth()->login($user, true);
-            User::where('email','=',$request->email)->update(['otp' => null]);
+            User::where('email','=',$request->email)->update(['otp' => null, 'verify_otp' => '1']);
             $success['token'] = auth()->user()->createToken('authToken')->accessToken;
             $success['first_name'] = $user->first_name; 
             $success['last_name'] = $user->last_name; 
@@ -89,28 +90,38 @@ class LoginControllers extends BaseControllers
         $email = $request->input('email');
         $password = $request->input('password');
 
-        $user = User::where('email', '=', $email)->first();
+        $user = User::where('email', '=', $email)->first(); 
         if (!$user) {
-            return response()->json(['status'=>false, 'message' => 'Login Fail, please check email id'], 201);
+            return response()->json(['status'=>false, 'message' => 'The email you entered is invalid. Please make sure you have entered a valid email address and try.'], 201);
         }
         if (!Hash::check($password, $user->password)) {
-            return response()->json(['status'=>false, 'message' => 'Login Fail, please check password'], 201);
+            return response()->json(['status'=>false, 'message' => 'The Password is incorrect.Please double-check your password and try.'], 201);
         }
         
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-            $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')->accessToken; 
-            $success['first_name'] = $user->first_name;
-            $success['user_id'] = $user->id;
-            $success['last_name'] = $user->last_name;
-            $success['phone_number'] = $user->phone_number;
-            $success['email'] = $user->email;
-            $success['otp'] = $user->otp;
-            return response(["status" => true, 'data' => $success]);
-        } 
-        else{ 
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+        if($user->role == 'user') {
+            if($user->verify_otp == 1){
+                if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+                    $user = Auth::user(); 
+                    $success['token'] =  $user->createToken('MyApp')->accessToken; 
+                    $success['first_name'] = $user->first_name;
+                    $success['user_id'] = $user->id;
+                    $success['last_name'] = $user->last_name;
+                    $success['phone_number'] = $user->phone_number;
+                    $success['email'] = $user->email;
+                    $success['otp'] = $user->otp;
+                    return response(["status" => true, 'data' => $success]);
+                } 
+                else{ 
+                    return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+                }
+            }else{
+                return response()->json(['status'=>false, 'message' => 'Please verify your account before logging in.'], 201);
+            }
         }
+        else{
+            return response()->json(['status'=>false, 'message' => 'You are not a member of the system, Please go and register first , then you can proceed for login..'], 201);
+        }
+        
     }
 
     public function forgetPassword(Request $request)
@@ -176,6 +187,15 @@ class LoginControllers extends BaseControllers
 
         $user = User::where('email', $request->email)->update(['password' => Hash::make($request->password)]);
         if($user){
+            $headers = 'Your Password is Updated';
+            $subject = 'Reset Password :-'.'Your Password is Updated';
+            $header = 'Your Password is Updated';
+            mail($user['email'], $headers, $subject, $header);
+            // Mail::send('pages.email.OTPVerificationEmail123', ['otp' => 'your Password Update'], function($message) use($request){
+            //         $message->to($request->email);
+            //         $message->subject('OTP Received for account verification');
+            //   });
+
             return $this->sendResponse($user, 'Password Change');
         }else{
             return $this->sendResponse($user, 'Password Not Change Please Password');

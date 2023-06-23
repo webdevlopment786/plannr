@@ -1,6 +1,7 @@
 @extends('layout.master')
 
 @push('plugin-styles')
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
 @endpush
 <style>
@@ -31,10 +32,13 @@
                 </a>
             </div>
         </div>
+        <button style="margin-bottom: 10px" class="btn btn-primary delete_all">Delete All Selected</button>
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
             <thead>
               <tr>
+                <th width="50px"><input type="checkbox" id="master"></th>
+                <th>No</th>
                 <th>Category Name</th>
                 <th>Product Title</th>
                 <th>Image</th>
@@ -48,6 +52,8 @@
             <tbody>
                 @foreach($categoryListings as $categoryListing)
                     <tr>
+                        <td><input type="checkbox" class="sub_chk" data-id="{{$categoryListing->id}}"></td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>
                             @foreach($categorys as $category)
                                 @if($category->id == $categoryListing->category_id)
@@ -87,7 +93,11 @@
                         </td>
                         <td>
                             <a href="{{url('category-listing-edit/'.$categoryListing->id)}}" class="btn btn-sm btn-info">Edit</a>
-                            <a href="{{url('category-listing-delete/'.$categoryListing->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</a>
+                            <form method="POST" action="{{ url('category-listing-delete', $categoryListing->id) }}" style="display:inline-block;">
+                                @csrf
+                                <input name="_method" type="hidden" value="DELETE">
+                                <button type="submit" class="btn btn-sm btn-danger show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -104,6 +114,113 @@
 @push('plugin-scripts')
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+  <script type="text/javascript">
+
+      $('.show_confirm').click(function(event) {
+          var form =  $(this).closest("form");
+          var name = $(this).data("name");
+          event.preventDefault();
+          swal({
+              title: `Are you sure you want to delete this record?`,
+              text: "If you delete this, it will be gone forever.",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              form.submit();
+            }
+          });
+      });
+
+    jQuery('#master').on('click', function(e) {
+      if(jQuery(this).is(':checked',true)) {
+
+          jQuery(".sub_chk").prop('checked', true);  
+      } 
+      else {  
+          jQuery(".sub_chk").prop('checked',false);  
+      }  
+    });
+
+    $('.delete_all').on('click', function(e) {
+      var allVals = [];
+      $(".sub_chk:checked").each(function() {  
+          allVals.push($(this).attr('data-id'));
+      });
+
+      if(allVals.length <=0)  
+      {  
+          swal({
+                title: `Please select row.`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })   
+      }
+      else { 
+
+          swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: [
+              'No, cancel it!',
+              'Yes, I am sure!'
+            ],
+            dangerMode: true,
+          }).
+
+          then(function(isConfirm) {
+            if (isConfirm) {
+              var join_selected_values = allVals.join(","); 
+              $.ajax({
+                  url:'{{url("category-listing-delete-all")}}',
+                  type: 'DELETE',
+                  headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                  data: 'ids='+join_selected_values,
+                  success: function (data) {
+                    console.log('data',data);
+                      if (data['success']) {
+                          $(".sub_chk:checked").each(function() {  
+                              $(this).parents("tr").remove();
+                          });
+
+                          swal({
+                          title: "Banner Delete Successfully",
+                          icon: "warning",
+                          buttons: [
+                            'OK, I am sure!'
+                          ],
+                          dangerMode: true,
+                        })
+
+                        location.reload();
+
+                      } else if (data['error']) {
+                          alert(data['error']);
+                      } else {
+                          alert('Whoops Something went wrong!!');
+                      }
+                  },
+                  error: function (data) {
+                      alert(data.responseText);
+                  }
+              });
+              $.each(allVals, function( index, value ) {
+                  $('table tr').filter("[data-row-id='" + value + "']").remove();
+              });
+            } else {
+              location.reload();
+            }
+          });
+      }  
+    });
+
+  </script>
+
 @endpush
 
 @push('custom-scripts')

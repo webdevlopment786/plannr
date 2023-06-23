@@ -20,7 +20,7 @@ class TrendingControllers extends Controller
         // return $request->all();
         $request->validate([
             'name' => 'required',
-            'image' => 'required',
+            'image' => 'required|image|max:2048',
             'status' => 'required',
         ]);
 
@@ -40,7 +40,6 @@ class TrendingControllers extends Controller
 
     public function update(Request $request)
     {   
-        // return $request->all();
 
         $trendingbanners = Banner::where('id',$request->trending_id)->first();
         if ($request->hasFile('image')) {
@@ -68,5 +67,20 @@ class TrendingControllers extends Controller
         }
         $trending->delete();
         return redirect("trending")->with('success','Trending Banner Delete Successfully');
+    }
+
+    public function deleteAll(Request $request)
+    {
+        $ids = $request->ids;
+        $banners =Banner::whereIn('id',explode(",",$ids))->get();
+        foreach($banners as $banner){
+            $image_path = public_path('images/banner/'.$banner->image);
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+            }
+            
+            $banner->delete();
+        }
+        return response()->json(['success'=>"Trending Banner Delete Successfully."]);
     }
 }

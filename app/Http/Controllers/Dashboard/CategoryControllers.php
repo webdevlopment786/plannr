@@ -13,7 +13,7 @@ class CategoryControllers extends Controller
 {
     public function index()
     {
-        $categorys = Category::get();
+        $categorys = Category::orderBy('order','ASC')->get();
         return view('pages.category.index',compact('categorys'));
     }
 
@@ -21,7 +21,7 @@ class CategoryControllers extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'image' => 'required',
+            'image' => 'required|image|max:2048',
             'status' => 'required',
             'home_screen' => 'required',
         ]);
@@ -36,13 +36,22 @@ class CategoryControllers extends Controller
         $category->status = $request->status;
         $category->image = $imageName;
         $category->save();
-        return redirect("category")->with('success','Category Add Successfully');
+        return redirect("category")->with('success','Categories Added Successfully');
     }
 
     public function update(Request $request)
     {   
+        $request->validate([
+            'name' => 'required',
+            'status' => 'required',
+            'home_screen' => 'required',
+        ]);
+
         $category = Category::where('id',$request->category_id)->first();
         if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'required|image|max:2048',
+            ]);
             $imageName = time() . '.' . $request->image->extension();
             // $request->image->move(public_path('images'), $imageName);
             $request->image->move(public_path('images/category'), $imageName);
@@ -53,7 +62,7 @@ class CategoryControllers extends Controller
         $category->status = $request->status;
         $category->update();
 
-        return redirect("category")->with('success','Category Update Successfully');
+        return redirect("category")->with('success','Categories Update Successfully');
     }
 
     public function delete($id)
@@ -64,7 +73,40 @@ class CategoryControllers extends Controller
           File::delete($image_path);
         }
         $category->delete();
-        return redirect("category")->with('success','Category Delete Successfully');
+        return redirect("category")->with('success','Categories Delete Successfully');
+    }
+
+    public function deleteAll(Request $request)
+    {
+        $ids = $request->ids;
+        $categorys =  Category::whereIn('id',explode(",",$ids))->delete();
+        foreach($categorys as $category){
+            $image_path = public_path('images/banner/'.$category->image);
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+            }
+            
+            $category->delete();
+        }
+        return response()->json(['success'=>"Categories Deleted successfully."]);
+    }
+
+    public function updateOrder(Request $request)
+    {
+        $tasks = Category::all();
+
+        foreach ($tasks as $task) {
+            $task->timestamps = false;
+            $id = $task->id;
+
+            foreach ($request->order as $order) {
+                if ($order['id'] == $id) {
+                    $task->update(['order' => $order['position']]);
+                }
+            }
+        }
+        
+        return response('Update Successfully.', 200);
     }
 
     public function listing()
@@ -86,12 +128,6 @@ class CategoryControllers extends Controller
         return view('pages.category.listingCreate',compact('categorys','color','categoryProduct','valueone'));
     }
 
-    public function ajaxData(Request $request)
-    {
-        $categorys =  $request->all(['value']);
-        return $categorys;
-    }
-
     public function listingStore(Request $request)
     {
         $request->validate([
@@ -99,7 +135,7 @@ class CategoryControllers extends Controller
             'color_id' => 'required',
             'free_or_premium' => 'required',
             'product_title' => 'required',
-            'image' => 'required',
+            'image' => 'required|image|max:2048',
             'status' => 'required',
             'home_screen' => 'required',
         ]);
@@ -115,8 +151,8 @@ class CategoryControllers extends Controller
         $categorys->image = $imageName;
         $categorys->home_screen = $request->home_screen;
         $categorys->status = $request->status;
-        $categorys->save();
-        return redirect("category-listing-index")->with('success','Add Category Listing Successfully');
+        $categorys->save(); 
+        return redirect("category-listing-index")->with('success','Product Categories Added Successfully');
     }
 
     public function listingEdit($id)
@@ -141,6 +177,11 @@ class CategoryControllers extends Controller
         
         $categorys = CategoryListing::find($id);
         if ($request->hasFile('image')) {
+
+            $request->validate([
+                'image' => 'required|image|max:2048',
+            ]);
+            
             $imageName = time() . '.' . $request->image->extension();
             // $request->image->move(public_path('images'), $imageName);
             $request->image->move(public_path('images/product'), $imageName);
@@ -160,17 +201,33 @@ class CategoryControllers extends Controller
         $categorys->home_screen = $request->home_screen;
         $categorys->status = $request->status;
         $categorys->update();
-        return redirect("category-listing-index")->with('success','Update Category Listing Successfully');
+        return redirect("category-listing-index")->with('success','Product Categories Update Successfully');
     }
 
     public function deleteCategoryListing($id)
     {   
         $CategoryListing = CategoryListing::find($id);
-        $image_path = public_path('images/product'.$CategoryListing->image);
+        $image_path = public_path('images/product/'.$CategoryListing->image);
         if(File::exists($image_path)) {
           File::delete($image_path);
         }
         $CategoryListing->delete();
-        return redirect("category-listing-index")->with('success','Delete Category Listing Successfully');
+        return redirect("category-listing-index")->with('success','Product Categories Delete Successfully');
+    }
+
+    public function deleteAllProduct(Request $request)
+    {
+        $ids = $request->ids;
+        $products = CategoryListing::whereIn('id',explode(",",$ids))->get();
+
+        foreach($products as $product){
+            $image_path = public_path('images/product/'.$product->image);
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+            }
+            
+            $product->delete();
+        }
+        return response()->json(['success'=>"Banner Delete Successfully."]);
     }
 }

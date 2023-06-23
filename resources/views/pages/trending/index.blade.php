@@ -1,6 +1,7 @@
 @extends('layout.master')
 
 @push('plugin-styles')
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
 @endpush
 <style>
@@ -49,18 +50,26 @@
                     <div class="mb-3">
                         <label for="exampleInputUsername1" class="form-label">Title</label>
                         <input type="text" class="form-control" name="name" autocomplete="off" placeholder="Trending Name">
+                        @if ($errors->has('name'))
+                          <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
                     </div>
                   <div class="mb-3">
                     <label class="form-label" for="formFile">File upload</label>
                     <input class="form-control" name="image" type="file" id="formFile">
+                    @if ($errors->has('image'))
+                      <span class="text-danger">{{ $errors->first('image') }}</span>
+                    @endif
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Status</label>
                     <select class="form-select" name="status" id="status">
-                    <option selected disabled>Status</option>
                     <option value="1">Active</option>
                     <option value="0">Block</option>
                   </select>
+                    @if ($errors->has('status'))
+                      <span class="text-danger">{{ $errors->first('status') }}</span>
+                    @endif
                   </div>
               </div>
               <div class="modal-footer">
@@ -87,7 +96,10 @@
                         <label for="exampleInputUsername1" class="form-label">Title</label>
                         <input type="hidden" name="trending_id" value="{{$trending->id}}">
                         <input type="text" class="form-control" name="name" value="{{$trending->name}}" id="trending_name" autocomplete="off" placeholder="Trending Name">
-                    </div>
+                        @if ($errors->has('name'))
+                          <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
+                      </div>
                     <div class="mb-3">
                     <div class="row">
                         <div class="col-md-10">
@@ -97,7 +109,7 @@
                             </div>
                             <div class="col-md-2">
                             <img class="category-image show" src="{{ asset('images/banner/'.$trending->banner) }}" alt="tag" height="60px" width="60px">
-                            </div>
+                        </div>
                     </div>
                     </div>
                     <div class="mb-3">
@@ -106,6 +118,9 @@
                         <option value="1" @if($trending->status == old('status','1')) selected="selected" @endif>Active</option>
                         <option value="0" @if($trending->status == old('status','0')) selected="selected" @endif>Block</option>
                     </select>
+                      @if ($errors->has('status'))
+                        <span class="text-danger">{{ $errors->first('status') }}</span>
+                      @endif
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -118,9 +133,12 @@
         @endforeach
         
         <div class="table-responsive">
+        <button style="margin-bottom: 10px" class="btn btn-primary delete_all">Delete All Selected</button>
           <table id="dataTableExample" class="table">
             <thead>
               <tr>
+                <th width="50px"><input type="checkbox" id="master"></th>
+                <th>No</th>
                 <th>Name</th>
                 <th>Image</th>
                 <th>Status</th>
@@ -130,6 +148,8 @@
             <tbody>
                 @foreach($trendings as $trending)
                     <tr>
+                        <td><input type="checkbox" class="sub_chk" data-id="{{$trending->id}}"></td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{$trending->name}}</td>
                         <td><img class="category-image" src="{{ asset('images/banner/'.$trending->banner) }}" alt="tag" height="30px" width="30px"></td>
                         <td>
@@ -141,8 +161,13 @@
                         </td>
                         <td>
                         <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#exampleModaledit{{$trending->id}}">Edit</a>
-                        <a href="{{url('trending-delete/'.$trending->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</a>
-                        </td>
+                        <!-- <a href="{{url('trending-delete/'.$trending->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</a> -->
+                        <form method="POST" action="{{ url('trending-delete', $trending->id) }}" style="display:inline-block;">
+                            @csrf
+                            <input name="_method" type="hidden" value="DELETE">
+                            <button type="submit" class="btn btn-sm btn-danger show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
+                        </form>  
+                      </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -159,6 +184,113 @@
 @push('plugin-scripts')
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+  <script type="text/javascript">
+
+      $('.show_confirm').click(function(event) {
+          var form =  $(this).closest("form");
+          var name = $(this).data("name");
+          event.preventDefault();
+          swal({
+              title: `Are you sure you want to delete this record?`,
+              text: "If you delete this, it will be gone forever.",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              form.submit();
+            }
+          });
+      });
+
+
+      jQuery('#master').on('click', function(e) {
+         if(jQuery(this).is(':checked',true))  
+         {
+          jQuery(".sub_chk").prop('checked', true);  
+         } else {  
+          jQuery(".sub_chk").prop('checked',false);  
+         }  
+        });
+
+
+    $('.delete_all').on('click', function(e) {
+      var allVals = [];  
+      $(".sub_chk:checked").each(function() {  
+          allVals.push($(this).attr('data-id'));
+      });
+
+      if(allVals.length <=0)  
+      {  
+          swal({
+                title: `Please select row.`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })   
+      }
+      else 
+      { 
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: [
+              'No, cancel it!',
+              'Yes, I am sure!'
+            ],
+            dangerMode: true,
+          }).
+          then(function(isConfirm) {
+            if (isConfirm) {
+              var join_selected_values = allVals.join(","); 
+              $.ajax({
+                  url:'{{url("trending-delete-all")}}',
+                  type: 'DELETE',
+                  headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                  data: 'ids='+join_selected_values,
+                  success: function (data) {
+                    console.log('data',data);
+                      if (data['success']) {
+                          $(".sub_chk:checked").each(function() {  
+                              $(this).parents("tr").remove();
+                          });
+
+                          swal({
+                          title: "Banner Delete Successfully",
+                          icon: "warning",
+                          buttons: [
+                            'OK, I am sure!'
+                          ],
+                          dangerMode: true,
+                        })
+
+                        location.reload();
+
+                      } else if (data['error']) {
+                          alert(data['error']);
+                      } else {
+                          alert('Whoops Something went wrong!!');
+                      }
+                  },
+                  error: function (data) {
+                      alert(data.responseText);
+                  }
+              });
+              $.each(allVals, function( index, value ) {
+                  $('table tr').filter("[data-row-id='" + value + "']").remove();
+              });
+            } else {
+              location.reload();
+            }
+          });
+        
+        
+      }  
+    });
+  </script>
 @endpush
 
 @push('custom-scripts')

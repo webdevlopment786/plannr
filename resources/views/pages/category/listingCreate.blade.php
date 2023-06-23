@@ -10,13 +10,15 @@
             @csrf
             <div class="mb-3">
                 <label for="exampleFormControlSelect1" class="form-label">Category Name</label>
-                <span id="value"></span>
                 <select class="form-select language" name="category_id" id="exampleFormControlSelect1">
                     <option selected disabled>Select your Category</option>
                     @foreach($categorys as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
                 </select>
+                @if ($errors->has('category_id'))
+                  <span class="text-danger">{{ $errors->first('category_id') }}</span>
+                @endif
             </div>
             <div class="mb-3">
                 <label for="exampleInputPlaceholder" class="form-label">Product Title</label>
@@ -34,6 +36,9 @@
                         <option value="{{$colors->id}}">{{$colors->color_name}}</option>
                     @endforeach
                 </select>
+                @if ($errors->has('color_id'))
+                  <span class="text-danger">{{ $errors->first('color_id') }}</span>
+                @endif
             </div>
 
             <div class="mb-3">
@@ -43,26 +48,36 @@
                     <option value="0">Free</option>
                     <option value="1">Premium</option>
                 </select>
+                @if ($errors->has('free_or_premium'))
+                  <span class="text-danger">{{ $errors->first('free_or_premium') }}</span>
+                @endif
             </div> 
             <div class="mb-3">
                 <label class="form-label" for="formFile">File upload</label>
                 <input class="form-control" name="image" type="file" id="formFile">
+                @if ($errors->has('image'))
+                  <span class="text-danger">{{ $errors->first('image') }}</span>
+                @endif
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlSelect1" class="form-label">Show Home Screen</label>
                 <select class="form-select" name="home_screen" id="exampleFormControlSelect1">
-                    <option selected disabled>Please Select</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                 </select>
+                @if ($errors->has('home_screen'))
+                  <span class="text-danger">{{ $errors->first('home_screen') }}</span>
+                @endif
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlSelect1" class="form-label">Status</label>
                 <select class="form-select" name="status" id="exampleFormControlSelect1">
-                    <option selected disabled>Select your Status</option>
                     <option value="1">Active</option>
                     <option value="0">Block</option>
                 </select>
+                @if ($errors->has('status'))
+                  <span class="text-danger">{{ $errors->first('status') }}</span>
+                @endif
             </div>
           <button class="btn btn-primary" type="submit">Submit</button>
         </form>

@@ -28,7 +28,7 @@ class EventControllers extends Controller
                     $data['Date'] = $event->date;
                     $data['Time'] = $event->time;
                     $data['Hosted_By'] = $event->hosted_by;
-                    $data['Image'] = $imagePath;
+                    $data['Image'] = $imagePath;    
                     array_push($searchData, $data);
                 }else{
                     $imagePath = asset('images/product/'.$event->custom_image);
@@ -129,22 +129,22 @@ class EventControllers extends Controller
     {
         $eventId = $request->event_id;
         $editInvitation = CreateInvitation::where('id',$eventId)->where('user_id',$request->user_id)->firstOrFail();
-        $editInvitation->name = $request->name;
-        $editInvitation->date = $request->date;
-        $editInvitation->zone = $request->time_zone;
-        $editInvitation->time = $request->time;
-        $editInvitation->location = $request->location;
-        $editInvitation->phone = $request->phone;
-        $editInvitation->type_events = $request->type_events;
-        $editInvitation->dress_code = $request->dress_code;
-        $editInvitation->food = $request->food;
-        $editInvitation->add_info = $request->add_info;
-        $editInvitation->add_admin = $request->add_admin;
-        $editInvitation->add_chat_room = $request->add_chat_room;
-        $editInvitation->invite_more = $request->invite_more;
-        $editInvitation->hosted_by = $request->hosted_by;
-        $editInvitation->message = $request->message;
-        $editInvitation->update();
+        // $editInvitation->name = $request->name;
+        // $editInvitation->date = $request->date;
+        // $editInvitation->zone = $request->time_zone;
+        // $editInvitation->time = $request->time;
+        // $editInvitation->location = $request->location;
+        // $editInvitation->phone = $request->phone;
+        // $editInvitation->type_events = $request->type_events;
+        // $editInvitation->dress_code = $request->dress_code;
+        // $editInvitation->food = $request->food;
+        // $editInvitation->add_info = $request->add_info;
+        // $editInvitation->add_admin = $request->add_admin;
+        // $editInvitation->add_chat_room = $request->add_chat_room;
+        // $editInvitation->invite_more = $request->invite_more;
+        // $editInvitation->hosted_by = $request->hosted_by;
+        // $editInvitation->message = $request->message;
+        // $editInvitation->update();
 
         if($editInvitation){
             return response(["status" => true, 'data' => 'Invitation Update Successfully'], 200);
@@ -172,6 +172,7 @@ class EventControllers extends Controller
         $data['Time Zone'] =  $CreateInvitationView->zone;
         $data['Hosted By'] =  $CreateInvitationView->hosted_by;
         $data['Location'] =  $CreateInvitationView->location;
+        $data['Phone_number'] =  $CreateInvitationView->phone;
         $data['message'] =  $CreateInvitationView->message;
         $data['Type of Event'] =  $CreateInvitationView->type_events;
         $data['Dress Code'] =  $CreateInvitationView->dress_code;

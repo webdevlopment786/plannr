@@ -19,7 +19,7 @@ class CategoryControllers extends Controller
     public function index(Request $request)
     {
         $categoryData = array();
-        $categorys = Category::where('status','1')->get();
+        $categorys = Category::where('status','1')->orderBy('order','ASC')->get();
         
         foreach($categorys as $category){
             $imagePath = asset('images/category/'.$category->image);
@@ -126,7 +126,7 @@ class CategoryControllers extends Controller
 
     public function createInvitation(Request $request)
     {   
-        // return $request->all();
+        
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'required',
@@ -299,6 +299,7 @@ class CategoryControllers extends Controller
         $data['Event Time'] =  $CreateInvitationView->time;
         $data['Time Zone'] =  $CreateInvitationView->zone;
         $data['Hosted By'] =  $CreateInvitationView->hosted_by;
+        $data['Phone_number'] =  $CreateInvitationView->phone;
         $data['Location'] =  $CreateInvitationView->location;
         $data['message'] =  $CreateInvitationView->message;
         $data['Type of Event'] =  $CreateInvitationView->type_events;

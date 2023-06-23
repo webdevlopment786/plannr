@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\BannerControllers;
 use App\Http\Controllers\Dashboard\LoginControllers;
 use App\Http\Controllers\Dashboard\CategoryControllers;
 use App\Http\Controllers\Dashboard\CreateinvitationController;
+use App\Http\Controllers\Dashboard\DashboardControllers;
 use App\Http\Controllers\Dashboard\SubscriptionControllers;
 use App\Http\Controllers\Dashboard\TrendingControllers;
 use App\Http\Controllers\Dashboard\UserControllers;
@@ -25,13 +26,17 @@ Route::get('user-create',[UserControllers::class,'create'])->name('user.create')
 Route::post('user-store',[UserControllers::class,'store'])->name('user.store'); 
 Route::get('user-edit/{id}',[UserControllers::class,'edit'])->name('user.edit'); 
 Route::post('user-update/{id}',[UserControllers::class,'update'])->name('user.update'); 
-Route::get('user-delete/{id}',[UserControllers::class,'delete'])->name('user.delete'); 
+Route::delete('user-delete/{id}',[UserControllers::class,'delete'])->name('user.delete'); 
+Route::delete('user-delete-all',[UserControllers::class,'deleteAll'])->name('user-delete-all'); 
 
 // Category
 Route::get('category',[CategoryControllers::class,'index'])->name('category.index');
 Route::post('category-store',[CategoryControllers::class,'store'])->name('category.store');
 Route::post('category-update',[CategoryControllers::class,'update'])->name('category.update');
-Route::get('category-delete/{id}',[CategoryControllers::class,'delete'])->name('category.delete');
+Route::delete('category-delete/{id}',[CategoryControllers::class,'delete'])->name('category.delete');
+Route::delete('category-delete-all', [CategoryControllers::class,'deleteAll'])->name('category.delete.all');
+Route::post('category-sortabledatatable',[CategoryControllers::class,'updateOrder'])->name('category.sortabledatatable');
+
 
 // Category Listing
 Route::get('category-listing-index',[CategoryControllers::class,'listing'])->name('category.listing.index');
@@ -40,7 +45,8 @@ Route::post('category-listing-create',[CategoryControllers::class,'listingCreate
 Route::post('category-listing-store',[CategoryControllers::class,'listingStore'])->name('category.listing.store');
 Route::get('category-listing-edit/{id}',[CategoryControllers::class,'listingEdit'])->name('category.listing.edit');
 Route::post('category-listing-update/{id}',[CategoryControllers::class,'listingUpdate'])->name('category.listing.update');
-Route::get('category-listing-delete/{id}',[CategoryControllers::class,'deleteCategoryListing'])->name('category.listing.delete');
+Route::delete('category-listing-delete/{id}',[CategoryControllers::class,'deleteCategoryListing'])->name('category.listing.delete');
+Route::delete('category-listing-delete-all',[CategoryControllers::class,'deleteAllProduct'])->name('category.listing.delete.all');
 
 // subscription 
 Route::get('subscription',[SubscriptionControllers::class,'index'])->name('subscription.index');
@@ -54,20 +60,20 @@ Route::get('create-invition',[CreateinvitationController::class,'index'])->name(
 Route::get('banner',[BannerControllers::class,'index'])->name('banner.index');
 Route::post('banner-store',[BannerControllers::class,'store'])->name('banner.store');
 Route::post('banner-update',[BannerControllers::class,'update'])->name('banner.update');
-Route::get('banner-delete/{id}',[BannerControllers::class,'delete'])->name('banner.delete');
+Route::delete('banner-delete/{id}',[BannerControllers::class,'delete'])->name('banner.delete');
+Route::delete('banner-delete-all',[BannerControllers::class,'deleteAll'])->name('banner.delete-all');
 
 // Trending
 Route::get('trending',[TrendingControllers::class,'index'])->name('trending.index');
 Route::post('trending-store',[TrendingControllers::class,'store'])->name('trending.store');
 Route::post('trending-update',[TrendingControllers::class,'update'])->name('trending.update');
-Route::get('trending-delete/{id}',[TrendingControllers::class,'delete'])->name('trending.delete');
+Route::delete('trending-delete/{id}',[TrendingControllers::class,'delete'])->name('trending.delete');
+Route::delete('trending-delete-all',[TrendingControllers::class,'deleteAll'])->name('trending.delete.all');
 
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
-        return view('dashboard');
-}); 
+    Route::get('/',[DashboardControllers::class,'index'])->name('dashboard.index');
     Route::group(['prefix' => 'tables'], function(){
         Route::get('basic-tables', function () { return view('pages.tables.basic-tables'); });
         // Route::get('data-table', function () { return view('pages.tables.data-table'); });

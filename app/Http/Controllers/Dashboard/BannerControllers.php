@@ -18,7 +18,7 @@ class BannerControllers extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'banner_image' => 'required',
+            'banner_image' => 'required|image|max:2048',
             'status' => 'required',
         ]);
 
@@ -36,7 +36,11 @@ class BannerControllers extends Controller
     public function update(Request $request)
     {
         $banners = Banner::where('id',$request->banner_id)->first();
+
         if ($request->hasFile('banner_image')) {
+            $request->validate([
+                'banner_image' => 'required|image|max:2048',
+            ]);
             $imageName = time() . '.' . $request->banner_image->extension();
             // $request->image->move(public_path('images'), $imageName);
             $request->banner_image->move(public_path('images/banner/'), $imageName);
@@ -57,6 +61,21 @@ class BannerControllers extends Controller
           File::delete($image_path);
         }
         $banner->delete();
-        return redirect("banner")->with('success','Banner Delete Successfully');
+        return redirect("banner")->with('success','Banner Delete Successfully.');
+    }
+
+    public function deleteAll(Request $request)
+    {
+        $ids = $request->ids;
+        $banners =  Banner::whereIn('id',explode(",",$ids))->delete();
+        foreach($banners as $banner){
+            $image_path = public_path('images/banner/'.$banner->image);
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+            }
+            
+            $banner->delete();
+        }
+        return response()->json(['success'=>"Banner Delete Successfully."]);
     }
 }

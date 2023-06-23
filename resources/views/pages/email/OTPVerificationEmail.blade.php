@@ -1,1 +1,1 @@
-Your OTP is : <?php echo $otp; ?>
+Your OTP is : <?php echo $otp; ?> 

@@ -45,13 +45,12 @@
             <div class="mb-3">
                 <label for="exampleFormControlSelect1" class="form-label">Status</label>
                 <select class="form-select" name="status" id="exampleFormControlSelect1">
-                @if ($errors->has('status'))
-                  <span class="text-danger">{{ $errors->first('status') }}</span>
-                @endif
-                    <option selected disabled>Select your Status</option>
                     <option value="1">Active</option>
                     <option value="0">Inactive</option>
                 </select>
+                @if ($errors->has('status'))
+                  <span class="text-danger">{{ $errors->first('status') }}</span>
+                @endif
             </div>
           <button class="btn btn-primary" type="submit">Submit</button>
         </form>
