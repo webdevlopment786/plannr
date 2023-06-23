@@ -127,27 +127,31 @@ class EventControllers extends Controller
 
     public function editInvitation(Request $request)
     {
+        $searchData = array();
         $eventId = $request->event_id;
         $editInvitation = CreateInvitation::where('id',$eventId)->where('user_id',$request->user_id)->firstOrFail();
-        // $editInvitation->name = $request->name;
-        // $editInvitation->date = $request->date;
-        // $editInvitation->zone = $request->time_zone;
-        // $editInvitation->time = $request->time;
-        // $editInvitation->location = $request->location;
-        // $editInvitation->phone = $request->phone;
-        // $editInvitation->type_events = $request->type_events;
-        // $editInvitation->dress_code = $request->dress_code;
-        // $editInvitation->food = $request->food;
-        // $editInvitation->add_info = $request->add_info;
-        // $editInvitation->add_admin = $request->add_admin;
-        // $editInvitation->add_chat_room = $request->add_chat_room;
-        // $editInvitation->invite_more = $request->invite_more;
-        // $editInvitation->hosted_by = $request->hosted_by;
-        // $editInvitation->message = $request->message;
-        // $editInvitation->update();
 
-        if($editInvitation){
-            return response(["status" => true, 'data' => 'Invitation Update Successfully'], 200);
+        $data = array();
+        $data['id'] = $editInvitation->id;
+        $data['name'] = $editInvitation->name;
+        $data['time'] = $editInvitation->time;
+        $data['time_zone'] = $editInvitation->zone;
+        $data['location'] = $editInvitation->location;
+        $data['phone'] = $editInvitation->phone;
+        $data['type_events'] = $editInvitation->type_events;
+        $data['dress_code'] = $editInvitation->dress_code;
+        $data['food'] = $editInvitation->food;
+        $data['add_info'] = $editInvitation->add_info;
+        $data['add_admin'] = $editInvitation->add_admin;
+        $data['add_chat_room'] = $editInvitation->add_chat_room;
+        $data['invite_more'] = $editInvitation->invite_more;
+        $data['hosted_by'] = $editInvitation->hosted_by;
+        $data['message'] = $editInvitation->message;
+  
+        array_push($searchData, $data);
+
+        if($searchData){
+            return response(["status" => true, 'data' => $searchData], 200);
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         } 
