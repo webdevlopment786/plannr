@@ -127,31 +127,15 @@ class EventControllers extends Controller
 
     public function editInvitation(Request $request)
     {
+        
         $searchData = array();
         $eventId = $request->event_id;
         $editInvitation = CreateInvitation::where('id',$eventId)->where('user_id',$request->user_id)->firstOrFail();
-
-        $data = array();
-        $data['id'] = $editInvitation->id;
-        $data['name'] = $editInvitation->name;
-        $data['time'] = $editInvitation->time;
-        $data['time_zone'] = $editInvitation->zone;
-        $data['location'] = $editInvitation->location;
-        $data['phone'] = $editInvitation->phone;
-        $data['type_events'] = $editInvitation->type_events;
-        $data['dress_code'] = $editInvitation->dress_code;
-        $data['food'] = $editInvitation->food;
-        $data['add_info'] = $editInvitation->add_info;
-        $data['add_admin'] = $editInvitation->add_admin;
-        $data['add_chat_room'] = $editInvitation->add_chat_room;
-        $data['invite_more'] = $editInvitation->invite_more;
-        $data['hosted_by'] = $editInvitation->hosted_by;
-        $data['message'] = $editInvitation->message;
   
         array_push($searchData, $data);
 
-        if($searchData){
-            return response(["status" => true, 'data' => $searchData], 200);
+        if($editInvitation){
+            return response(["status" => true, 'data' => $editInvitation], 200);
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         } 
