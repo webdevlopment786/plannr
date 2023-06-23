@@ -128,12 +128,10 @@ class EventControllers extends Controller
     public function editInvitation(Request $request)
     {
         
-        $searchData = array();
+       
         $eventId = $request->event_id;
         $editInvitation = CreateInvitation::where('id',$eventId)->where('user_id',$request->user_id)->firstOrFail();
   
-        array_push($searchData, $data);
-
         if($editInvitation){
             return response(["status" => true, 'data' => $editInvitation], 200);
         }else{
