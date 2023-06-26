@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Contact;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Mail;
 
 class ContactControllers extends Controller
 {
@@ -46,5 +47,25 @@ class ContactControllers extends Controller
 
     }
 
-    
+    public function invitationSendMail(Request $request)
+    {
+        // $ids = $request->contact_id;
+        // $userId = $request->user_id;
+
+        // foreach($ids as $id){
+        //     $banners = Contact::where('user_id',$userId)->where('id',$id)->get();
+        //     foreach($banners as $banner){
+                
+        //         $emailid = '';
+        //         $data = array('name'=>"Virat Gandhi");
+        //         $emailid = $banner->email;
+        //         Mail::send('pages.email.OTPVerificationEmail', ['otp' => 'sadsadsa'], function($message) use($request){
+        //                     $message->to($emailid);
+        //                     $message->subject('OTP Received for account verification');
+        //               });
+        //     }
+        // }
+        // return '12345';
+
+    }
 }

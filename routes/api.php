@@ -40,6 +40,7 @@ Route::get('category',[CategoryControllers::class,'index']);
 Route::get('product',[CategoryControllers::class,'product']);
 Route::get('color',[CategoryControllers::class,'color']);
 Route::post('search-fitter',[CategoryControllers::class,'searchFitter']);
+Route::post('clear-all-fitter',[CategoryControllers::class,'clearAllFitter']);
 Route::post('category-wise-product',[CategoryControllers::class,'categoryWiseProduct']);
 
 // Create Invitation
@@ -58,6 +59,7 @@ Route::post('view-invitation',[EventControllers::class,'viewInvitation']);
 // Contacts
 Route::post('create-contact-list',[ContactControllers::class,'createContactList']);
 Route::post('contact-list',[ContactControllers::class,'contactList']);
+Route::post('invitation-send-mail',[ContactControllers::class,'invitationSendMail']);
 
 // home Sccreen 
 Route::get('banner',[HomePageControllers::class,'banner']);

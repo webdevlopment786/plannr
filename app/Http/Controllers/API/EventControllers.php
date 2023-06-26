@@ -27,6 +27,7 @@ class EventControllers extends Controller
                     $data['Phone'] = $event->phone;
                     $data['Date'] = $event->date;
                     $data['Time'] = $event->time;
+                    $data['Draft'] = $event->draft;
                     $data['Hosted_By'] = $event->hosted_by;
                     $data['Image'] = $imagePath;    
                     array_push($searchData, $data);

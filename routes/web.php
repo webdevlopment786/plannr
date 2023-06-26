@@ -71,7 +71,6 @@ Route::delete('trending-delete/{id}',[TrendingControllers::class,'delete'])->nam
 Route::delete('trending-delete-all',[TrendingControllers::class,'deleteAll'])->name('trending.delete.all');
 
 
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/',[DashboardControllers::class,'index'])->name('dashboard.index');
     Route::group(['prefix' => 'tables'], function(){

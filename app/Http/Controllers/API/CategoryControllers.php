@@ -124,6 +124,34 @@ class CategoryControllers extends Controller
        
     }
 
+    public function clearAllFitter(Request $request)
+    {
+        $searchData = array();
+        $categoryId = $request->category_id;
+        $products = CategoryListing::where('category_id',$categoryId)->get();
+
+        $item = $products->count();
+        foreach($products as $product){
+            $imagePath = asset('images/product/'.$product->image);
+            $data = array();
+            $data['id'] = $product->id;
+            $data['category_id'] = $product->category_id;
+            $data['color_id'] = $product->color_id;
+            $data['free_or_premium'] = $product->free_or_premium;
+            $data['product_title'] = $product->product_title;
+            $data['image'] = $product->image;
+            $data['image_path'] = $imagePath;
+            array_push($searchData, $data);
+            
+        }
+
+        if($searchData){
+            return response(["status" => true,  'item' => $item ,'data' => $searchData],200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'],201);
+        }
+    }
+
     public function createInvitation(Request $request)
     {   
         
@@ -285,31 +313,31 @@ class CategoryControllers extends Controller
     public function createInvitationView(Request $request)
     {
 
-        $CreateInvitationView = CreateInvitation::where('user_id',$request->user_id)->first();
-        $product = CategoryListing::where('id',$CreateInvitationView->product_id)->first();
+        $createInvitationView = CreateInvitation::where('user_id',$request->user_id)->first();
+        $product = CategoryListing::where('id',$createInvitationView->product_id)->first();
 
         if($product){
             $imagePath = asset('images/product/'.$product->image);
         }else{
-            $imagePath = asset('images/createinvitation/'.$CreateInvitationView->custom_image);
+            $imagePath = asset('images/createinvitation/'.$createInvitationView->custom_image);
         }
 
         $data['image'] =  $imagePath;
-        $data['Event Title'] =  $CreateInvitationView->name;
-        $data['Start Date'] =  $CreateInvitationView->date;
-        $data['Event Time'] =  $CreateInvitationView->time;
-        $data['Time Zone'] =  $CreateInvitationView->zone;
-        $data['Hosted By'] =  $CreateInvitationView->hosted_by;
-        $data['Phone_number'] =  $CreateInvitationView->phone;
-        $data['Location'] =  $CreateInvitationView->location;
-        $data['message'] =  $CreateInvitationView->message;
-        $data['Type of Event'] =  $CreateInvitationView->type_events;
-        $data['Dress Code'] =  $CreateInvitationView->dress_code;
-        $data['Food / Beverages'] =  $CreateInvitationView->food;
-        $data['Additional Information'] =  $CreateInvitationView->add_info;
-        $data['Add Additional Admin / Event Organizer'] =  $CreateInvitationView->add_admin;
-        $data['Add Chat Room'] =  $CreateInvitationView->add_chat_room;
-        $data['Invite More Than 2 People'] =  $CreateInvitationView->invite_more;
+        $data['Event Title'] =  $createInvitationView->name;
+        $data['Start Date'] =  $createInvitationView->date;
+        $data['Event Time'] =  $createInvitationView->time;
+        $data['Time Zone'] =  $createInvitationView->zone;
+        $data['Hosted By'] =  $createInvitationView->hosted_by;
+        $data['Phone_number'] =  $createInvitationView->phone;
+        $data['Location'] =  $createInvitationView->location;
+        $data['message'] =  $createInvitationView->message;
+        $data['Type of Event'] =  $createInvitationView->type_events;
+        $data['Dress Code'] =  $createInvitationView->dress_code;
+        $data['Food / Beverages'] =  $createInvitationView->food;
+        $data['Additional Information'] =  $createInvitationView->add_info;
+        $data['Add Additional Admin / Event Organizer'] =  $createInvitationView->add_admin;
+        $data['Add Chat Room'] =  $createInvitationView->add_chat_room;
+        $data['Invite More Than 2 People'] =  $createInvitationView->invite_more;
 
         if($data){
             return response(["status" => true, 'data' => $data], 200);
