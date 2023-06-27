@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Contact;
+use App\CreateInvitation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Mail;
@@ -49,23 +50,36 @@ class ContactControllers extends Controller
 
     public function invitationSendMail(Request $request)
     {
-        // $ids = $request->contact_id;
-        // $userId = $request->user_id;
-
-        // foreach($ids as $id){
-        //     $banners = Contact::where('user_id',$userId)->where('id',$id)->get();
-        //     foreach($banners as $banner){
+        $ids = $request->contact_id;
+        $userId = $request->user_id;
+        $invitationId = $request->invitation_id;
+        foreach($ids as $id){
+            $banners = Contact::where('user_id',$userId)->where('id',$id)->get();
+            
+            foreach($banners as $banner){
+                $invationsend = CreateInvitation::where('id',$invitationId)->first();
+                $emailid = $banner->email;
+                // $url = 'http://localhost:8000/create-invition-show?invitation_id=';
+                $url = 'https://webdevelopment33.com/plannr/create-invition-show?invitation_id=';
+                $subject = "<h1>Hello, I am <a href=" .$url.$invationsend->id. "></h1><p>Invitation Link.</p>";
+                $headers = 'Welcome To';
+                 
+                if($emailid){
+                    mail($emailid, $headers, $subject, $url);
+                    // Mail::send('pages.email.OTPVerificationEmail', ['otp' => $html], function($message) use($emailid){
+                    //     $message->to($emailid);
+                    //     $message->subject('OTP Received for account verification');
+                    // });
+                }
                 
-        //         $emailid = '';
-        //         $data = array('name'=>"Virat Gandhi");
-        //         $emailid = $banner->email;
-        //         Mail::send('pages.email.OTPVerificationEmail', ['otp' => 'sadsadsa'], function($message) use($request){
-        //                     $message->to($emailid);
-        //                     $message->subject('OTP Received for account verification');
-        //               });
-        //     }
-        // }
-        // return '12345';
+            }
+        }
 
+        if($emailid){
+            return response(["status" => true, 'data' => 'Mail Send all gets']);
+        }else{
+            return response(["status" => false, 'data' => 'Not found']);
+        }
+       
     }
 }

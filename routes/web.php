@@ -55,6 +55,7 @@ Route::post('subscription-update/{id}',[SubscriptionControllers::class,'update']
 
 // createinvitation
 Route::get('create-invition',[CreateinvitationController::class,'index'])->name('create.invition.index');
+Route::get('create-invition-show',[CreateinvitationController::class,'showInvition'])->name('create.invition.show');
 
 // Banner 
 Route::get('banner',[BannerControllers::class,'index'])->name('banner.index');

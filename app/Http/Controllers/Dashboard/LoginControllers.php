@@ -25,16 +25,16 @@ class LoginControllers extends Controller
         
         $user = user::where('email',$request->email)->first();
         
-        if($user->role == 'admin') {
+        // if($user->role == 'admin') {
             $credentials = $request->only('email', 'password');
             if (Auth::attempt($credentials)) {
                 return redirect()->intended('/')
                             ->withSuccess('Signed in');
             }
-        }
-        else {
-            return redirect()->back()->with('error', 'You are not an admin.');
-        }
+        // }
+        // else {
+            // return redirect()->back()->with('error', 'You are not an admin.');
+        // }
         return redirect("auth/login")->with('error','Login details are not valid');
     }
 

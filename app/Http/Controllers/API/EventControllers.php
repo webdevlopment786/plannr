@@ -153,21 +153,22 @@ class EventControllers extends Controller
         }
 
         $data['image'] =  $imagePath;
-        $data['Event Title'] =  $CreateInvitationView->name;
+        $data['Type of Event'] =  $CreateInvitationView->type_events;
         $data['Start Date'] =  $CreateInvitationView->date;
         $data['Event Time'] =  $CreateInvitationView->time;
-        $data['Time Zone'] =  $CreateInvitationView->zone;
-        $data['Hosted By'] =  $CreateInvitationView->hosted_by;
         $data['Location'] =  $CreateInvitationView->location;
+        $data['Hosted By'] =  $CreateInvitationView->hosted_by;
         $data['Phone_number'] =  $CreateInvitationView->phone;
-        $data['message'] =  $CreateInvitationView->message;
-        $data['Type of Event'] =  $CreateInvitationView->type_events;
-        $data['Dress Code'] =  $CreateInvitationView->dress_code;
-        $data['Food / Beverages'] =  $CreateInvitationView->food;
-        $data['Additional Information'] =  $CreateInvitationView->add_info;
-        $data['Add Additional Admin / Event Organizer'] =  $CreateInvitationView->add_admin;
-        $data['Add Chat Room'] =  $CreateInvitationView->add_chat_room;
-        $data['Invite More Than 2 People'] =  $CreateInvitationView->invite_more;
+        $data['Event Title'] =  $CreateInvitationView->name;
+
+        // $data['Time Zone'] =  $CreateInvitationView->zone;
+        // $data['message'] =  $CreateInvitationView->message;
+        // $data['Dress Code'] =  $CreateInvitationView->dress_code;
+        // $data['Food / Beverages'] =  $CreateInvitationView->food;
+        // $data['Additional Information'] =  $CreateInvitationView->add_info;
+        // $data['Add Additional Admin / Event Organizer'] =  $CreateInvitationView->add_admin;
+        // $data['Add Chat Room'] =  $CreateInvitationView->add_chat_room;
+        // $data['Invite More Than 2 People'] =  $CreateInvitationView->invite_more;
 
         if($data){
             return response(["status" => true, 'data' => $data], 200);
