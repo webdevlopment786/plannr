@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\LoginControllers;
 use App\Http\Controllers\Dashboard\CategoryControllers;
 use App\Http\Controllers\Dashboard\CreateinvitationController;
 use App\Http\Controllers\Dashboard\DashboardControllers;
+use App\Http\Controllers\Dashboard\FAQControllers;
 use App\Http\Controllers\Dashboard\SubscriptionControllers;
 use App\Http\Controllers\Dashboard\TrendingControllers;
 use App\Http\Controllers\Dashboard\UserControllers;
@@ -52,6 +53,14 @@ Route::delete('category-listing-delete-all',[CategoryControllers::class,'deleteA
 Route::get('subscription',[SubscriptionControllers::class,'index'])->name('subscription.index');
 Route::get('subscription-edit/{id}',[SubscriptionControllers::class,'edit'])->name('subscription.edit');
 Route::post('subscription-update/{id}',[SubscriptionControllers::class,'update'])->name('subscription.update');
+
+// FAQ
+Route::get('faq',[FAQControllers::class,'index'])->name('faq.index');
+Route::get('faq-create',[FAQControllers::class,'create'])->name('faq.create');
+Route::post('faq-store',[FAQControllers::class,'store'])->name('faq.store');
+Route::get('faq-edit',[FAQControllers::class,'edit'])->name('faq.edit');
+Route::post('faq-update',[FAQControllers::class,'update'])->name('faq.update');
+Route::delete('faq-delete',[FAQControllers::class,'delete'])->name('faq.delete');
 
 // createinvitation
 Route::get('create-invition',[CreateinvitationController::class,'index'])->name('create.invition.index');

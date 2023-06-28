@@ -67,6 +67,13 @@
           </a>
       </li>
 
+      <li class="nav-item {{ active_class(['faq']) }}">
+          <a href="{{ route('faq.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="file-text"></i>
+            <span class="link-title">FAQ</span>
+          </a>
+      </li>
+
       <li class="nav-item {{ active_class(['tables/*']) }}">
         <a href="{{ route('logout') }}" class="nav-link">
           <i class="link-icon" data-feather="log-out"></i>

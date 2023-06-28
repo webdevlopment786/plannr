@@ -35,6 +35,11 @@ Route::post('forget-password',[APILoginControllers::class,'forgetPassword']);
 Route::post('reset-password',[APILoginControllers::class,'resetPassword']);
 Route::post('resend-otp',[APILoginControllers::class,'resendOTP']);
 
+// User Profile 
+Route::post('user-profile',[APILoginControllers::class,'userProfile']);
+Route::post('user-profile-view',[APILoginControllers::class,'userProfileView']);
+Route::post('user-profile-delete',[APILoginControllers::class,'userProfileDelete']);
+
 // Category
 Route::get('category',[CategoryControllers::class,'index']);
 Route::get('product',[CategoryControllers::class,'product']);

@@ -246,4 +246,58 @@ class LoginControllers extends BaseControllers
           }
              Auth::login($user);
     }
+
+    public function userProfile(Request $request)
+    {
+        $userId = $request->user_id;
+        $user = User::where('id',$userId)->first();
+
+        $imageName = time() . '.' . $request->photo->extension();
+        $request->photo->move(public_path('images/userProfile/'), $imageName);
+
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+        $user->image = $imageName;
+        $user->update();
+
+        if($user){
+            return response(["status" => true, 'data' => 'User Profile Update Successfully'], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+    }
+
+    public function userProfileView(Request $request)
+    {
+        
+        $userId = $request->user_id;
+        $user = User::where('id',$userId)->first();
+
+        $imagePath = asset('images/userProfile/'.$user->image);
+        $data['image'] = $imagePath; 
+        $data['name'] = $user->first_name.' '.$user->last_name; 
+        $data['email'] = $user->email;
+
+        if($data){
+            return response(["status" => true, 'data' => $data ], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+
+
+    }
+
+    public function userProfileDelete(Request $request)
+    {
+        $userId = $request->user_id;
+        $user = User::where('id',$userId)->first();
+        $user->delete();
+
+        if($user){
+              return response(["status" => true, 'data' => 'Profile Deleted Successfully' ], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+
+    }
 }

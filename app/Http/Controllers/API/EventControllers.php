@@ -12,12 +12,18 @@ class EventControllers extends Controller
 {
     public function upComingEvent(Request $request)
     {   
-            $searchData = array();
-            $date = Carbon::today()->subDays(1);
-            $events = CreateInvitation::where('user_id',$request->user_id)->where('date','>=',$date)->get();
-
-            foreach($events as $event){
+        $searchData = array();
+        $date = Carbon::today();
+        $newDate1 = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
+        $newDate =  $date->format('j-n-Y');
+         
+        // $events = CreateInvitation::where('user_id',$request->user_id)->where('date','<=',$newDate)->get();
+        $events = CreateInvitation::where('user_id',$request->user_id)->get(); 
+        foreach($events as $event){
+            if($event->date > $newDate){
                 
+                if ($event->date > $newDate){
+            
                 $product = CategoryListing::where('id',$event->product_id)->first();
                 $data = array();
                 if($product){
@@ -31,26 +37,17 @@ class EventControllers extends Controller
                     $data['Hosted_By'] = $event->hosted_by;
                     $data['Image'] = $imagePath;    
                     array_push($searchData, $data);
-                }else{
-                    $imagePath = asset('images/product/'.$event->custom_image);
-                    $data['id'] = $event->id;
-                    $data['Name'] = $event->name;
-                    $data['Phone'] = $event->phone;
-                    $data['Date'] = $event->date;
-                    $data['Time'] = $event->time;
-                    $data['Hosted_By'] = $event->hosted_by;
-                    $data['Image'] = $imagePath;
-                    array_push($searchData, $data);
-
                 }
-                
             }
-             
-            if($searchData){
-                return response(["status" => true, 'data' => $searchData], 200);
-            }else{
-                return response(["status" => false, 'data' => 'Not found'], 201);
-            }
+        }
+            
+        }
+         
+        if($searchData){
+            return response(["status" => true, 'data' => $searchData], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
     }
 
     public function pastEvent(Request $request)
