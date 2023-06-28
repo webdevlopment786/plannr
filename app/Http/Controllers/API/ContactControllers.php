@@ -82,7 +82,7 @@ class ContactControllers extends Controller
         }
 
         if($to){
-            return response(["status" => true, 'data' => 'Invitation Sent Successfully!']);
+            return response(["status" => true, 'message' => 'Invitation Sent Successfully!']);
         }else{
             return response(["status" => false, 'data' => 'Not found']);
         }
