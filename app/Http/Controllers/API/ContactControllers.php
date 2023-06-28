@@ -50,33 +50,39 @@ class ContactControllers extends Controller
 
     public function invitationSendMail(Request $request)
     {
-        $ids = $request->contact_id;
+        $ids = json_decode($request->contact_id); 
         $userId = $request->user_id;
         $invitationId = $request->invitation_id;
+
         foreach($ids as $id){
             $banners = Contact::where('user_id',$userId)->where('id',$id)->get();
-            
             foreach($banners as $banner){
                 $invationsend = CreateInvitation::where('id',$invitationId)->first();
-                $emailid = $banner->email;
-                // $url = 'http://localhost:8000/create-invition-show?invitation_id=';
-                $url = 'https://webdevelopment33.com/plannr/create-invition-show?invitation_id=';
-                $subject = "<h1>Hello, I am <a href=" .$url.$invationsend->id. "></h1><p>Invitation Link.</p>";
-                $headers = 'Welcome To';
-                 
-                if($emailid){
-                    mail($emailid, $headers, $subject, $url);
-                    // Mail::send('pages.email.OTPVerificationEmail', ['otp' => $html], function($message) use($emailid){
-                    //     $message->to($emailid);
-                    //     $message->subject('OTP Received for account verification');
+                
+                $to = $banner->email;
+                $msg = "Thanks To Receiving My Invitation Card .";
+                $subject="Invitation Card For :- $invationsend->type_events";
+                $headers = 'Content-type: text/html; charset=iso-8859-1'."\r\n";
+                $headers .= 'From:Invitation Card <info@plannr.com>'."\r\n";
+                $ms="<html></body><div><div>Dear $banner->name,</div></br></br>";
+                $ms.="<div style='padding-top:8px;'>I invite you to come and join us to celebrate with us.Please do join us!</div>
+                <div style='padding-top:10px;'><a href='https://webdevelopment33.com/plannr/create-invition-show?invitation_id=$invationsend->id'>Invitation Link</a></div>
+                <div style='padding-top:4px;'>Thank You</div></div>
+                </body></html>";
+                
+                if($to){
+                    mail($to,$subject,$ms,$headers);
+                    // Mail::send('pages.email.OTPVerificationEmail', ['otp' => $ms], function($message) use($to){
+                    //     $message->to($to);
+                    //     $message->subject('Invitation Card For');
                     // });
                 }
                 
             }
         }
 
-        if($emailid){
-            return response(["status" => true, 'data' => 'Mail Send all gets']);
+        if($to){
+            return response(["status" => true, 'data' => 'Invitation Sent Successfully!']);
         }else{
             return response(["status" => false, 'data' => 'Not found']);
         }
