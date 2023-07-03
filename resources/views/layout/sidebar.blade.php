@@ -1,7 +1,7 @@
 <nav class="sidebar">
   <div class="sidebar-header">
     <a href="#" class="sidebar-brand">
-      Pla<span>nner</span>
+      Pla<span>nnr</span>
     </a>
   </div>
   <div class="sidebar-body">

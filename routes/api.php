@@ -71,6 +71,9 @@ Route::get('banner',[HomePageControllers::class,'banner']);
 Route::get('category-wise-product-banner',[HomePageControllers::class,'categoryWiseProductBanner']);
 Route::get('trending-banner',[HomePageControllers::class,'trendingBanner']);
 
+// FAQ
+Route::get('faq',[HomePageControllers::class,'faq']);
+
 //Google
 Route::get('/login/google', [APILoginControllers::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/login/google/callback', [APILoginControllers::class, 'handleGoogleCallback']);

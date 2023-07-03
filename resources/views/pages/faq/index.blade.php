@@ -27,7 +27,7 @@
                 <h6 class="card-title">FAQ List</h6>
             </div>
             <div class="col-sm-12 col-md-6 ">
-                <a href="#"><button type="button" class="btn btn-primary" 
+                <a href="{{route('faq.create')}}"><button type="button" class="btn btn-primary" 
                     style="float: right; margin-bottom: 10px;">Add FAQ</button>
                 </a>
             </div>
@@ -40,21 +40,35 @@
                 <th width="50px"><input type="checkbox" id="master"></th>
                 <th>No</th>
                 <th>Title</th>
-                <th>Describe</th>
+                <th>Description</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
+              @foreach($faqs as $faq)
                 <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
+                    <td><input type="checkbox" class="sub_chk" data-id="{{$faq->id}}"></td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{$faq->title}}</td>
+                    <td>{{ Str::limit($faq->description, 50) }}</td>
+                    <td>   
+                      @if($faq->status == 1)
+                          Active
+                      @else
+                          Block
+                      @endif
+                    </td>
+                    <td>
+                        <a href="{{url('faq-edit/'.$faq->id)}}" class="btn btn-sm btn-info">Edit</a>
+                        <form method="POST" action="{{ url('faq-delete', $faq->id) }}" style="display:inline-block;">
+                            @csrf
+                            <input name="_method" type="hidden" value="DELETE">
+                            <button type="submit" class="btn btn-sm btn-danger show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
+                        </form>
+                    </td>
                 </tr>
-              
+              @endforeach
             </tbody>
           </table>
         </div>
@@ -131,7 +145,7 @@
             if (isConfirm) {
               var join_selected_values = allVals.join(","); 
               $.ajax({
-                  url:'{{url("category-listing-delete-all")}}',
+                  url:'{{url("faq-delete-all")}}',
                   type: 'DELETE',
                   headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                   data: 'ids='+join_selected_values,
@@ -143,7 +157,7 @@
                           });
 
                           swal({
-                          title: "Banner Delete Successfully",
+                          title: "FAQ Delete Successfully",
                           icon: "warning",
                           buttons: [
                             'OK, I am sure!'

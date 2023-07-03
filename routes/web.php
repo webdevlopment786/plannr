@@ -58,9 +58,10 @@ Route::post('subscription-update/{id}',[SubscriptionControllers::class,'update']
 Route::get('faq',[FAQControllers::class,'index'])->name('faq.index');
 Route::get('faq-create',[FAQControllers::class,'create'])->name('faq.create');
 Route::post('faq-store',[FAQControllers::class,'store'])->name('faq.store');
-Route::get('faq-edit',[FAQControllers::class,'edit'])->name('faq.edit');
-Route::post('faq-update',[FAQControllers::class,'update'])->name('faq.update');
-Route::delete('faq-delete',[FAQControllers::class,'delete'])->name('faq.delete');
+Route::get('faq-edit/{id}',[FAQControllers::class,'edit'])->name('faq.edit');
+Route::post('faq-update/{id}',[FAQControllers::class,'update'])->name('faq.update');
+Route::delete('faq-delete/{id}',[FAQControllers::class,'delete'])->name('faq.delete');
+Route::delete('faq-delete-all',[FAQControllers::class,'deleteAll'])->name('faq.delete-all');
 
 // createinvitation
 Route::get('create-invition',[CreateinvitationController::class,'index'])->name('create.invition.index');

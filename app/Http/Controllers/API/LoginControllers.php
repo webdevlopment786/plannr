@@ -261,7 +261,7 @@ class LoginControllers extends BaseControllers
         $user->update();
 
         if($user){
-            return response(["status" => true, 'data' => 'User Profile Update Successfully'], 200);
+            return response(["status" => true, 'message' => 'User Profile Update Successfully'], 200);
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         }
@@ -294,7 +294,7 @@ class LoginControllers extends BaseControllers
         $user->delete();
 
         if($user){
-              return response(["status" => true, 'data' => 'Profile Deleted Successfully' ], 200);
+              return response(["status" => true, 'message' => 'Profile Deleted Successfully' ], 200);
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         }

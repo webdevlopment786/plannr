@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Banner;
 use App\Category;
 use App\CategoryListing;
+use App\FAQ;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -78,6 +79,17 @@ class HomePageControllers extends Controller
         
         if($trendingData){
             return response(["status" => true, 'data' => $trendingData],200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'],201);
+        }
+    }
+
+    public function faq(Request $request)
+    {
+        $faq = FAQ::where('status',1)->get(['title','description']);
+
+        if($faq){
+            return response(["status" => true, 'data' => $faq],200);
         }else{
             return response(["status" => false, 'data' => 'Not found'],201);
         }

@@ -44,7 +44,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlSelect1" class="form-label">Status</label>
-                <select class="form-select" value="{{$users->first_name}}" name="status" id="exampleFormControlSelect1">
+                <select class="form-select" value="{{$users->status}}" name="status" id="exampleFormControlSelect1">
                 @if ($errors->has('status'))
                   <span class="text-danger">{{ $errors->first('status') }}</span>
                 @endif
