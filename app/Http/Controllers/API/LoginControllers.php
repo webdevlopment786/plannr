@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Validator;
 use App\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class LoginControllers extends BaseControllers
@@ -273,11 +274,17 @@ class LoginControllers extends BaseControllers
         $userId = $request->user_id;
         $user = User::where('id',$userId)->first();
 
-        $imagePath = asset('images/userProfile/'.$user->image);
+        if($user->image){
+            $imagePath = asset('images/userProfile/'.$user->image);
+        }else{
+            $imagePath = '';
+        }
+
         $data['image'] = $imagePath; 
         $data['name'] = $user->first_name.' '.$user->last_name; 
         $data['email'] = $user->email;
-
+        Log::info(json_encode($user));
+        
         if($data){
             return response(["status" => true, 'data' => $data ], 200);
         }else{
@@ -292,7 +299,7 @@ class LoginControllers extends BaseControllers
         $userId = $request->user_id;
         $user = User::where('id',$userId)->first();
         $user->delete();
-
+        Log::info(json_encode($user));
         if($user){
               return response(["status" => true, 'message' => 'Profile Deleted Successfully' ], 200);
         }else{

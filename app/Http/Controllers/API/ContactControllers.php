@@ -50,12 +50,16 @@ class ContactControllers extends Controller
 
     public function invitationSendMail(Request $request)
     {
-        $ids = json_decode($request->contact_id); 
+        $id = $request->all();
+        $idsss = $request->contact_id; 
         $userId = $request->user_id;
         $invitationId = $request->invitation_id;
-
-        foreach($ids as $id){
+        
+        
+        foreach($idsss as $id){
             $banners = Contact::where('user_id',$userId)->where('id',$id)->get();
+            
+            // return $banners;
             foreach($banners as $banner){
                 $invationsend = CreateInvitation::where('id',$invitationId)->first();
                 
