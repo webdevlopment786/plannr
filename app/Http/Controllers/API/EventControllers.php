@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\CategoryListing;
-use App\CreateInvitation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\CategoryListing;
+use App\Models\CreateInvitation;
 use Carbon\Carbon;
 
 class EventControllers extends Controller
@@ -19,6 +19,7 @@ class EventControllers extends Controller
          
         // $events = CreateInvitation::where('user_id',$request->user_id)->where('date','<=',$newDate)->get();
         $events = CreateInvitation::where('user_id',$request->user_id)->get(); 
+         
         foreach($events as $event){
             if($event->date > $newDate){
                 

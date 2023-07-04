@@ -5,11 +5,11 @@ use App\Http\Controllers\API\BaseControllers;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use Validator;
-use App\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
+use Validator;
+use App\Models\User;
 
 class LoginControllers extends BaseControllers
 {

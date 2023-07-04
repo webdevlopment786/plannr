@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FAQ extends Model
+class Banner extends Model
 {
     use HasFactory;
 
-    protected $table = 'faq';
+    protected $table = 'banner';
 
     protected $fillable = [
-        'title','description','status',
+        'banner_image','name','which', 'status',
     ];
 }

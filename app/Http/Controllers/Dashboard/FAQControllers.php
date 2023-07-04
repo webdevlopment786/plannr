@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\FAQ;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\FAQ;
 
 class FAQControllers extends Controller
 {
@@ -42,6 +42,7 @@ class FAQControllers extends Controller
         return view('pages.faq.edit',compact('faq'));
 
     }
+    
     public function update(Request $request,$id)
     {
         $request->validate([

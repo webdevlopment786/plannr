@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\CategoryListing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\CreateInvitation;
+use App\Models\CategoryListing;
+use App\Models\CreateInvitation;
 
 class CreateinvitationController extends Controller
 {
@@ -19,7 +19,6 @@ class CreateinvitationController extends Controller
     {
         $value = $request->invitation_id;
         $createinvitions = CreateInvitation::where('id',$value)->first();
-        // return $createinvitions;
         $product = CategoryListing::where('id',$createinvitions->product_id)->first();
         return view('pages.createinvitation.show',compact('createinvitions','product'));
     }

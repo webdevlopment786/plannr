@@ -1,18 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Color extends Model
 {
     use HasFactory;
-
-    protected $table = 'contact';
+    protected $table = 'color';
 
     protected $fillable = [
-        'name', 'mobile_number', 'email','user_id',
+        'color_name', 'color_code',
     ];
 }
-

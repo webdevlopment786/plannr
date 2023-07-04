@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Contact;
-use App\CreateInvitation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\CreateInvitation;
+use App\Models\Contact;
 use Mail;
 
 class ContactControllers extends Controller
@@ -45,6 +45,29 @@ class ContactControllers extends Controller
         }else{
             return response(["status" => false, 'data' => 'Not found']);
         }
+
+    }
+
+    public function contactSYNC(Request $request)
+    {
+        $contacts[] = $request->contact_list;
+        // return $contacts;
+        foreach($contacts as $contact){
+            $contactLists = New Contact();
+            $contactLists->user_id = $request->user_id;
+            $contactLists->name = $contact;
+            $contactLists->mobile_number = $contact;
+            $contactLists->email = $contact;
+            $contactLists->save();
+        }
+
+        if($contactLists){
+            return response(["status" => true, 'data' => 'Contact SYNC Successfully'], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+
+        
 
     }
 

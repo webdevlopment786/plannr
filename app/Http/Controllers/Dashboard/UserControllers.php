@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Validator;
 
 class UserControllers extends Controller
 {
+
     public function index(Request $request)
     {
         $users = User::orderBy('id', 'DESC')->get();

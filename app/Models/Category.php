@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Banner extends Model
+class Category extends Model
 {
     use HasFactory;
 
-    protected $table = 'banner';
+    protected $table = 'category';
 
     protected $fillable = [
-        'banner_image','name','which', 'status',
+        'name', 'status','order',
     ];
 }

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Category;
-use App\CategoryListing;
-use App\Color;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
+use App\Models\CategoryListing;
+use App\Models\Category;
+use App\Models\Color;
 
 class CategoryControllers extends Controller
 {

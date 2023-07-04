@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
-use App\Banner;
+use App\Models\Banner;
 
 class BannerControllers extends Controller
 {

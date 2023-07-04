@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Subscription;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 
 
 class SubscriptionControllers extends Controller
 {
+    
     public function index()
     {
         $subscriptions = Subscription::get();

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\CategoryListing;
-use App\Category;
-use App\User;
+use App\Models\CategoryListing;
+use App\Models\Category;
+use App\Models\User;
 
 class DashboardControllers extends Controller
 {

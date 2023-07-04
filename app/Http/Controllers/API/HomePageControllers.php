@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Banner;
-use App\Category;
-use App\CategoryListing;
-use App\FAQ;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use App\Models\CategoryListing;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Banner;
+use App\Models\FAQ;
 
 class HomePageControllers extends Controller
 {

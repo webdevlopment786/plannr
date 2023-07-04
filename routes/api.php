@@ -5,6 +5,7 @@ use App\Http\Controllers\API\ContactControllers;
 use App\Http\Controllers\API\EventControllers;
 use App\Http\Controllers\API\LoginControllers as APILoginControllers;
 use App\Http\Controllers\API\HomePageControllers;
+use App\Http\Controllers\API\SubscriptionControllers;
 use Illuminate\Http\Request;
 
 /*
@@ -61,9 +62,13 @@ Route::post('event-overview',[EventControllers::class,'eventOverView']);
 Route::post('edit-invitation',[EventControllers::class,'editInvitation']);
 Route::post('view-invitation',[EventControllers::class,'viewInvitation']);
 
+// Subscription
+Route::get('subscription',[SubscriptionControllers::class,'index']);
+
 // Contacts
 Route::post('create-contact-list',[ContactControllers::class,'createContactList']);
 Route::post('contact-list',[ContactControllers::class,'contactList']);
+Route::post('contact-sync',[ContactControllers::class,'contactSYNC']);
 Route::post('invitation-send-mail',[ContactControllers::class,'invitationSendMail']);
 
 // home Sccreen 
