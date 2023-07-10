@@ -6,7 +6,9 @@ use App\Http\Controllers\Dashboard\CategoryControllers;
 use App\Http\Controllers\Dashboard\CreateinvitationController;
 use App\Http\Controllers\Dashboard\DashboardControllers;
 use App\Http\Controllers\Dashboard\FAQControllers;
+use App\Http\Controllers\Dashboard\PrivacyPolicyControllers;
 use App\Http\Controllers\Dashboard\SubscriptionControllers;
+use App\Http\Controllers\Dashboard\TermsofserviceController;
 use App\Http\Controllers\Dashboard\TrendingControllers;
 use App\Http\Controllers\Dashboard\UserControllers;
 
@@ -62,6 +64,16 @@ Route::get('faq-edit/{id}',[FAQControllers::class,'edit'])->name('faq.edit');
 Route::post('faq-update/{id}',[FAQControllers::class,'update'])->name('faq.update');
 Route::delete('faq-delete/{id}',[FAQControllers::class,'delete'])->name('faq.delete');
 Route::delete('faq-delete-all',[FAQControllers::class,'deleteAll'])->name('faq.delete-all');
+
+// Term Of Service
+Route::get('term-service',[TermsofserviceController::class,'index'])->name('term.service.index');
+Route::get('term-service-edit/{id}',[TermsofserviceController::class,'edit'])->name('term.service.edit');
+Route::post('term-service-update/{id}',[TermsofserviceController::class,'update'])->name('term.service.update');
+
+// Privacy-Policy
+Route::get('privacy-policy',[PrivacyPolicyControllers::class,'index'])->name('privacy.policy.index');
+Route::get('privacy-policy-edit/{id}',[PrivacyPolicyControllers::class,'edit'])->name('privacy.policy.edit');
+Route::post('privacy-policy-update/{id}',[PrivacyPolicyControllers::class,'update'])->name('privacy.policy.update');
 
 // createinvitation
 Route::get('create-invition',[CreateinvitationController::class,'index'])->name('create.invition.index');

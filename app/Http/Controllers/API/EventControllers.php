@@ -13,19 +13,14 @@ class EventControllers extends Controller
     public function upComingEvent(Request $request)
     {   
         $searchData = array();
-        $date = Carbon::today();
-        $newDate1 = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
-        $newDate =  $date->format('j-n-Y');
-         
-        // $events = CreateInvitation::where('user_id',$request->user_id)->where('date','<=',$newDate)->get();
-        $events = CreateInvitation::where('user_id',$request->user_id)->get(); 
-         
+        $val = now()->format('Y-m-d');
+        $events = CreateInvitation::where('user_id',$request->user_id)->whereDate('date', '>=', $val)->get(); 
+        // return $events;
+        
         foreach($events as $event){
-            if($event->date > $newDate){
-                
-                if ($event->date > $newDate){
             
                 $product = CategoryListing::where('id',$event->product_id)->first();
+                
                 $data = array();
                 if($product){
                     $imagePath = asset('images/product/'.$product->image);
@@ -39,8 +34,6 @@ class EventControllers extends Controller
                     $data['Image'] = $imagePath;    
                     array_push($searchData, $data);
                 }
-            }
-        }
             
         }
          
@@ -173,5 +166,20 @@ class EventControllers extends Controller
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         }
+    }
+
+    public function cancelEvent(Request $request)
+    {
+        $cancel = CreateInvitation::where('id',$request->event_id)->where('user_id',$request->user_id)->first();
+        $cancel->draft = $request->draft;
+        $cancel->update();
+
+        if($cancel){
+            return response(["status" => true, 'message' => 'Event Cancel Successfully'], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+
+
     }
 }

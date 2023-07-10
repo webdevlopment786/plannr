@@ -74,13 +74,26 @@
           </a>
       </li>
 
+      <li class="nav-item {{ active_class(['term-service  ']) }}">
+          <a href="{{ route('term.service.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="sidebar"></i>
+            <span class="link-title">Terms Of Service</span>
+          </a>
+      </li>
+
+      <li class="nav-item {{ active_class(['privacy-policy']) }}">
+          <a href="{{ route('privacy.policy.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="cpu"></i>
+            <span class="link-title">Privacy Policy</span>
+          </a>
+      </li>
+
       <li class="nav-item {{ active_class(['tables/*']) }}">
         <a href="{{ route('logout') }}" class="nav-link">
           <i class="link-icon" data-feather="log-out"></i>
           <span class="link-title">Logout</span>
         </a>
       </li>
-
     </ul>
   </div>
 </nav>

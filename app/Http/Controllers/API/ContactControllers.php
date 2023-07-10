@@ -50,9 +50,14 @@ class ContactControllers extends Controller
 
     public function contactSYNC(Request $request)
     {
-        $contacts[] = $request->contact_list;
-        // return $contacts;
+      
+        // return $request->all();
+        $contacts = $request->contact_list;
+        $data = json_encode($contacts);
+        // return $data; 
+        
         foreach($contacts as $contact){
+            return $contact;
             $contactLists = New Contact();
             $contactLists->user_id = $request->user_id;
             $contactLists->name = $contact;

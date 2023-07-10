@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CategoryControllers;
+use App\Http\Controllers\API\CMSControllers;
 use App\Http\Controllers\API\ContactControllers;
 use App\Http\Controllers\API\EventControllers;
 use App\Http\Controllers\API\LoginControllers as APILoginControllers;
@@ -61,6 +62,7 @@ Route::post('event-past',[EventControllers::class,'pastEvent']);
 Route::post('event-overview',[EventControllers::class,'eventOverView']);
 Route::post('edit-invitation',[EventControllers::class,'editInvitation']);
 Route::post('view-invitation',[EventControllers::class,'viewInvitation']);
+Route::post('cancel-event',[EventControllers::class,'cancelEvent']);
 
 // Subscription
 Route::get('subscription',[SubscriptionControllers::class,'index']);
@@ -88,6 +90,11 @@ Route::get('/login/google/callback', [APILoginControllers::class, 'handleGoogleC
 Route::get('/login/facebook', [APILoginControllers::class, 'redirectToFacebook'])->name('login.facebook');
 Route::get('/login/facebook/callback', [APILoginControllers::class, 'handleFacebookCallback']);
 
+// trem of serves
+Route::get('trem-of-serves',[CMSControllers::class,'trem']);
+
+// privacy-policy
+Route::get('privacy-policy',[CMSControllers::class,'privacy']);
 
 // Route::get('redirect/{provider}', [APILoginControllers::class, 'redirect']);
 // Route::get('login/{provider}', [APILoginControllers::class, 'callback']);

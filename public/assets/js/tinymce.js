@@ -9,7 +9,8 @@ $(function() {
     tinymce.init({
       selector: '#tinymceExample',
       height: 400,
-      default_text_color: 'red',
+      default_text_color: 'white',
+      content_style: 'body p { color: #fff;}',
       plugins: 'advlist autolink lists link image charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen',
       toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
       toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
