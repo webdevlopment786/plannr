@@ -96,5 +96,9 @@ Route::get('trem-of-serves',[CMSControllers::class,'trem']);
 // privacy-policy
 Route::get('privacy-policy',[CMSControllers::class,'privacy']);
 
+// contact us 
+Route::get('contact',[CMSControllers::class,'contactUs']);
+
+
 // Route::get('redirect/{provider}', [APILoginControllers::class, 'redirect']);
 // Route::get('login/{provider}', [APILoginControllers::class, 'callback']);

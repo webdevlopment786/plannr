@@ -22,6 +22,10 @@ class PrivacyPolicyControllers extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'content' => 'required',
+        ]);
+
         $privacy = CMSPages::find($id);
         $privacy->content = $request->content;
         $privacy->which_page = 'privacy';

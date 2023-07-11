@@ -53,11 +53,11 @@ class ContactControllers extends Controller
       
         // return $request->all();
         $contacts = $request->contact_list;
-        $data = json_encode($contacts);
-        // return $data; 
         
+        $data = json_encode($contacts);
+        // return $data;         
         foreach($contacts as $contact){
-            return $contact;
+            // return $contact;
             $contactLists = New Contact();
             $contactLists->user_id = $request->user_id;
             $contactLists->name = $contact;
@@ -71,8 +71,6 @@ class ContactControllers extends Controller
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         }
-
-        
 
     }
 

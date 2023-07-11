@@ -22,8 +22,8 @@
 @section('content')
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Privacy Policy</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Privacy Policy List</li>
+    <li class="breadcrumb-item"><a href="#">Contact Us</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
   </ol>
 </nav>
 <div class="row">
@@ -32,7 +32,7 @@
       <div class="card-body">
         <div class="row">
             <div class="col-sm-12 col-md-6">
-                <h6 class="card-title">Privacy Policy List</h6>
+                <h6 class="card-title">Contact Us List</h6>
             </div>
             <!-- <div class="col-sm-12 col-md-6 ">
               <button type="button" class="btn btn-primary" style="float: right; margin-bottom: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Terms and Service</button>
@@ -44,19 +44,19 @@
             <thead>
               <tr>
                 <th>No</th>
-                <th>Privacy Policy</th>
+                <th>Contact Us</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-                @foreach($privacys as $privacy)
-                <tr>
-                   <td>{{ $loop->iteration }}</td>
-                   <td>{!! Str::limit($privacy->content, 150) !!}</td>
-                   <td>
-                     <a class="btn btn-success" href="{{url('privacy-policy-edit/'.$privacy->id)}}">Edit</a>
-                  </td>
-                </tr>
+                @foreach($contacts as $contact)
+                    <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{!! Str::limit($contact->content, 150) !!}</td>
+                    <td>
+                        <a class="btn btn-success" href="{{url('contact-edit/'.$contact->id)}}">Edit</a>
+                    </td>
+                    </tr>
                 @endforeach
             </tbody>
           </table>

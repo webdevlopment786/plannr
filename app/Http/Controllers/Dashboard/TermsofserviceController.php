@@ -22,6 +22,10 @@ class TermsofserviceController extends Controller
 
     public function update(Request $request,$id)
     {
+        $this->validate($request, [
+            'content' => 'required',
+        ]);
+
         $trems = CMSPages::find($id);
         $trems->content = $request->content;
         $trems->which_page = 'trems';

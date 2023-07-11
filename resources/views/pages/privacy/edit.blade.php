@@ -23,6 +23,9 @@ body {
                     <div class="card-body">
                         <h4 class="card-title"> Privacy Policy </h4>
                         <textarea class="form-control" name="content" id="tinymceExample" rows="10">{{$privacy->content}}</textarea>
+                        @if ($errors->has('content'))
+                          <span class="text-danger">{{ $errors->first('content') }}</span>
+                        @endif
                     </div>
                     </div>
                 </div>

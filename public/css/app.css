@@ -22519,3 +22519,8 @@ div.tox .tox-dialog__body {
 }
 
 /*# sourceMappingURL=app.css.map*/
+
+
+span.tox-statusbar__branding {
+  display: none !important;
+}

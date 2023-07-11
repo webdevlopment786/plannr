@@ -88,6 +88,13 @@
           </a>
       </li>
 
+      <li class="nav-item {{ active_class(['contact']) }}">
+          <a href="{{ route('contact.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="hard-drive"></i>
+            <span class="link-title">Contact Us</span>
+          </a>
+      </li>
+
       <li class="nav-item {{ active_class(['tables/*']) }}">
         <a href="{{ route('logout') }}" class="nav-link">
           <i class="link-icon" data-feather="log-out"></i>

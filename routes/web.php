@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\BannerControllers;
 use App\Http\Controllers\Dashboard\LoginControllers;
 use App\Http\Controllers\Dashboard\CategoryControllers;
+use App\Http\Controllers\Dashboard\ContactControllers;
 use App\Http\Controllers\Dashboard\CreateinvitationController;
 use App\Http\Controllers\Dashboard\DashboardControllers;
 use App\Http\Controllers\Dashboard\FAQControllers;
@@ -75,7 +76,12 @@ Route::get('privacy-policy',[PrivacyPolicyControllers::class,'index'])->name('pr
 Route::get('privacy-policy-edit/{id}',[PrivacyPolicyControllers::class,'edit'])->name('privacy.policy.edit');
 Route::post('privacy-policy-update/{id}',[PrivacyPolicyControllers::class,'update'])->name('privacy.policy.update');
 
-// createinvitation
+// ContactUs
+Route::get('contact',[ContactControllers::class,'index'])->name('contact.index');
+Route::get('contact-edit/{id}',[ContactControllers::class,'edit'])->name('contact.edit');
+Route::post('contact-update/{id}',[ContactControllers::class,'update'])->name('contact.update');
+
+// Create Invitation
 Route::get('create-invition',[CreateinvitationController::class,'index'])->name('create.invition.index');
 Route::get('create-invition-show',[CreateinvitationController::class,'showInvition'])->name('create.invition.show');
 

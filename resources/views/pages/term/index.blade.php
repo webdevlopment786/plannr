@@ -52,9 +52,9 @@
                 @foreach($trems as $trem)
                 <tr>
                    <td>{{ $loop->iteration }}</td>
-                   <td>{!! Str::limit($trem->content, 200) !!}</td>
+                   <td>{!! Str::limit($trem->content, 150) !!}</td>
                    <td>
-                     <a class="btn btn-success mt-4" href="{{url('term-service-edit/'.$trem->id)}}">Edit</a>
+                     <a class="btn btn-success" href="{{url('term-service-edit/'.$trem->id)}}">Edit</a>
                   </td>
                 </tr>
                 @endforeach

@@ -33,4 +33,17 @@ class CMSControllers extends Controller
         }
         
     }
+
+    public function contactUs()
+    {
+
+        $contact = CMSPages::where('which_page','contact')->get(['content']);
+
+        if($contact){
+            return response(["status" => true, 'data' => $contact], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+        
+    }
 }
