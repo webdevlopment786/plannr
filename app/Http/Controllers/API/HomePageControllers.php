@@ -85,10 +85,19 @@ class HomePageControllers extends Controller
 
     public function faq(Request $request)
     {
-        $faq = FAQ::where('status',1)->get(['title','description']);
+        $trendingData = array();
+        $faqs = FAQ::where('status',1)->get();
 
-        if($faq){
-            return response(["status" => true, 'data' => $faq],200);
+        foreach($faqs as $faq){
+            $data = array();
+            $data['title'] = $faq->title;
+            $data['description'] = $faq->description;
+            $data['view'] = 'false';
+            array_push($trendingData, $data);
+        }
+
+        if($trendingData){
+            return response(["status" => true, 'data' => $trendingData],200);
         }else{
             return response(["status" => false, 'data' => 'Not found'],201);
         }
