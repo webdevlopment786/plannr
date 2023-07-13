@@ -79,15 +79,16 @@ class CategoryControllers extends Controller
     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-        $categorys =  Category::whereIn('id',explode(",",$ids))->delete();
+        $categorys =  Category::whereIn('id',explode(",",$ids))->get();
+        
         foreach($categorys as $category){
             $image_path = public_path('images/banner/'.$category->image);
             if(File::exists($image_path)) {
                 File::delete($image_path);
             }
-            
             $category->delete();
         }
+
         return response()->json(['success'=>"Categories Deleted successfully."]);
     }
 
