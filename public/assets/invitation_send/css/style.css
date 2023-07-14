@@ -1,8 +1,8 @@
-/* Nunito Font */
+/* / Nunito Font / */
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap');
 
-/* Global CSS Start Here */
+/* / Global CSS Start Here / */
 
 body {
     font-family: 'Nunito', sans-serif !important;
@@ -39,24 +39,42 @@ body {
     text-decoration: none;
     color: #fff;
 }
-
+.offcanvas-end {
+    top: 0;
+    right: 0;
+    width: 500px !important;
+    border-left: 1px solid rgba(0,0,0,.2);
+    transform: translateX(100%);
+}
 .heading {
     display: flex;
     justify-content: right;
     align-items: center;
 }
-
+.bor-1 {
+    border: unset;
+    background-color: #fff;
+}
+.wi-95 {
+    width: 95% !important;
+}
+#search-text {
+    width: 89%;
+}
 .bg-sec {
     box-shadow: rgb(122 118 118 / 20%) 2px 5px 5px;
 }
 .bg-sec{
     width: 100%;
 }
+input:focus-visible {
+    outline: inherit;
+}
 .bg-white{
     color: #fff;
 }
 .form-page {
-    width: 80%;
+    width: 70%;
 }
 
 .sec::before {
@@ -70,7 +88,7 @@ body {
 
 .bg-se {
     background-color: #263238;
-    /* height: 100px; */
+    /* / height: 100px; / */
 }
 
 .icon {
@@ -124,7 +142,7 @@ body {
 }
 
 .bt-sec {
-    width: 15%;
+    width: 10%;
     height: 15%;
 }
 
@@ -401,7 +419,7 @@ body {
     }
 
     .img-w {
-        width: 151px;
+        width: 145px;
     }
 
     .bg-msg {
