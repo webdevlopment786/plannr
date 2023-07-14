@@ -378,5 +378,28 @@
             </div>
         </div>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    
+    <script>new WOW().init();</script>
+    <script>
+        const minusButton = document.getElementById('minus');
+        const plusButton = document.getElementById('plus');
+        const inputField = document.getElementById('input');
+
+        minusButton.addEventListener('click', event => {
+            event.preventDefault();
+            const currentValue = Number(inputField.value) || 0;
+            inputField.value = currentValue - 1;
+        });
+
+        plusButton.addEventListener('click', event => {
+            event.preventDefault();
+            const currentValue = Number(inputField.value) || 0;
+            inputField.value = currentValue + 1;
+        });
+    </script>
 </body>
 </html>
