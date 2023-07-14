@@ -1,0 +1,415 @@
+/* Nunito Font */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap');
+
+/* Global CSS Start Here */
+
+body {
+    font-family: 'Nunito', sans-serif !important;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+:root {
+    --main-bg-color: #FFFFE5;
+    --dark-green-color: #263238;
+    --dark-blue-color: #012130;
+}
+
+.bg-color {
+    background-color: #FFFFE5;
+}
+
+.button {
+    background-color: #263238;
+    width: 97%;
+    height: 53px;
+    border-radius: 10px;
+}
+
+.butt {
+    border-color: #263238;
+    background-color: unset;
+    color: #263238;
+}
+
+.button a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.heading {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.bg-sec {
+    box-shadow: rgb(122 118 118 / 20%) 2px 5px 5px;
+}
+
+.form-page {
+    width: 80%;
+}
+
+.sec::before {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 127px;
+    background-color: rgb(0, 0, 0);
+    right: 50%;
+}
+
+.bg-se {
+    background-color: #263238;
+    height: 50px;
+}
+
+.icon {
+    font-size: 25px;
+}
+
+.img-w {
+    width: 190px;
+}
+
+.bt {
+    width: 100px;
+}
+
+.accordion-button {
+    background-color: #012130 !important;
+}
+
+.accordion-item {
+    background-color: #f2f2f2 !important;
+    padding: 10px 10px !important;
+    border: none !important;
+}
+
+.accordion-button:not(.collapsed)::after {
+    transform: rotate(-180deg);
+    background-image: unset !important;
+}
+
+.b-color {
+    background-color: #7a8b87;
+}
+
+.sec-bg i {
+    background: #012130;
+    height: 40px;
+    width: 50px;
+}
+
+.img-with {
+    width: 10%;
+}
+
+.bg-msg {
+    background-color: #263238;
+    border-radius: 10px 10px 10px 0px;
+}
+
+.bg-ms {
+    border-radius: 10px 10px 0px 10px;
+}
+
+.mar-l {
+    margin-left: 20px;
+}
+
+.bt-sec {
+    width: 15%;
+    height: 15%;
+}
+
+@media (max-width:1199.98px) {
+    .bt {
+        width: 98% !important;
+    }
+
+    .bt-we {
+        width: 97% !important;
+    }
+
+    .mar-l {
+        margin-left: 15px;
+        width: 30% !important;
+    }
+
+    .sec-p-page {
+        width: 10% !important;
+    }
+
+    .box {
+        width: 20% !important;
+    }
+
+    .bg-msg {
+        width: 22% !important;
+    }
+
+    .bg-ms {
+        width: 10% !important;
+    }
+
+    .with-s {
+        width: 60%;
+    }
+
+    .margin-text {
+        width: 11% !important;
+    }
+
+    .m-w {
+        width: 80% !important;
+    }
+
+    .with-s {
+        width: 60% !important;
+    }
+
+    .button {
+        width: 107px;
+    }
+
+    .m-sec-p .mt-3 {
+        margin-top: unset !important;
+    }
+
+    .bt-se {
+        width: 12% !important;
+    }
+}
+
+@media (max-width:991.98px) {
+    .bt-sec {
+        width: 20% !important;
+        height: 20% !important;
+    }
+    .with-sec {
+        width: 100% !important;
+    }
+    .heading {
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 10px !important;
+    }
+    .bt-we {
+        width: 100% !important;
+    }
+
+    .justi-sec {
+        justify-content: center;
+    }
+
+    .sec-p-page {
+        width: 23% !important;
+        margin-top: 20px !important;
+    }
+
+    .butt {
+        margin-left: 17px;
+    }
+
+    .button {
+        width: 100%;
+        padding: 0px;
+    }
+
+    .font-s {
+        font-size: 15px !important;
+    }
+
+    .m-sec {
+        margin-top: 13% !important;
+    }
+
+    .with-50-se {
+        width: 100% !important;
+    }
+
+    .m-sec-p .mt-3 {
+        margin-top: unset !important;
+    }
+
+    .box {
+        width: 29% !important;
+    }
+
+    .bg-msg {
+        width: 31% !important;
+    }
+
+    .icon-wi {
+        width: 12% !important;
+    }
+
+    .bg-ms {
+        width: 15% !important;
+    }
+
+    .img-with {
+        width: 20%;
+    }
+
+    .m-w {
+        width: 79% !important;
+    }
+
+    .margin-text {
+        width: 15% !important;
+    }
+
+    .with-s {
+        width: 75% !important;
+    }
+
+    .bt-se {
+        width: 30% !important;
+    }
+
+    .sec.mb-5 {
+        margin-bottom: unset !important;
+    }
+
+    .sec::before {
+        content: "";
+        position: absolute;
+        width: 78%;
+        height: 1px;
+        background-color: rgb(0, 0, 0);
+        right: 11%;
+        bottom: -89%;
+    }
+}
+
+@media (max-width:767.98px) {
+    .icon-wi {
+        width: 20% !important;
+    }
+
+    .sec::before {
+        bottom: -70%;
+    }
+
+    .col-lg-6.m-sec-p {
+        --bs-gutter-y: 2rem !important;
+    }
+
+    .m-sec {
+        margin-top: 18% !important;
+    }
+
+    .button {
+        width: 100%;
+        padding: 0px;
+    }
+
+    .butt {
+        margin-left: 5px;
+    }
+
+    .font-size {
+        font-size: 16px !important;
+    }
+
+    .with-s {
+        width: 100% !important;
+    }
+
+    .margin-text {
+        width: 21% !important;
+    }
+
+    .bt {
+        width: 95% !important;
+    }
+
+    .sec-p-page {
+        width: 25% !important;
+        margin-top: 10px !important;
+    }
+
+    .bt-sec {
+        width: 40% !important;
+        height: 40% !important;
+    }
+
+    .bt-se {
+        width: 50% !important;
+    }
+
+    .with-sec {
+        width: 100% !important;
+        justify-content: center !important;
+        margin-top: 15px !important;
+    }
+
+    .bg-ms {
+        width: 20% !important;
+    }
+
+    .bg-msg {
+        width: 55% !important;
+    }
+
+    .box {
+        width: 50% !important;
+    }
+
+    .img-with {
+        width: 31%;
+    }
+
+    .bg-ms {
+        width: 24% !important;
+    }
+
+    .icon {
+        font-size: 20px;
+    }
+
+    .icon-wi {
+        width: 16% !important;
+    }
+}
+
+@media (max-width:357px) {
+    .m-w {
+        width: 75% !important;
+    }
+
+    .jus-sec {
+        justify-content: space-between;
+    }
+
+    .margin-text {
+        width: 25% !important;
+    }
+
+    .col-lg-6.m-sec-p {
+        margin-top: 20px;
+    }
+
+    .img-w {
+        width: 151px;
+    }
+
+    .bg-msg {
+        width: 63% !important;
+    }
+
+    .bg-ms {
+        width: 30% !important;
+    }
+
+    .with-50-se {
+        width: 100% !important;
+    }
+
+}

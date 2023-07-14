@@ -22,4 +22,19 @@ class CreateinvitationController extends Controller
         $product = CategoryListing::where('id',$createinvitions->product_id)->first();
         return view('pages.createinvitation.show',compact('createinvitions','product'));
     }
+
+    public function invitationSend()
+    {
+        return view('pages.invitationsend');
+    }
+
+    public function invationclick()
+    {
+        return view('pages.invationclick');
+    }
+
+    public function messagesend()
+    {
+        return view('pages.messageclick');
+    }
 }

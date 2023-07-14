@@ -41,7 +41,6 @@ Route::delete('category-delete/{id}',[CategoryControllers::class,'delete'])->nam
 Route::delete('category-delete-all', [CategoryControllers::class,'deleteAll'])->name('category.delete.all');
 Route::post('category-sortabledatatable',[CategoryControllers::class,'updateOrder'])->name('category.sortabledatatable');
 
-
 // Category Listing
 Route::get('category-listing-index',[CategoryControllers::class,'listing'])->name('category.listing.index');
 Route::get('category-listing-create',[CategoryControllers::class,'listingCreate'])->name('category.listing.create');
@@ -84,6 +83,9 @@ Route::post('contact-update/{id}',[ContactControllers::class,'update'])->name('c
 // Create Invitation
 Route::get('create-invition',[CreateinvitationController::class,'index'])->name('create.invition.index');
 Route::get('create-invition-show',[CreateinvitationController::class,'showInvition'])->name('create.invition.show');
+Route::get('invitation-send',[CreateinvitationController::class,'invitationSend'])->name('invitationsend');
+Route::get('invitation',[CreateinvitationController::class,'invationclick'])->name('invitation');
+Route::get('message',[CreateinvitationController::class,'messagesend'])->name('message');
 
 // Banner 
 Route::get('banner',[BannerControllers::class,'index'])->name('banner.index');
