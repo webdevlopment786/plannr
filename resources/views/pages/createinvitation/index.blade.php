@@ -38,29 +38,92 @@
               <button type="button" class="btn btn-primary" style="float: right; margin-bottom: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Banner</button>
             </div> -->
         </div>
+
         @foreach($createinvitions as $createinvition)
         <div class="modal fade" id="exampleModalToggle-{{$createinvition->id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel">Create Invition List</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <table id="dataTableExample" class="table">
-            <thead>
-              <tr>
-                <th>Product_id</th>
-                <th>Name OF Event</th>
-                <th>Event Date</th>
-                <th>Event Time</th>
-                <th>Time Zone</th>
-                <th>Hosted By</th>
-                <th>Location</th>
-                <th>Host Phone Number</th> 
-              </tr>
-            </thead>
-            <tbody>
+          <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalToggleLabel">Create Invition List</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <table id="dataTableExampleone" class="table">
+                <thead>
+                    <tr>
+                      <th>Product_id</th>
+                      <th>Name OF Event</th>
+                      <th>Event Date</th>
+                      <th>Event Time</th>
+                      <th>Time Zone</th>
+                      <th>Hosted By</th>
+                      <th>Location</th>
+                      <th>Host Phone Number</th> 
+                    </tr>
+                </thead>
+              <tbody>
+                  <tr>
+                      <td>{{$createinvition->product_id}}</td>
+                      <td>{{$createinvition->name}}</td>
+                      <td>{{$createinvition->time}}</td>
+                      <td>{{$createinvition->date}}</td>
+                      <td>{{$createinvition->zone}}</td>
+                      <td>{{$createinvition->hosted_by}}</td>
+                      <td>{{$createinvition->location}}</td>
+                      <td>{{$createinvition->phone}}</td>
+                  <tr>
+              </tbody>
+            </table>
+
+            <table id="dataTableExampletwo" class="table">
+              <thead>
+                <tr>
+                  <th>Message</th>
+                  <th>Types OF event</th>
+                  <th>Dress Code </th>
+                  <th>Food Beverages</th>
+                  <th>Additione information</th>
+                  <th>Add Additional Admin /
+                  <br>Event Organizer</th>
+                  <th>Add Chat Room</th>
+                  <th>Invite More Than 2 People</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>{{$createinvition->message}}</td>
+                      <td>{{$createinvition->type_events}}</td>
+                      <td>{{$createinvition->dress_code}}</td>
+                      <td>{{$createinvition->food}}</td>
+                      <td>{{$createinvition->add_info}}</td>
+                      <td>{{$createinvition->add_admin}}</td>
+                      <td>{{$createinvition->add_chat_room}}</td>
+                      <td>{{$createinvition->invite_more}}</td>
+                  <tr>
+              </tbody>
+            </table>
+              </div>
+              </div>
+          </div>
+        </div>
+        @endforeach
+
+        <div class="table-responsive">
+          <table id="dataTableExample" class="table">
+              <thead>
+                <tr>
+                  <th>Product_id</th>
+                  <th>Name OF Event</th>
+                  <th>Event Time</th>
+                  <th>Event Date</th>
+                  <th>Time Zone</th>
+                  <th>Hosted By</th>
+                  <th>Location</th>
+                  <th>Active</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($createinvitions as $createinvition)
                 <tr>
                     <td>{{$createinvition->product_id}}</td>
                     <td>{{$createinvition->name}}</td>
@@ -69,72 +132,13 @@
                     <td>{{$createinvition->zone}}</td>
                     <td>{{$createinvition->hosted_by}}</td>
                     <td>{{$createinvition->location}}</td>
-                    <td>{{$createinvition->phone}}</td>
-                <tr>
-            </tbody>
-          </table>
-          <table id="dataTableExample" class="table">
-            <thead>
-              <tr>
-               <th>Message</th>
-                <th>Types OF event</th>
-                <th>Dress Code </th>
-                <th>Food Beverages</th>
-                <th>Additione information</th>
-                <th>Add Additional Admin /
-                  <br>Event Organizer</th>
-                <th>Add Chat Room</th>
-                <th>Invite More Than 2 People</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{$createinvition->message}}</td>
-                    <td>{{$createinvition->type_events}}</td>
-                    <td>{{$createinvition->dress_code}}</td>
-                    <td>{{$createinvition->food}}</td>
-                    <td>{{$createinvition->add_info}}</td>
-                    <td>{{$createinvition->add_admin}}</td>
-                    <td>{{$createinvition->add_chat_room}}</td>
-                    <td>{{$createinvition->invite_more}}</td>
-                <tr>
-            </tbody>
-          </table>
-            </div>
-            </div>
-        </div>
-        </div>
-        @endforeach
-        <div class="table-responsive">
-          <table id="dataTableExample" class="table">
-            <thead>
-              <tr>
-                <th>Product_id</th>
-                <th>Name OF Event</th>
-                <th>Event Time</th>
-                <th>Event Date</th>
-                <th>Time Zone</th>
-                <th>Hosted By</th>
-                <th>Location</th>
-                <th>Active</th>
-              </tr>
-            </thead>
-            <tbody>
-                @foreach($createinvitions as $createinvition)
-                    <tr>
-                        <td>{{$createinvition->product_id}}</td>
-                        <td>{{$createinvition->name}}</td>
-                        <td>{{$createinvition->time}}</td>
-                        <td>{{$createinvition->date}}</td>
-                        <td>{{$createinvition->zone}}</td>
-                        <td>{{$createinvition->hosted_by}}</td>
-                        <td>{{$createinvition->location}}</td>
-                        <td><a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle-{{$createinvition->id}}" role="button">View More</a></td>
-                    <tr>
-                @endforeach
+                  <td><a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle-{{$createinvition->id}}" role="button">View More</a></td>
+                </tr>
+              @endforeach
             </tbody>
           </table>
         </div>
+        
       </div>
     </div>
   </div>

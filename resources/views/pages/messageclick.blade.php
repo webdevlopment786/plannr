@@ -27,7 +27,7 @@
             <div class="container-fluid">
                 <div class="row ">
                     <div class="col-lg-2  box p-0 m-0 text-start">
-                        <button type="button" class="butt button fs-5 fw-bold rounded text-dark bt-we"><a href="{{route('invitation')}}" class="text-dark">Invitation</a></button>
+                        <button type="button" class="butt button fs-5 fw-bold rounded text-dark bt-we"><a href="{{url('invitation-send')}}" class="text-dark">Invitation</a></button>
                     </div>
 
                     <div class="col-lg-2  box p-0 m-0 text-start">
@@ -68,7 +68,7 @@
                     <h6 class="text-end">Sent to 1</h6>
                 </div>
                 <div class="line border border-dark w-100 mt-5"></div>
-                <div class="row mt-5 align-items-center border border-1 rounded p-2 border-dark">
+                <div class="row mt-5 align-items-center border border-1 rounded p-3 border-dark">
                     <div class="col-6">
                         <h6 class="mb-0">Write a Message</h6>
                     </div>

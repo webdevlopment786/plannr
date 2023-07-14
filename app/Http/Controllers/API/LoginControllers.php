@@ -191,7 +191,7 @@ class LoginControllers extends BaseControllers
             $headers = 'Your Password is Updated';
             $subject = 'Reset Password :-'.'Your Password is Updated';
             $header = 'Your Password is Updated';
-            mail($user['email'], $headers, $subject, $header);
+            mail($request->email, $headers, $subject, $header);
             // Mail::send('pages.email.OTPVerificationEmail123', ['otp' => 'your Password Update'], function($message) use($request){
             //         $message->to($request->email);
             //         $message->subject('OTP Received for account verification');

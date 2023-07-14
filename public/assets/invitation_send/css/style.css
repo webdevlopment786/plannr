@@ -49,7 +49,12 @@ body {
 .bg-sec {
     box-shadow: rgb(122 118 118 / 20%) 2px 5px 5px;
 }
-
+.bg-sec{
+    width: 100%;
+}
+.bg-white{
+    color: #fff;
+}
 .form-page {
     width: 80%;
 }
@@ -65,7 +70,7 @@ body {
 
 .bg-se {
     background-color: #263238;
-    height: 50px;
+    /* height: 100px; */
 }
 
 .icon {
@@ -116,10 +121,6 @@ body {
 
 .bg-ms {
     border-radius: 10px 10px 0px 10px;
-}
-
-.mar-l {
-    margin-left: 20px;
 }
 
 .bt-sec {
@@ -190,6 +191,9 @@ body {
     .bt-sec {
         width: 20% !important;
         height: 20% !important;
+    }
+    .wit-2 {
+        width: 2% !important;
     }
     .with-sec {
         width: 100% !important;
@@ -284,7 +288,7 @@ body {
         height: 1px;
         background-color: rgb(0, 0, 0);
         right: 11%;
-        bottom: -89%;
+        bottom: -100%;
     }
 }
 
@@ -412,4 +416,9 @@ body {
         width: 100% !important;
     }
 
+}
+@media (max-width:320px) {
+    .mar-l {
+        width: 37% !important;
+    }
 }

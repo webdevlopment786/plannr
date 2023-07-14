@@ -25,21 +25,22 @@
             </div>
         </div>
         <button style="margin-bottom: 10px" class="btn btn-primary delete_all">Delete All Selected</button>
+
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
-            <thead>
-              <tr>
-                <th width="50px"><input type="checkbox" id="master"></th>
-                <th>No</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
+              <thead>
+                <tr>
+                  <th width="50px"><input type="checkbox" id="master"></th>
+                  <th>No</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Phone Number</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
                 @foreach($users as $user)
                   <tr>
                     <td><input type="checkbox" class="sub_chk" data-id="{{$user->id}}"></td>
@@ -68,6 +69,7 @@
             </tbody>
           </table>
         </div>
+
       </div>
     </div>
   </div>
@@ -79,6 +81,7 @@
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
   <script type="text/javascript">
 
       $('.show_confirm').click(function(event) {
