@@ -256,6 +256,8 @@ class LoginControllers extends BaseControllers
         $imageName = time() . '.' . $request->photo->extension();
         $request->photo->move(public_path('images/userProfile/'), $imageName);
 
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
         $user->image = $imageName;

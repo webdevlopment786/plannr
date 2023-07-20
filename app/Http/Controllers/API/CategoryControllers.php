@@ -154,7 +154,7 @@ class CategoryControllers extends Controller
 
     public function createInvitation(Request $request)
     {   
-        
+        // return $request->date;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'required',
@@ -210,7 +210,7 @@ class CategoryControllers extends Controller
         $createinvitation->save();  
 
         if($createinvitation){
-            return response(["status" => true, 'data' => $createinvitation], 200);
+            return response(["status" => true, 'message' => 'Invition Create'], 200);
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         }

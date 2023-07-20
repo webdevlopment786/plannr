@@ -83,6 +83,7 @@ Route::post('contact-update/{id}',[ContactControllers::class,'update'])->name('c
 // Create Invitation
 Route::get('create-invition',[CreateinvitationController::class,'index'])->name('create.invition.index');
 Route::get('create-invition-show',[CreateinvitationController::class,'showInvition'])->name('create.invition.show');
+Route::post('rsvp-count',[CreateinvitationController::class,'rsvp'])->name('rsvp.count');
 Route::get('invitation-send',[CreateinvitationController::class,'invitationSend'])->name('invitationsend');
 Route::get('invitation',[CreateinvitationController::class,'invationclick'])->name('invitation');
 Route::get('message',[CreateinvitationController::class,'messagesend'])->name('message');

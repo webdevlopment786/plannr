@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CategoryListing;
 use App\Models\CreateInvitation;
+use App\Models\Rsvp;
 
 class CreateinvitationController extends Controller
 {
@@ -20,7 +21,39 @@ class CreateinvitationController extends Controller
         $value = $request->invitation_id;
         $createinvitions = CreateInvitation::where('id',$value)->first();
         $product = CategoryListing::where('id',$createinvitions->product_id)->first();
-        return view('pages.createinvitation.show',compact('createinvitions','product'));
+        $rsvps = Rsvp::where('invitation_id',$value)->get()->take(3);
+        $rsvpcount = Rsvp::where('invitation_id',$value)->where('status','1')->count();
+        $rsvpcountmaybe = Rsvp::where('invitation_id',$value)->where('status','2')->count();
+        $rsvpcountno = Rsvp::where('invitation_id',$value)->where('status','0')->count();
+        $rsvpsnew = Rsvp::where('invitation_id',$value)->get();
+        return view('pages.createinvitation.show',compact('createinvitions','product','rsvps','rsvpsnew',
+                                                          'rsvpcount','rsvpcountmaybe','rsvpcountno'));
+    }
+
+    public function rsvp(Request $request)
+    {
+        
+        $guest = $request->guest;  
+        $rsvpcount = new Rsvp();
+        $rsvpcount->invitation_id = $request->invitation_id;
+        $rsvpcount->name = $request->name;
+        $rsvpcount->email = $request->email;
+
+        if($guest){
+            $rsvpcount->guest = $guest;
+        }else{
+            $rsvpcount->guest = '0';
+        }
+
+        $rsvpcount->comment = $request->comment;
+        $rsvpcount->status = $request->status;
+        $rsvpcount->save();
+        return redirect()->back()->with('success', 'your message,here'); 
+    }
+
+    public function messageSendInvitation(Request $request)
+    {   
+            
     }
 
     public function invitationSend()

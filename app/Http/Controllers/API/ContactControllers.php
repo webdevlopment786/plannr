@@ -30,7 +30,7 @@ class ContactControllers extends Controller
     {
         $contactData = array();
         $contactLists = Contact::where('user_id',$request->user_id)->get();
-
+        $empty = array();
         foreach($contactLists as $contactList){
             $data = array();
             $data['id'] = $contactList->id;
@@ -43,7 +43,7 @@ class ContactControllers extends Controller
         if($contactData){
             return response(["status" => true, 'data' => $contactData]);
         }else{
-            return response(["status" => false, 'data' => 'Not found']);
+            return response(["status" => false, 'data' =>  $empty]);
         }
 
     }

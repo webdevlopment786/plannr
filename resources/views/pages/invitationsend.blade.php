@@ -93,7 +93,7 @@
                         </div>
 
                         <div class="col-lg-10  p-0 mar-l">
-                            <h5 class="text-dark mb-0">view map</h5>
+                            <h5 class="text-dark mb-0"><a href="{{url('invitation-send')}}"> View Map</a></h5>
                         </div>
                     </div>
                 </div>
@@ -233,9 +233,10 @@
         <div class="offcanvas-body m-1">
             <div class="row justify-content-center">
                 <div class="col-lg-11  p-0">
-                    <button class="text-start p-2 bg-sec border border-secondary rounded text-secondary">
-                        <i class="fa-solid fa-magnifying-glass"></i> Search Guests
-                    </button>
+                    <input type="text" class="text-start p-2 bg-sec border border-secondary rounded text-secondary" placeholder="Search Guests">
+                    <!-- <button class="text-start p-2 bg-sec border border-secondary rounded text-secondary"> -->
+                        <i class="fa-solid fa-magnifying-glass"></i> 
+                    <!-- </button> -->
                 </div>
                 <div class="accordion mt-5" id="accordionExample">
                     <div class="accordion-item pt-5 px-3 rounded-3">
