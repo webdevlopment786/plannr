@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CreateInvitation;
 use App\Models\Contact;
+use App\Models\ContactInvitations;
 use Mail;
 
 class ContactControllers extends Controller
@@ -76,15 +77,17 @@ class ContactControllers extends Controller
 
     public function invitationSendMail(Request $request)
     {
-        $id = $request->all();
-        $idsss = $request->contact_id; 
+        
+        $idsss = json_decode($request['contact_id']); 
+         
         $userId = $request->user_id;
         $invitationId = $request->invitation_id;
         
-        
+        // return $idsss;
         foreach($idsss as $id){
+            // return $id;
             $banners = Contact::where('user_id',$userId)->where('id',$id)->get();
-            
+             
             // return $banners;
             foreach($banners as $banner){
                 $invationsend = CreateInvitation::where('id',$invitationId)->first();
@@ -111,6 +114,12 @@ class ContactControllers extends Controller
             }
         }
 
+        $contact = new ContactInvitations();
+        $contact->user_id = $userId;
+        $contact->invitation_id = $invitationId;
+        $contact->contact_id = $request['contact_id'];
+        $contact->save();
+
         if($to){
             return response(["status" => true, 'message' => 'Invitation Sent Successfully!']);
         }else{
@@ -118,4 +127,26 @@ class ContactControllers extends Controller
         }
        
     }
+
+    public function invitationSendListUser(Request $request)
+    {
+        $user_id = $request->user_id;
+        $invitationid = $request->invitation_id;
+        $contactlist = ContactInvitations::where('user_id',$user_id)->where('invitation_id', $invitationid)->get();
+
+        foreach($contactlist as $contactlists){
+            $contactId =  json_decode($contactlists->contact_id);
+            $contactlist = Contact::whereIn('id',$contactId)->get(['id','name','mobile_number','email']);
+        }
+
+        if($contactlist){
+            return response(["status" => true, 'data' => $contactlist]);
+        }else{
+            return response(["status" => false, 'data' => 'Not found']);
+        }
+        
+    }
+
+
+
 }

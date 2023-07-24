@@ -4,6 +4,7 @@ use App\Http\Controllers\API\CategoryControllers;
 use App\Http\Controllers\API\CMSControllers;
 use App\Http\Controllers\API\ContactControllers;
 use App\Http\Controllers\API\EventControllers;
+use App\Http\Controllers\API\GuestControllers;
 use App\Http\Controllers\API\LoginControllers as APILoginControllers;
 use App\Http\Controllers\API\HomePageControllers;
 use App\Http\Controllers\API\SubscriptionControllers;
@@ -72,6 +73,7 @@ Route::post('create-contact-list',[ContactControllers::class,'createContactList'
 Route::post('contact-list',[ContactControllers::class,'contactList']);
 Route::post('contact-sync',[ContactControllers::class,'contactSYNC']);
 Route::post('invitation-send-mail',[ContactControllers::class,'invitationSendMail']);
+Route::post('invitation-send-List-user',[ContactControllers::class,'invitationSendListUser']);
 
 // home Sccreen 
 Route::get('banner',[HomePageControllers::class,'banner']);
@@ -99,6 +101,11 @@ Route::get('privacy-policy',[CMSControllers::class,'privacy']);
 // contact us 
 Route::get('contact',[CMSControllers::class,'contactUs']);
 
+
+// Guest
+Route::post('guest-list-all',[GuestControllers::class,'guestlistall']);
+Route::post('guest-list-yes',[GuestControllers::class,'guestListYes']);
+Route::post('guest-list-count',[GuestControllers::class,'guestlistcount']);
 
 // Route::get('redirect/{provider}', [APILoginControllers::class, 'redirect']);
 // Route::get('login/{provider}', [APILoginControllers::class, 'callback']);
