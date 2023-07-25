@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use App\Models\ContactInvitations;
+use App\Models\CreateInvitation;
 use App\Models\Rsvp;
 use Illuminate\Http\Request;
 
@@ -29,12 +30,27 @@ class GuestControllers extends Controller
 
     public function guestListYes(Request $request)
     {
+        $guest =  $request->guest;
         $invitationId = $request->invitation_id;
-        $guestListYes = Rsvp::where('invitation_id',$invitationId)->where('status',1)->get();
 
-        // foreach($guestListYes as $guestListYess){
-        //     $contactlist = Contact::whereIn('id',json_decode($guestListYess->contact_id))->get(['id','name','mobile_number','email']);
-        // }
+        if($guest == 'yes'){
+            $guestListyes = Rsvp::where('invitation_id',$invitationId)->where('status',1)->get();
+            foreach($guestListyes as $guestListyess){
+                $create = CreateInvitation::where('id',$guestListyess->invitation_id)->first();
+                $guestListYes = Contact::where('user_id',$create->user_id)->get(['id','name','mobile_number','email']);
+            }
+        }elseif($guest == 'no'){
+            $guestListYes = Rsvp::where('invitation_id',$invitationId)->where('status',0)->get();
+        }elseif($guest == 'maybe'){
+            $guestListYes = Rsvp::where('invitation_id',$invitationId)->where('status',2)->get();
+        }elseif($guest == 'all'){
+            $guestList = ContactInvitations::get(); 
+            foreach($guestList as $guestLists){
+                $guestListYes = Contact::whereIn('id',json_decode($guestLists->contact_id))->get(['id','name','mobile_number','email']);
+            }
+        }else{
+            $guestListYes = '';
+        }
 
         if($guestListYes){
             return response(["status" => true, 'data' => $guestListYes]);
@@ -73,4 +89,6 @@ class GuestControllers extends Controller
             return response(["status" => false, 'data' => 'Not found']);
         }
     }
+
+
 }
