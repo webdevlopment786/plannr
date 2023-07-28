@@ -106,6 +106,7 @@ Route::get('contact',[CMSControllers::class,'contactUs']);
 Route::post('guest-list-all',[GuestControllers::class,'guestlistall']);
 Route::post('guest-list-yes',[GuestControllers::class,'guestListYes']);
 Route::post('guest-list-count',[GuestControllers::class,'guestlistcount']);
+Route::post('rsvp-count',[GuestControllers::class,'RsvpCount']);
 
 // Route::get('redirect/{provider}', [APILoginControllers::class, 'redirect']);
 // Route::get('login/{provider}', [APILoginControllers::class, 'callback']);

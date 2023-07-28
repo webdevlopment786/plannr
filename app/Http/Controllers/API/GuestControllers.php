@@ -90,5 +90,33 @@ class GuestControllers extends Controller
         }
     }
 
+    public function RsvpCount(Request $request)
+    { 
+        $contactData = array();
+        $invitationId = $request->invitation_id;
+        $guestListNocount = Rsvp::where('invitation_id',$invitationId)->where('status','0')->count();
+        $guestListYescount = Rsvp::where('invitation_id',$invitationId)->where('status','1')->count();
+        $guestListmaybecount = Rsvp::where('invitation_id',$invitationId)->where('status','2')->count();
+        $allcount = Rsvp::where('invitation_id',$invitationId)->count();
+
+        $guestPendingcount = ContactInvitations::where('invitation_id',$invitationId)->first();
+        $yesandmaybe = $guestListmaybecount + $guestListYescount;
+        $getlists = count(json_decode($guestPendingcount->contact_id));
+        $pendingcountlist = $getlists - $allcount;
+        
+        $data = array();
+        $data['Attending'] = $yesandmaybe;
+        $data['Not Attending'] = $guestListNocount;
+        $data['panding'] = $pendingcountlist;
+        
+        array_push($contactData, $data);
+
+        if($contactData){
+            return response(["status" => true, 'data' => $contactData]);
+        }else{
+            return response(["status" => false, 'data' => 'Not found']);
+        }
+    }
+
 
 }
