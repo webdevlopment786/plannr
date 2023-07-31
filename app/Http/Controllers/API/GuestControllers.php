@@ -71,7 +71,13 @@ class GuestControllers extends Controller
 
         $guestPendingcount = ContactInvitations::where('invitation_id',$invitationId)->first();
 
-        $getlists = count(json_decode($guestPendingcount->contact_id));
+        if($guestPendingcount){
+
+            $getlists = count(json_decode($guestPendingcount->contact_id));
+        }else{
+            $getlists = '0';
+        }
+        
         $pendingcountlist = $getlists - $allcount;
         
         $data = array();
@@ -101,7 +107,12 @@ class GuestControllers extends Controller
 
         $guestPendingcount = ContactInvitations::where('invitation_id',$invitationId)->first();
         $yesandmaybe = $guestListmaybecount + $guestListYescount;
-        $getlists = count(json_decode($guestPendingcount->contact_id));
+        if($guestPendingcount)
+        {
+            $getlists = count(json_decode($guestPendingcount->contact_id));
+        }else{
+            $getlists = '0';
+        }
         $pendingcountlist = $getlists - $allcount;
         
         $data = array();

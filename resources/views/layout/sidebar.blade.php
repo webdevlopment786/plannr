@@ -35,6 +35,13 @@
         </a>
       </li>
 
+      <li class="nav-item {{ active_class(['additional-features']) }}">
+        <a href="{{ route('additional.features.index') }}" class="nav-link">
+          <i class="link-icon" data-feather="list"></i>
+          <span class="link-title">Additional Features</span>
+        </a>
+      </li>
+
       <li class="nav-item {{ active_class(['trending']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#advanced-ui" role="button" aria-expanded="{{ is_active_route(['trending']) }}" aria-controls="advanced-ui">
           <i class="link-icon" data-feather="anchor"></i>

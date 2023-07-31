@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AdditionalFeaturesControllers;
 use App\Http\Controllers\Dashboard\BannerControllers;
 use App\Http\Controllers\Dashboard\LoginControllers;
 use App\Http\Controllers\Dashboard\CategoryControllers;
@@ -101,6 +102,13 @@ Route::post('trending-store',[TrendingControllers::class,'store'])->name('trendi
 Route::post('trending-update',[TrendingControllers::class,'update'])->name('trending.update');
 Route::delete('trending-delete/{id}',[TrendingControllers::class,'delete'])->name('trending.delete');
 Route::delete('trending-delete-all',[TrendingControllers::class,'deleteAll'])->name('trending.delete.all');
+
+// AdditionalFeaturesControllers
+Route::get('additional-features',[AdditionalFeaturesControllers::class,'index'])->name('additional.features.index');
+Route::post('trending-store',[AdditionalFeaturesControllers::class,'store'])->name('trending.store');
+Route::post('trending-update',[AdditionalFeaturesControllers::class,'update'])->name('trending.update');
+Route::delete('trending-delete/{id}',[AdditionalFeaturesControllers::class,'delete'])->name('trending.delete');
+Route::delete('trending-delete-all',[AdditionalFeaturesControllers::class,'deleteAll'])->name('trending.delete.all');
 
 
 Route::group(['middleware' => 'auth'], function () {
