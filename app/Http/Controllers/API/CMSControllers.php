@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdditionalFeatures;
 use App\Models\CMSPages;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,20 @@ class CMSControllers extends Controller
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         }
+        
+    }
+
+    public function additionalFeatures()
+    {
+        
+        $additionalFeatures = AdditionalFeatures::get(['title','price']);
+
+        if($additionalFeatures){
+            return response(["status" => true, 'data' => $additionalFeatures], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
+
         
     }
 }

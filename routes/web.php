@@ -105,10 +105,10 @@ Route::delete('trending-delete-all',[TrendingControllers::class,'deleteAll'])->n
 
 // AdditionalFeaturesControllers
 Route::get('additional-features',[AdditionalFeaturesControllers::class,'index'])->name('additional.features.index');
-Route::post('trending-store',[AdditionalFeaturesControllers::class,'store'])->name('trending.store');
-Route::post('trending-update',[AdditionalFeaturesControllers::class,'update'])->name('trending.update');
-Route::delete('trending-delete/{id}',[AdditionalFeaturesControllers::class,'delete'])->name('trending.delete');
-Route::delete('trending-delete-all',[AdditionalFeaturesControllers::class,'deleteAll'])->name('trending.delete.all');
+Route::post('additional-features-store',[AdditionalFeaturesControllers::class,'store'])->name('additional.features.store');
+Route::post('additional-features-update',[AdditionalFeaturesControllers::class,'update'])->name('additional.features.update');
+Route::delete('additional-features-delete/{id}',[AdditionalFeaturesControllers::class,'delete'])->name('additional.features.delete');
+Route::delete('additional-features-delete-all',[AdditionalFeaturesControllers::class,'deleteAll'])->name('additional.features.delete.all');
 
 
 Route::group(['middleware' => 'auth'], function () {

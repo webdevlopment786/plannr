@@ -37,7 +37,7 @@
 
       <li class="nav-item {{ active_class(['additional-features']) }}">
         <a href="{{ route('additional.features.index') }}" class="nav-link">
-          <i class="link-icon" data-feather="list"></i>
+          <i class="link-icon" data-feather="briefcase"></i>
           <span class="link-title">Additional Features</span>
         </a>
       </li>

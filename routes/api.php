@@ -101,10 +101,12 @@ Route::get('privacy-policy',[CMSControllers::class,'privacy']);
 // contact us 
 Route::get('contact',[CMSControllers::class,'contactUs']);
 
+// additionalFeatures
+Route::get('additional-features',[CMSControllers::class,'additionalFeatures']);
 
 // Guest
 Route::post('guest-list-all',[GuestControllers::class,'guestlistall']);
-Route::post('guest-list-yes',[GuestControllers::class,'guestListYes']);
+Route::post('guest-list',[GuestControllers::class,'guestListYes']);
 Route::post('guest-list-count',[GuestControllers::class,'guestlistcount']);
 Route::post('rsvp-count',[GuestControllers::class,'RsvpCount']);
 

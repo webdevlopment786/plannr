@@ -33,7 +33,8 @@
                 <h6 class="card-title">Additional Features</h6>
             </div>
             <div class="col-sm-12 col-md-6 ">
-              <!-- <button type="button" class="btn btn-primary" style="float: right; margin-bottom: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Additional Features</button> -->
+              <button type="button" class="btn btn-primary" style="float: right; margin-bottom: 10px;" 
+              data-bs-toggle="modal" data-bs-target="#exampleModal">Add Additional Features</button>
             </div>
         </div>
         <!-- Add Banner Modal -->
@@ -44,14 +45,21 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form class="forms-sample" action="{{route('trending.store')}}" method="post" enctype="multipart/form-data">
+              <form class="forms-sample" action="{{route('additional.features.store')}}" method="post" enctype="multipart/form-data">
               @csrf
               <div class="modal-body">
                 <div class="mb-3">
                     <label for="exampleInputUsername1" class="form-label">Title</label>
-                    <input type="text" class="form-control" name="name" autocomplete="off" placeholder="Trending Name">
+                    <input type="text" class="form-control" name="title" autocomplete="off" placeholder="Enter Title">
                     @if ($errors->has('name'))
                         <span class="text-danger">{{ $errors->first('name') }}</span>
+                    @endif
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputUsername1" class="form-label">Price</label>
+                    <input type="text" class="form-control" name="price" value="" id="" autocomplete="off" placeholder="Enter Price">
+                    @if ($errors->has('price'))
+                      <span class="text-danger">{{ $errors->first('price') }}</span>
                     @endif
                 </div>
               </div>
@@ -62,48 +70,51 @@
             </div>
           </div>
         </div>
-
+         <!-- End Add Banner Modal -->
          <!-- Edit Banner Modal -->
-        @foreach($features as $feature)
+          @foreach($features as $feature)
             <div class="modal fade" id="exampleModaledit{{$feature->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Trending Update</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form class="forms-sample" action="{{route('trending.update')}}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="exampleInputUsername1" class="form-label">Title</label>
-                        <input type="text" class="form-control" name="title" value="{{$feature->name}}" id="" autocomplete="off" placeholder="Enter Title">
-                        @if ($errors->has('title'))
-                          <span class="text-danger">{{ $errors->first('title') }}</span>
-                        @endif
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Trending Update</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form class="forms-sample" action="{{route('additional.features.update')}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                  <input type="hidden" name="feature_id" value="{{$feature->id}}">
+                                    <label for="exampleInputUsername1" class="form-label">Title</label>
+                                    <input type="text" class="form-control" name="title" value="{{$feature->title}}" id="" autocomplete="off" placeholder="Enter Title">
+                                    @if ($errors->has('title'))
+                                    <span class="text-danger">{{ $errors->first('title') }}</span>
+                                    @endif
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputUsername1" class="form-label">Price</label>
+                                    <input type="text" class="form-control" name="price" value="{{$feature->price}}" id="" autocomplete="off" placeholder="Enter Price">
+                                    @if ($errors->has('price'))
+                                    <span class="text-danger">{{ $errors->first('price') }}</span>
+                                    @endif
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputUsername1" class="form-label">Price</label>
-                        <input type="text" class="form-control" name="price" value="" id="" autocomplete="off" placeholder="Enter Price">
-                        @if ($errors->has('price'))
-                          <span class="text-danger">{{ $errors->first('price') }}</span>
-                        @endif
-                    </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-                </form>
-                </div>
                 </div>
             </div>
-        @endforeach
+          @endforeach
+         <!-- End Edit Banner Modal -->
         
         <div class="table-responsive">
         <!-- <button style="margin-bottom: 10px" class="btn btn-primary delete_all">Delete All Selected</button> -->
           <table id="dataTableExample" class="table">
             <thead>
               <tr>
-                <th width="50px"><input type="checkbox" id="master"></th>
+                <!-- <th width="50px"><input type="checkbox" id="master"></th> -->
                 <th>No</th>
                 <th>Title</th>
                 <th>Price</th>
@@ -113,14 +124,13 @@
             <tbody>
                 @foreach($features as $feature)
                     <tr>
-                        <td><input type="checkbox" class="sub_chk" data-id="{{$feature->id}}"></td>
+                        <!-- <td><input type="checkbox" class="sub_chk" data-id="{{$feature->id}}"></td> -->
                         <td>{{ $loop->iteration }}</td>
                         <td>{{$feature->title}}</td>
                         <td>{{$feature->price}}</td>
                         <td>
                         <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#exampleModaledit{{$feature->id}}">Edit</a>
-                        <!-- <a href="{{url('trending-delete/'.$trending->id)}}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</a> -->
-                        <form method="POST" action="{{ url('trending-delete', $trending->id) }}" style="display:inline-block;">
+                        <form method="POST" action="{{ url('additional-features-delete', $feature->id) }}" style="display:inline-block;">
                             @csrf
                             <input name="_method" type="hidden" value="DELETE">
                             <button type="submit" class="btn btn-sm btn-danger show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>

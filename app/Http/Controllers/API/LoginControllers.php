@@ -66,7 +66,6 @@ class LoginControllers extends BaseControllers
     {
 
         $user  = User::where([['email','=',$request->email],['otp','=',$request->otp]])->first();
-        return $user;
         if($user){
             auth()->login($user, true);
             User::where('email','=',$request->email)->update(['otp' => null, 'verify_otp' => '1']);
