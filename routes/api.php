@@ -7,6 +7,7 @@ use App\Http\Controllers\API\EventControllers;
 use App\Http\Controllers\API\GuestControllers;
 use App\Http\Controllers\API\LoginControllers as APILoginControllers;
 use App\Http\Controllers\API\HomePageControllers;
+use App\Http\Controllers\API\MessagerControllers;
 use App\Http\Controllers\API\SubscriptionControllers;
 use Illuminate\Http\Request;
 
@@ -103,6 +104,9 @@ Route::get('contact',[CMSControllers::class,'contactUs']);
 
 // additionalFeatures
 Route::get('additional-features',[CMSControllers::class,'additionalFeatures']);
+
+// BroadcastingMessager
+Route::post('broadcasting-messager',[MessagerControllers::class,'broadcastingMessager']);
 
 // Guest
 Route::post('guest-list-all',[GuestControllers::class,'guestlistall']);
