@@ -37,6 +37,7 @@
               data-bs-toggle="modal" data-bs-target="#exampleModal">Add Additional Features</button>
             </div>
         </div>
+
         <!-- Add Banner Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -51,8 +52,8 @@
                 <div class="mb-3">
                     <label for="exampleInputUsername1" class="form-label">Title</label>
                     <input type="text" class="form-control" name="title" autocomplete="off" placeholder="Enter Title">
-                    @if ($errors->has('name'))
-                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                    @if ($errors->has('title'))
+                        <span class="text-danger">{{ $errors->first('title') }}</span>
                     @endif
                 </div>
                 <div class="mb-3">

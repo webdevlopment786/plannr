@@ -45,9 +45,18 @@ class LoginControllers extends BaseControllers
         $success['last_name'] =  $user->last_name;
         $success['phone_number'] =  $user->phone_number;
         $success['email'] =  $user->email;
+        
         $success['otp'] =  $user->otp;
         $headers = 'Your OTP';
-        $subject = 'Your OTP is :-'.$success['otp'];
+        $subject = "<html>";
+        $subject.= "<head><body><div>Made with ❤️ by Planner</div><div><div><img></div>
+                <h2>Here is your one time password</h2>
+                <h4>To validate your emial address </h4>
+                <h1><?php echo $otp; ?> </h1></div></body><div>
+                FAQ's | Terms & Conditions | Contact us
+            </div>
+        </head>
+    </html>";
         $header = 'Verify This OTP';
         if($user){   
                 mail($success['email'], $headers, $subject, $header);     
@@ -307,5 +316,57 @@ class LoginControllers extends BaseControllers
             return response(["status" => false, 'data' => 'Not found'], 201);
         }
 
+    }
+
+
+
+    public function newAPIForRegister(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'c_password' => 'required|same:password',
+        ]);
+
+        $email = $request->input('email');
+        $user = User::where('email', '=', $email)->first();
+        if ($user) {
+            return response()->json(['status'=>false, 'message' => 'The email has already been taken'], 201);
+        }
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+
+        $input = $request->all();
+        $otp = rand(1000,9999);
+        $input['password'] = bcrypt($input['password']);
+        $input['otp'] = $otp;
+
+        $user = User::create($input);
+        $success['token'] =  $user->createToken('MyApp')->accessToken;
+        $success['first_name'] =  $user->first_name;
+        $success['last_name'] =  $user->last_name;
+        $success['phone_number'] =  $user->phone_number;
+        $success['email'] =  $user->email;
+        
+        $success['otp'] =  $user->otp;
+        $headers = 'Your OTP';
+        $subject = 'Your OTP is :-'.$success['otp'];
+        $header = 'Verify This OTP';
+        if($user){   
+                mail($success['email'], $headers, $subject, $header);     
+        //     Mail::send('pages.email.OTPVerificationEmail', ['otp' => $otp], function($message) use($request){
+        //         $message->to($request->email);
+        //         $message->subject('OTP Received for account verification');
+        //   });
+         return $this->sendResponse('message', 'OTP Send Check Mail.');
+        }
+        else{
+            return response()->json(["status" => false, 'status' => 'failed']);
+       }
     }
 }

@@ -48,7 +48,7 @@ class CreateinvitationController extends Controller
         $rsvpcount->comment = $request->comment;
         $rsvpcount->status = $request->status;
         $rsvpcount->save();
-        return redirect()->back()->with('success', 'your message,here'); 
+        return redirect()->back()->with('success', 'Message Send'); 
     }
 
     public function messageSendInvitation(Request $request)

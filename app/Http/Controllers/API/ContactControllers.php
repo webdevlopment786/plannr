@@ -146,4 +146,26 @@ class ContactControllers extends Controller
         }
         
     }
+
+    public function newContactList(Request $request)
+    {
+        $contactData = array();
+        $contactLists = Contact::where('user_id',$request->user_id)->get();
+        $empty = array();
+        foreach($contactLists as $contactList){
+            $data = array();
+            $data['id'] = $contactList->id;
+            $data['Name'] = $contactList->name;
+            $data['Email'] = $contactList->email;
+            $data['Mobile_Number'] = $contactList->mobile_number;
+            array_push($contactData, $data);
+         }
+
+        if($contactData){
+            return response(["status" => true, 'data' => $contactData]);
+        }else{
+            return response(["status" => false, 'data' =>  $empty]);
+        }
+
+    }
 }

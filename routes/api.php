@@ -114,5 +114,10 @@ Route::post('guest-list',[GuestControllers::class,'guestListYes']);
 Route::post('guest-list-count',[GuestControllers::class,'guestlistcount']);
 Route::post('rsvp-count',[GuestControllers::class,'RsvpCount']);
 
+
+// New API For Register
+Route::post('new-api-for-register',[APILoginControllers::class,'newAPIForRegister']);
+Route::post('new-contact-List',[ContactControllers::class,'newContactList']);
+
 // Route::get('redirect/{provider}', [APILoginControllers::class, 'redirect']);
 // Route::get('login/{provider}', [APILoginControllers::class, 'callback']);
