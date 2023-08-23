@@ -56,7 +56,8 @@ Route::post('category-wise-product',[CategoryControllers::class,'categoryWisePro
 Route::post('create-invitation',[CategoryControllers::class,'createInvitation']);
 Route::post('create-invitation-product',[CategoryControllers::class,'createInvitationID']);
 Route::post('create-invitation-with-image',[CategoryControllers::class,'createInvitationWithImage']);
-Route::post('create-invitation-view',[CategoryControllers::class,'createInvitationView']);
+Route::post('create-invitation-view',[CategoryControllers::class,'createInvitationView']); 
+Route::post('update-invitation-draft',[CategoryControllers::class,'updateCreateInvitation']); 
 
 // Event
 Route::post('event-upcoming',[EventControllers::class,'upComingEvent']);
@@ -65,6 +66,7 @@ Route::post('event-overview',[EventControllers::class,'eventOverView']);
 Route::post('edit-invitation',[EventControllers::class,'editInvitation']);
 Route::post('view-invitation',[EventControllers::class,'viewInvitation']);
 Route::post('cancel-event',[EventControllers::class,'cancelEvent']);
+Route::post('delete-event',[EventControllers::class,'deleteDraftEvent']);
 
 // Subscription
 Route::get('subscription',[SubscriptionControllers::class,'index']);

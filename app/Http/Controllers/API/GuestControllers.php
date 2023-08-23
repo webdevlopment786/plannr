@@ -44,7 +44,7 @@ class GuestControllers extends Controller
         }elseif($guest == 'maybe'){
             $guestListYes = Rsvp::where('invitation_id',$invitationId)->where('status',2)->get();
         }elseif($guest == 'all'){
-            $guestList = ContactInvitations::get(); 
+            $guestList = ContactInvitations::get();  
             foreach($guestList as $guestLists){
                 $guestListYes = Contact::whereIn('id',json_decode($guestLists->contact_id))->get(['id','name','mobile_number','email']);
             }

@@ -179,7 +179,18 @@ class EventControllers extends Controller
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         }
+    }
 
-
+    public function deleteDraftEvent(Request $request)
+    {
+     
+        $delete = CreateInvitation::where('id',$request->event_id)->where('user_id',$request->user_id)->first();
+        $delete->delete();
+        
+        if($delete){
+            return response(["status" => true, 'message' => 'Event Delete Successfully'], 200);
+        }else{
+            return response(["status" => false, 'data' => 'Not found'], 201);
+        }
     }
 }
