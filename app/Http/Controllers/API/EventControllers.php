@@ -119,13 +119,39 @@ class EventControllers extends Controller
 
     public function editInvitation(Request $request)
     {
-        
-       
+        $searchData = array();
         $eventId = $request->event_id;
         $editInvitation = CreateInvitation::where('id',$eventId)->where('user_id',$request->user_id)->firstOrFail();
-  
-        if($editInvitation){
-            return response(["status" => true, 'data' => $editInvitation], 200);
+        
+        if(empty($editInvitation->custom_image)){
+            $custom_image = "null";
+        }
+
+        $data = array();
+        $data['id'] = $editInvitation->id;
+        $data['product_id'] = $editInvitation->product_id;
+        $data['user_id'] = $editInvitation->user_id;
+        $data['custom_image'] = $custom_image;
+        $data['name'] = $editInvitation->name;
+        $data['time'] = $editInvitation->time;
+        $data['date'] = $editInvitation->date;
+        $data['zone'] = $editInvitation->zone;
+        $data['location'] = $editInvitation->location;
+        $data['phone'] = $editInvitation->phone;
+        $data['message'] = $editInvitation->message;
+        $data['type_events'] = $editInvitation->type_events;
+        $data['food'] = $editInvitation->food;
+        $data['add_info'] = $editInvitation->add_info;
+        $data['add_admin'] = $editInvitation->add_admin;
+        $data['add_chat_room'] = $editInvitation->add_chat_room;
+        $data['invite_more'] = $editInvitation->invite_more;
+        $data['hosted_by'] = $editInvitation->hosted_by;
+        $data['draft'] = $editInvitation->draft;
+
+        array_push($searchData, $data);
+
+        if($searchData){
+            return response(["status" => true, 'data' => $searchData], 200);
         }else{
             return response(["status" => false, 'data' => 'Not found'], 201);
         } 

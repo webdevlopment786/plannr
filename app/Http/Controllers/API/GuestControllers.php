@@ -130,4 +130,53 @@ class GuestControllers extends Controller
     }
 
 
+    public function addGusts(Request $request)
+    {
+        $contactData = array();
+        $user_id = $request->user_id;
+        $invitation_id = $request->invitation_id;
+        $ContactInvitations = ContactInvitations::where('invitation_id',$invitation_id)->where('user_id',$user_id)->get(); 
+        foreach($ContactInvitations as $guestLists){
+            $contactid = json_decode($guestLists->contact_id);
+            $guestListYes = Contact::whereIn('id',json_decode($guestLists->contact_id))->get();
+            $conatcts = Contact::where('user_id',$guestLists->user_id)->get();
+            
+            foreach($guestListYes as $guestListYess){
+                foreach($conatcts as $conatct){
+               
+                    if($guestListYess->id ==  $conatct->id)
+                    {
+                        $select = 'true';
+                    }else
+                    {   
+                        $select = 'flase';
+                    } 
+                    
+                    $data = array();
+                    $data['id'] = $conatct->id;
+                    $data['name'] = $conatct->name;
+                    $data['email'] = $conatct->email;
+                    $data['mobile_number'] = $conatct->mobile_number;
+                    $data['select'] = $select;
+                    
+                    array_push($contactData, $data);
+                } 
+            }
+        }  
+
+        if($contactData){
+            return response(["status" => true, 'data' => $contactData]);
+        }else{
+            return response(["status" => false, 'data' => 'Not found']);
+        }
+
+
+      
+       
+        // return $contactList;
+    }
+
+
+
+
 }

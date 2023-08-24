@@ -115,6 +115,7 @@ Route::post('guest-list-all',[GuestControllers::class,'guestlistall']);
 Route::post('guest-list',[GuestControllers::class,'guestListYes']);
 Route::post('guest-list-count',[GuestControllers::class,'guestlistcount']);
 Route::post('rsvp-count',[GuestControllers::class,'RsvpCount']);
+Route::post('add-gusts',[GuestControllers::class,'addGusts']);
 
 
 // New API For Register
