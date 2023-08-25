@@ -408,6 +408,8 @@
                     <div class="row mt-2">
                         <div class="col">
                             <input type="hidden" name="invitation_id" value="{{$createinvitions->id}}">
+                            <input type="hidden" name="contact_id" value="{{$contact_id}}">
+                            <input type="hidden" name="user_id" value="{{$user_id}}">
                             <input type="hidden" name="status" value="1">
                             <input type="text"  class="form-control border border-dark p-2" name="name" placeholder="RSVP Name"
                                 aria-label="RSVP Name">
@@ -464,6 +466,8 @@
                         <div class="row mt-2">
                             <div class="col">
                                 <input type="hidden" name="invitation_id" value="{{$createinvitions->id}}">
+                                <input type="hidden" name="contact_id" value="{{$contact_id}}">
+                                <input type="hidden" name="user_id" value="{{$user_id}}">
                                 <input type="hidden" name="status" value="2">
                                 <input type="text" class="form-control border border-dark p-2" name="name" placeholder="RSVP Name"
                                     aria-label="RSVP Name">
@@ -520,6 +524,8 @@
                     <div class="row mt-1">
                         <div class="col">
                             <input type="hidden" name="invitation_id" value="{{$createinvitions->id}}">
+                            <input type="hidden" name="contact_id" value="{{$contact_id}}">
+                            <input type="hidden" name="user_id" value="{{$user_id}}">
                             <input type="hidden" name="status" value="0">
                             <input type="text" class="form-control border border-dark" name="name" placeholder="RSVP Name"
                                 aria-label="RSVP Name">

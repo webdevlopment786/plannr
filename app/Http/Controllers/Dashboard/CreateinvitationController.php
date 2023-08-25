@@ -19,6 +19,8 @@ class CreateinvitationController extends Controller
     public function showInvition(Request $request)
     {
         $value = $request->invitation_id;
+        $contact_id = $request->guest_id;
+        $user_id = $request->user_id;
         $createinvitions = CreateInvitation::where('id',$value)->first();
         $product = CategoryListing::where('id',$createinvitions->product_id)->first();
         $rsvps = Rsvp::where('invitation_id',$value)->get()->take(3);
@@ -27,7 +29,7 @@ class CreateinvitationController extends Controller
         $rsvpcountno = Rsvp::where('invitation_id',$value)->where('status','0')->count();
         $rsvpsnew = Rsvp::where('invitation_id',$value)->get();
         return view('pages.createinvitation.show',compact('createinvitions','product','rsvps','rsvpsnew',
-                                                          'rsvpcount','rsvpcountmaybe','rsvpcountno'));
+                                                          'rsvpcount','rsvpcountmaybe','rsvpcountno','contact_id','user_id'));
     }
 
     public function rsvp(Request $request)
@@ -47,6 +49,8 @@ class CreateinvitationController extends Controller
 
         $rsvpcount->comment = $request->comment;
         $rsvpcount->status = $request->status;
+        $rsvpcount->contact_id  =$request->contact_id;
+        $rsvpcount->user_id =$request->user_id;
         $rsvpcount->save();
         return redirect()->back()->with('success', 'Message Send'); 
     }
