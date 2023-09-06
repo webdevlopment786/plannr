@@ -137,6 +137,7 @@ class GuestControllers extends Controller
         $invitation_id = $request->invitation_id;
         $ContactInvitations = ContactInvitations::where('invitation_id',$invitation_id)->where('user_id',$user_id)->first(); 
         $conatcts = Contact::where('user_id',$user_id)->get();
+
         foreach($conatcts as $conatct)
         {
             $data = array();
@@ -171,48 +172,65 @@ class GuestControllers extends Controller
     public function guestlistYesNo(Request $request)
     {
         $contactData = array();
+        $yes = array();
+        $no = array();
+        $maybe = array();
+        $pending = array();
         $ContactInvitations = ContactInvitations::where('invitation_id',$request->invitation_id)->where('user_id',$request->user_id)->first();
-        $contacts = Contact::whereIn('id',json_decode($ContactInvitations->contact_id))->get();
-        $rsvps = Rsvp::where('user_id',$request->user_id)->get(); 
-
-    
-        foreach($rsvps as  $rsvp)
+        // return $ContactInvitations->contact_id;
+       
+        $first = trim($ContactInvitations->contact_id, '[');
+        $last = trim($first, ']');
+        $invitationArrays = explode(",", $last);
+        
+        foreach($invitationArrays as $contact_id)
         {
-
-            $array = explode(",", $rsvp->contact_id);
-            $first = trim($ContactInvitations->contact_id, '[');
-            $last = trim($first, ']');
-            $array = explode(",", $last);
-            // return $array; 
-
-            if(in_array($rsvp->contact_id,$array)){
-                $select = 'true';
-            }else{
-                $select = 'flase';
-            }
-
             $data = array();
-            $contacts = Contact::where('id',$rsvp->contact_id)->get();
-            
-            foreach($contacts as $contact)
-            $data['id'] = $contact->id;
-            $data['name'] = $contact->name;
-            $data['email'] = $contact->email;
-            $data['mobile_number'] = $contact->mobile_number;
-            if($rsvp->status == 1)
-            {
-                $status = 'Yes';
-
-            }elseif($rsvp->status == 2){
-                $status = 'Maybe';
+            $contacts = Contact::where('id',$contact_id)->first();
+            $data['id'] = $contacts->id;
+            $data['name'] = $contacts->name;
+            $data['email'] = $contacts->email;
+            $data['mobile_number'] = $contacts->mobile_number;
+            $rsvps = Rsvp::where('contact_id',$contact_id)->first();
+            if(!empty($rsvps)){
+                if($rsvps->status == '1'){
+                    $status = 'yes';
+                    $data['status'] =  $status;
+                    array_push($yes, $data);
+                }elseif($rsvps->status == '2'){
+                    $status = 'maybe';
+                    $data['status'] =  $status;
+                    array_push($maybe, $data);
+                }else{
+                    $status = 'no';
+                    $data['status'] =  $status;
+                    array_push($no, $data);
+                }   
             }else{
-                $status = 'no';
+                $status = 'pending';
+                $data['status'] =  $status;
+                array_push($pending, $data);
             }
-            $data['status'] =  $status;
             array_push($contactData, $data);
         }
-        return $contactData;
-        
+
+        if($request->guest_list == 'yes'){
+            $returnData = $yes;
+        }elseif($request->guest_list == 'no'){
+            $returnData = $no;
+        }elseif($request->guest_list == 'maybe'){
+            $returnData = $maybe;
+        }elseif($request->guest_list == 'pending'){
+            $returnData = $pending;
+        }else{
+            $returnData = $contactData;
+        }
+      
+        if($returnData){
+            return response(["status" => true, 'data' => $returnData]);
+        }else{
+            return response(["status" => false, 'data' => 'Not found']);
+        }
         
     }
 

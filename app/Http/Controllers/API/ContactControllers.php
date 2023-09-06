@@ -99,16 +99,16 @@ class ContactControllers extends Controller
                 $headers .= 'From:Invitation Card <info@plannr.com>'."\r\n";
                 $ms="<html></body><div><div>Dear $banner->name,</div></br></br>";
                 $ms.="<div style='padding-top:8px;'>I invite you to come and join us to celebrate with us.Please do join us!</div>
-                <div style='padding-top:10px;'><a href='https://webdevelopment33.com/plannr/create-invition-show?invitation_id=$invationsend->id&guest_id=$banner->id&user_id=$userId'>Invitation Link</a></div>
+                <div style='padding-top:10px;'><a href='http://localhost:8000/create-invition-show?invitation_id=$invationsend->id&guest_id=$banner->id&user_id=$userId'>Invitation Link</a></div>
                 <div style='padding-top:4px;'>Thank You</div></div>
                 </body></html>";
                 
                 if($to){
-                    mail($to,$subject,$ms,$headers);
-                    // Mail::send('pages.email.OTPVerificationEmail', ['otp' => $ms], function($message) use($to){
-                    //     $message->to($to);
-                    //     $message->subject('Invitation Card For');
-                    // });
+                    // mail($to,$subject,$ms,$headers);
+                    Mail::send('pages.email.OTPVerificationEmail', ['otp' => $ms], function($message) use($to){
+                        $message->to($to);
+                        $message->subject('Invitation Card For');
+                    });
                 }
                 
             }

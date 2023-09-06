@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>planner Applicastion</title>
+    <title>Plannr</title>
     <!-- <link rel="stylesheet" href="css/style.css"> -->
     <link rel="stylesheet" href="{{ asset('assets/invitation_send/css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -60,10 +60,12 @@
                     <img src="{{asset('assets/invitation_send/img/Group 48098066.png')}}" alt="">
                     </div>
                 </div>
+                
+                @foreach($broadcastMessager as  $broadcastMessagers)
                 <div class="col-2  p-3 mb-5 mt-2 bg-msg">
-                    <h5 class="text-light mb-0">Message from host</h5>
-                    <h6 class="text-light mb-0">Hey come here</h6>
+                    <h6 class="text-light mb-0">{{$broadcastMessagers->message}}</h6>
                 </div>
+                @endforeach
                 <h6 class="text-secondary text-center">03 / 25 / 23 10:30 AM</h6>
                 <div class="row justify-content-end">
                     <div class="col-1 p-3 mb-1 mt-2 bg-msg bg-ms text-center">
@@ -75,7 +77,7 @@
                 <div class="row mt-5 align-items-center border border-1 rounded p-3 border-dark">
                     <div id='search-box'>
                         <form id='search-form' method='get' target='_top'>
-                            <input id='search-text' name='q' placeholder='Write a Message' type='text' class="bg-transparent border-0"/>
+                            <input id='search-text' name='messager' placeholder='Write a Message' type='text' class="bg-transparent border-0"/>
                             <button id='search-button' type='SEND' class="button bt-sec text-light p-2"><span>SEND</span></button>
                         </form>
                     </div>

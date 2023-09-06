@@ -382,7 +382,7 @@
         <div class="offcanvas-body">
             <h2 class="accordion-header" id="headingOne">
                 <button class="rounded button text-start p-1">
-                    <h6 class="text-light mb-0 px-2"> You will be attending!</h6> 
+                    <h6 class="text-light mb-0 px-2"> You will be attending! asadsadsad</h6> 
                 </button>
             </h2>
             <div class="accordion-item mt-5 p-4">

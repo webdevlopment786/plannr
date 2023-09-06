@@ -34,12 +34,10 @@
                                 href="{{url('invitation-send')}}">Invitation</a></button>
                     </div>
 
-                    <!-- <div class="col-2 bt-se p-0 m-0 text-start">
-                        <button type="button" class="butt button fs-5 fw-bold "><a href="{{route('message')}}" class="text-dark">Message</a></button>
-                    </div> -->
+                    
                     <div class="col-2 bt-se p-0 m-0 text-start">
                         <button type="button" class="butt button fs-5 fw-bold "><a
-                                href="{{url('message')}}" class="text-dark">Message</a></button>
+                                href="http://localhost:8000/message?invitation_id={{$createinvitions->id}}&guest_id={{$contact_id}}&user_id={{$user_id}}" class="text-dark">Message</a></button>
                     </div>
 
                     <div class="col-lg-5 with-sec text-end p-0 align-middle heading">

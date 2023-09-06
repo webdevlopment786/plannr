@@ -19,7 +19,7 @@
             </div>
             <div class="text-center">
               <p class="tx-16 fw-bolder">Admin</p>
-              <p class="tx-12 text-muted">Admin@gmail.com</p>
+              <!-- <p class="tx-12 text-muted">Admin@gmail.com</p> -->
             </div>
           </div>
           <ul class="list-unstyled p-1">

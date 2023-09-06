@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CategoryListing;
 use App\Models\CreateInvitation;
+use App\Models\Messager;
 use App\Models\Rsvp;
 
 class CreateinvitationController extends Controller
@@ -55,10 +56,6 @@ class CreateinvitationController extends Controller
         return redirect()->back()->with('success', 'Message Send'); 
     }
 
-    public function messageSendInvitation(Request $request)
-    {   
-            
-    }
 
     public function invitationSend()
     {
@@ -72,6 +69,14 @@ class CreateinvitationController extends Controller
 
     public function messagesend()
     {
-        return view('pages.messageclick');
+        $messageshows = Rsvp::get();
+        foreach($messageshows as $messageshow){
+            $broadcastMessager = Messager::where('user_id',$messageshow->user_id)->
+                                where('event_id',$messageshow->invitation_id)->
+                                where('Broadcast_to_option',$messageshow->status)->get();
+            return view('pages.messageclick',compact('broadcastMessager'));
+        }
+       
+
     }
 }
